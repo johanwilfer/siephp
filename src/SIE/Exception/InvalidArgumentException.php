@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of the SIE-PHP package.
  *
  * (c) Johan Wilfer <johan@jttech.se>
@@ -11,6 +11,11 @@
 
 namespace SIE\Exception;
 
+/**
+ * Class InvalidArgumentException
+ * @package SIE\Exception
+ * @inheritDoc
+ */
 class InvalidArgumentException extends \InvalidArgumentException
 {
 }

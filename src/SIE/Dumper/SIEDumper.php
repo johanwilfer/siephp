@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of the SIE-PHP package.
  *
  * (c) Johan Wilfer <johan@jttech.se>
@@ -18,7 +18,15 @@ use SIE\Data;
  */
 class SIEDumper
 {
+    /**
+     * Delimiter used for newline.
+     * @var string
+     */
     protected $delimiter_newline = "\r\n";
+    /**
+     * Delimiter used for fields.
+     * @var string
+     */
     protected $delimiter_field = " ";
 
     /**

@@ -1,6 +1,6 @@
 <?php
 
-/*
+/**
  * This file is part of the SIE-PHP package.
  *
  * (c) Johan Wilfer <johan@jttech.se>
@@ -69,6 +69,7 @@ class Transaction
     }
 
     /**
+     * Get account
      * @return Account
      */
     public function getAccount()
@@ -77,6 +78,7 @@ class Transaction
     }
 
     /**
+     * Set account
      * @param Account $account
      * @return Transaction
      */
