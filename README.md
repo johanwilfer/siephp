@@ -63,7 +63,7 @@ And it will generate the following output (in PC8/CP437 encoding):
 }
 ````
 
-See `examples/TSVtoSIE.php` for a custom TSV to SIE converter, loading the same data from a TSV-file.
+See [examples/TSVtoSIE.php](examples/TSVtoSIE.php) for a custom TSV to SIE converter, loading the same data from a TSV-file.
 
 ## Author
 Johan Wilfer - johan [at] jttech.se - http://jttech.se
