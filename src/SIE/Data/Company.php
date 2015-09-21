@@ -49,6 +49,12 @@ class Company
     protected $dimensions;
 
     /**
+     * The fiscal year, used by incoming and outgoing balances.
+     * @var FiscalYear[]
+     */
+    protected $fiscalYears;
+
+    /**
      * Creates a Company object, that could be exported as a SIE-file
      */
     public function __construct()
@@ -56,6 +62,7 @@ class Company
         $this->accounts = array();
         $this->verificationSeries = array();
         $this->dimensions = array();
+        $this->fiscalYears = array();
     }
 
     /**
@@ -219,6 +226,32 @@ class Company
     {
         return $this->verificationSeries;
     }
+
+    /**
+     * Add fiscal year
+     * @param FiscalYear $fiscalYear
+     * @return Company
+     * @throws DomainException
+     */
+    public function addFiscalYear(FiscalYear $fiscalYear)
+    {
+        // FIXME Only one year is supported now, add support for multiple fiscal years
+        if (count($this->fiscalYears) > 0)
+            throw new DomainException('Currently only a single fiscal year is supported.');
+
+        $this->fiscalYears[] = $fiscalYear;
+        return $this;
+    }
+
+    /**
+     * Get fiscal years
+     * @return FiscalYear[]
+     */
+    public function getFiscalYears()
+    {
+        return $this->fiscalYears;
+    }
+
 
     /**
      * Validate the data, valid data should be exportable to SIE-format

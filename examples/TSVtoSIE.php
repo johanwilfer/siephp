@@ -55,11 +55,66 @@ class TSVLoader
     }
 
     /**
+     * Parse balance data from TSV-file
+     *
      * @param $value
      * @param int $skipHeaderLines
-     * @return SIE\Data\Company
+     * @param Data\Company|null $company
+     * @return Data\FiscalYear
      */
-    public function parse($value, $skipHeaderLines = 1)
+    public function parseBalance($value, Data\Company $company = null, $skipHeaderLines = 1)
+    {
+        // parse text
+        $rows = $this->getTabularData($value);
+        // kill header lines
+        for ($i=0; $i < $skipHeaderLines; $i++)
+            array_shift($rows);
+
+        // add fiscal year
+        $fiscalYear = new Data\FiscalYear();
+        // we don't have this information, make something up
+        $fiscalYear->setDateStart(new \DateTime('first day of January this year'));
+        $fiscalYear->setDateEnd(new \DateTime('last day of December this year'));
+        $company->addFiscalYear($fiscalYear);
+
+        foreach ($rows as $row)
+        {
+            $data = array(
+                'account_id' => $row[0],
+                'account_name' => $row[1],
+                'incoming' => (float)(str_replace(array(' ',' ','.', ','), array('', '', '', '.'), $row[2])),
+                'outgoing' => (float)(str_replace(array(' ',' ','.', ','), array('', '', '', '.'), $row[5])),
+            );
+
+            // account - try fetch it from the company
+            $account = $company->getAccount($data['account_id']);
+            // account not found? create it.
+            if ($account === null)
+            {
+                $account = (new Data\Account($data['account_id']))
+                    ->setName($data['account_name']);
+                $company->addAccount($account);
+            }
+
+            // add balances
+            $fiscalYear->addAccountBalance(
+                (new Data\AccountBalance($account))
+                    ->setIncomingBalance($data['incoming'])
+                    ->setOutgoingBalance($data['outgoing'])
+            );
+        }
+    }
+
+
+    /**
+     * Parse transaction-data form TSV-file
+     *
+     * @param $value
+     * @param int $skipHeaderLines
+     * @param Data\Company $company
+     * @return Data\Company
+     */
+    public function parseTransactions($value, Data\Company $company, $skipHeaderLines = 1)
     {
         // parse text
         $rows = $this->getTabularData($value);
@@ -69,14 +124,11 @@ class TSVLoader
         // fix ordering
         usort($rows, array($this, 'tabularDataCompareRows'));
 
-        // create company and add a verification series and two dimensions
+        // add a verification series and two dimensions
         $verificationSeries = new Data\VerificationSeries();
-        $company = (new SIE\Data\Company())
-            ->setCompanyName('Imported company name åäöÅÄÖ')
-            ->addVerificationSeries($verificationSeries)
+        $company->addVerificationSeries($verificationSeries)
             ->addDimension(new Data\Dimension(Data\Dimension::DIMENSION_COST_CENTRE))
-            ->addDimension(new Data\Dimension(Data\Dimension::DIMENSION_PROJECT))
-        ;
+            ->addDimension(new Data\Dimension(Data\Dimension::DIMENSION_PROJECT));
 
         $last_verification_id = null;
         foreach ($rows as $row)
@@ -169,16 +221,24 @@ class TSVLoader
 
             $last_verification_id = $verification->getId();
         }
-
-        $company->validate();
-        return $company;
     }
 }
 
-$loader = new TSVLoader();
-$company = $loader->parse(file_get_contents(__DIR__ . '/data/import.tsv'));
+// example data
+$paths = array(
+    'transaction-data' => __DIR__ . '/data/import-transactions.tsv', // mitronic-transactions.tsv
+    'balance-data'     => __DIR__ . '/data/import-balance.tsv',      // mitronic-balance.tsv
+);
 
+//create company
+$company = (new SIE\Data\Company())->setCompanyName('Imported company name åäöÅÄÖ');
+// load data from TSV
+$loader = new TSVLoader();
+$loader->parseTransactions(file_get_contents($paths['transaction-data']), $company);
+$loader->parseBalance(file_get_contents($paths['balance-data']), $company);
+$company->validate();
+
+// dump as SIE
 $dumper = new \SIE\Dumper\SIEDumper();
 $output = $dumper->dump($company);
 echo $output;
-
