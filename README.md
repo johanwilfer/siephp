@@ -7,10 +7,17 @@ Currently only a subset of the specification is supported, like export to SIE4 (
 
 It's built around simple data-classes that represents a Company / Verifications / Transactions by the model in the SIE-standard. It also comes with a dumper-class that can dump the data to SIE-format.
 
+## Installation
+Install the latest version with
+
+```bash
+$ composer require jttech/sie
+```
+
 ## Usage
 
 [examples/](examples) holds some examples on how to use SIE-PHP. This is [examples/simple.php](examples/simple.php):
-````php
+```php
 // create a company
 $company = (new SIE\Data\Company())
     // set company name
@@ -43,10 +50,10 @@ $company->validate();
 $dumper = new SIE\Dumper\SIEDumper();
 $output = $dumper->dump($company);
 echo $output;
-````
+```
 
 And it will generate the following output (in PC8/CP437 encoding):
-````
+```
 #FLAGGA 0
 #FORMAT PC8
 #SIETYP 4
@@ -61,7 +68,7 @@ And it will generate the following output (in PC8/CP437 encoding):
     #TRANS 1511 {} -0.24 20150105
     #TRANS 3741 {} 0.24 20150105
 }
-````
+```
 
 See [examples/TSVtoSIE.php](examples/TSVtoSIE.php) for a custom TSV to SIE converter, loading the same data from a TSV-file.
 
