@@ -9,7 +9,7 @@ It's built around simple data-classes that represents a Company / Verifications 
 
 ## Usage
 
-The `examples`-directory holds some examples on how to use SIE-PHP. This is `examples/simple.php`:
+[examples/](examples) holds some examples on how to use SIE-PHP. This is [examples/simple.php](examples/simple.php):
 ````php
 // create a company
 $company = (new SIE\Data\Company())
