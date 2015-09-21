@@ -1,0 +1,7 @@
+# composer vendor and binary
+/vendor/
+/composer.phar
+
+# phpstorm dir
+/.idea
+

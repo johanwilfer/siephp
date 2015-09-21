@@ -1,0 +1,21 @@
+{
+    "name": "jttech/siephp",
+    "description": "Library for export to the Swedish SIE-format. Currently only a subset of the specification is supported, like export to SIE4 (verification/transaction data).",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Johan Wilfer",
+            "email": "johan@jttech.se"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {
+        "php": ">=5.4.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SIE\\": "src/SIE/"
+        }
+    }
+}
