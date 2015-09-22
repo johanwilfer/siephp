@@ -235,10 +235,6 @@ class Company
      */
     public function addFiscalYear(FiscalYear $fiscalYear)
     {
-        // FIXME Only one year is supported now, add support for multiple fiscal years
-        if (count($this->fiscalYears) > 0)
-            throw new DomainException('Currently only a single fiscal year is supported.');
-
         $this->fiscalYears[] = $fiscalYear;
         return $this;
     }

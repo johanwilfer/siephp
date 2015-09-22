@@ -18,9 +18,6 @@ use SIE\Exception\DomainException;
  */
 class FiscalYear
 {
-    //FIXME Right now we only support one fiscal year for export to SIE. Add the ability to have multiple fiscal years.
-    //FIXME Also, maybe we could use a DateInterval instead of start + end, and generate previous years automatically.
-
     /**
      * Start of Fiscal year
      * @var \DateTime
@@ -38,6 +35,37 @@ class FiscalYear
      * @var AccountBalance[]
      */
     protected $accountBalances;
+
+    /**
+     * Constructor for Fiscal year
+     */
+    public function __construct()
+    {
+        // default to this calendar year
+        $this->dateStart = new \DateTime('first day of January this year');
+        $this->dateEnd = new \DateTime('last day of December this year');
+        // initialize array
+        $this->accountBalances = array();
+    }
+
+    /**
+     * Constructs a FiscalYear for the previous year from this instances start.
+     * @return FiscalYear A new instance of FiscalYear
+     */
+    public function createPreviousFiscalYear()
+    {
+        // create new dates
+        $dateEnd = clone $this->dateEnd;
+        $dateEnd->modify('-1 year');
+        $dateStart = clone $this->dateStart;
+        $dateStart->modify('-1 year');
+        // create fiscal year and set start & end
+        $fiscalYear = new FiscalYear();
+        $fiscalYear->setDateEnd($dateEnd);
+        $fiscalYear->setDateStart($dateStart);
+        // return new FiscalYear
+        return $fiscalYear;
+    }
 
     /**
      * @return \DateTime

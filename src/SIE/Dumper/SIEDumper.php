@@ -152,17 +152,24 @@ class SIEDumper
         foreach ($sie->getDimensions() as $dimension)
             foreach ($dimension->getObjects() as $object)
                 $data .= $this->getLine('OBJEKT', array($dimension->getId(), $object->getId(), $object->getName()));
-        // fiscal year (we only support one)
-        $fiscalYear = $sie->getFiscalYears();
-        if (isset($fiscalYear[0]))
+
+        // fiscal year - add a #RAR line for each year
+        $fiscalYears = $sie->getFiscalYears();
+        $year = 0;
+        foreach ($fiscalYears as $fiscalYear)
+            $data .= $this->getLine('RAR', array($year--, $fiscalYear->getDateStart()->format('Ymd'), $fiscalYear->getDateEnd()->format('Ymd')));
+        // balance data per fiscal year
+        $year = 0;
+        foreach ($fiscalYears as $fiscalYear)
         {
-            $data .= $this->getLine('RAR', array($fiscalYear[0]->getDateStart()->format('Ymd'), $fiscalYear[0]->getDateEnd()->format('Ymd')));
-            foreach ($fiscalYear[0]->getAccountBalances() as $balance)
+            foreach ($fiscalYear->getAccountBalances() as $balance)
             {
-                $data .= $this->getLine('IB', array(0, $balance->getAccount()->getId(), $balance->getIncomingBalance()));
-                $data .= $this->getLine('UB', array(0, $balance->getAccount()->getId(), $balance->getOutgoingBalance()));
+                $data .= $this->getLine('IB', array($year, $balance->getAccount()->getId(), $balance->getIncomingBalance()));
+                $data .= $this->getLine('UB', array($year, $balance->getAccount()->getId(), $balance->getOutgoingBalance()));
             }
+            $year--;
         }
+
         // end head with a blank line (not needed but looks nice)
         $data .= $this->delimiter_newline;
 

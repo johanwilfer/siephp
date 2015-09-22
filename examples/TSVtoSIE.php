@@ -58,24 +58,17 @@ class TSVLoader
      * Parse balance data from TSV-file
      *
      * @param $value
+     * @param Data\Company    $company    The company to parse balances for
+     * @param Data\FiscalYear $fiscalYear The fiscal year
      * @param int $skipHeaderLines
-     * @param Data\Company|null $company
-     * @return Data\FiscalYear
      */
-    public function parseBalance($value, Data\Company $company = null, $skipHeaderLines = 1)
+    public function parseBalance($value, Data\Company $company, Data\FiscalYear $fiscalYear, $skipHeaderLines = 1)
     {
         // parse text
         $rows = $this->getTabularData($value);
         // kill header lines
         for ($i=0; $i < $skipHeaderLines; $i++)
             array_shift($rows);
-
-        // add fiscal year
-        $fiscalYear = new Data\FiscalYear();
-        // we don't have this information, make something up
-        $fiscalYear->setDateStart(new \DateTime('first day of January this year'));
-        $fiscalYear->setDateEnd(new \DateTime('last day of December this year'));
-        $company->addFiscalYear($fiscalYear);
 
         foreach ($rows as $row)
         {
@@ -224,21 +217,53 @@ class TSVLoader
     }
 }
 
-// example data
+
+
+/*
+ * paths to example data
+ */
+
 $paths = array(
-    'transaction-data' => __DIR__ . '/data/import-transactions.tsv', // mitronic-transactions.tsv
-    'balance-data'     => __DIR__ . '/data/import-balance.tsv',      // mitronic-balance.tsv
+    'transaction-data'    => __DIR__ . '/data/import-transactions.tsv',
+    'balance-data-year-0' => __DIR__ . '/data/import-balance-year-0.tsv',
+    'balance-data-year-1' => __DIR__ . '/data/import-balance-year-1.tsv',
 );
+
+
+
+/*
+ * Transaction data for current year
+ */
 
 //create company
 $company = (new SIE\Data\Company())->setCompanyName('Imported company name åäöÅÄÖ');
-// load data from TSV
+// load transaction data from TSV
 $loader = new TSVLoader();
 $loader->parseTransactions(file_get_contents($paths['transaction-data']), $company);
-$loader->parseBalance(file_get_contents($paths['balance-data']), $company);
-$company->validate();
 
-// dump as SIE
+
+
+/*
+ * Balance data
+ */
+
+// add fiscal year (defaults to current calendar year)
+$fiscalYear = new Data\FiscalYear();
+$company->addFiscalYear($fiscalYear);
+$loader->parseBalance(file_get_contents($paths['balance-data-year-0']), $company, $fiscalYear);
+
+// the year before that
+$fiscalYear = $fiscalYear->createPreviousFiscalYear();
+$company->addFiscalYear($fiscalYear);
+$loader->parseBalance(file_get_contents($paths['balance-data-year-1']), $company, $fiscalYear);
+
+
+
+/*
+ * Dump as SIE
+ */
+
+$company->validate();
 $dumper = new \SIE\Dumper\SIEDumper();
 $output = $dumper->dump($company);
 echo $output;
