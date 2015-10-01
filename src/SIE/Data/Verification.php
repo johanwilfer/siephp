@@ -202,7 +202,7 @@ class Verification
         // validate that our transactions equal zero
         //FIXME The round() is due to precision loss in float operation. Maybe use Money\Money here instead
         if (round($sum,2) != 0)
-            throw new DomainException('The verification id "' . $this->id . '" have a non-zero sum.');
+            throw new DomainException('The verification id "' . $this->id . '" have a non-zero sum: ' . $sum);
     }
 
 }
