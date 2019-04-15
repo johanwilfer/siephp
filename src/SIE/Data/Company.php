@@ -31,6 +31,13 @@ class Company
     protected $companyNumber;
 
     /**
+     * #KBTYP - type of chart of accounts
+     * It's optional, when it's missing BAS95 is used.
+     * @var string
+     */
+    protected $typeOfChartOfAccounts;
+    
+    /**
      * #KONTO - Accounts list
      * @var Account[]
      */
@@ -54,13 +61,6 @@ class Company
      */
     protected $fiscalYears;
 
-
-    /**
-     * #KBTYP - type of chart of accounts
-     * It's optional, when it's missing BAS95 is used.
-     * @var string
-     */
-    protected $typeOfChartOfAccounts;
     /**
      * Creates a Company object, that could be exported as a SIE-file
      */
@@ -110,6 +110,26 @@ class Company
     {
         $this->companyNumber = $companyNumber;
         return $this;
+    }
+
+    /**
+     * Set type of chart of accounts.
+     * @param $type
+     * @return Company
+     */
+    public function setTypeOfChartOfAccounts($type)
+    {
+        $this->typeOfChartOfAccounts = $type;
+        return $this;
+    }
+
+    /**
+     * Get type of chart of accounts.
+     * @return string
+     */
+    public function getTypeOfChartOfAccounts()
+    {
+        return $this->typeOfChartOfAccounts;
     }
 
 
@@ -274,23 +294,5 @@ class Company
         foreach ($this->verificationSeries as $item) {
             $item->validate();
         }
-    }
-
-    /**
-     * Set type of chart of accounts.
-     * @param $type
-     */
-    public function setTypeOfChartOfAccounts($type)
-    {
-        $this->typeOfChartOfAccounts = $type;
-    }
-
-    /**
-     * Get type of chart of accounts.
-     * @return string
-     */
-    public function getTypeOfChartOfAccounts()
-    {
-        return $this->typeOfChartOfAccounts;
     }
 }
