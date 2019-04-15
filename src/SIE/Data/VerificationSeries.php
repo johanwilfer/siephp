@@ -42,7 +42,7 @@ class VerificationSeries
      */
     public function __construct($id = self::CONST_DEFAULT_SERIES)
     {
-        $this->verifications = array();
+        $this->verifications = [];
         $this->id = $id;
     }
 
@@ -65,8 +65,9 @@ class VerificationSeries
     {
         $id = $verification->getId();
         // does the verification already exist?
-        if (isset($this->verifications[$id]))
+        if (isset($this->verifications[$id])) {
             throw new DomainException('The verification id "' . $id . '" in the series "' . $this->id . '" does already exist.');
+        }
 
         $this->verifications[$id] = $verification;
         return $this;
@@ -91,8 +92,9 @@ class VerificationSeries
     public function getVerification($id)
     {
         // search by id
-        if (isset($this->verifications[$id]))
+        if (isset($this->verifications[$id])) {
             return $this->verifications[$id];
+        }
         // not found
         return null;
     }
@@ -105,7 +107,8 @@ class VerificationSeries
     public function validate()
     {
         // validate verifications
-        foreach ($this->verifications as $verification)
+        foreach ($this->verifications as $verification) {
             $verification->validate();
+        }
     }
 }

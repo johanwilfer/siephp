@@ -58,7 +58,7 @@ class Dimension
     public function __construct($id)
     {
         $this->id = $id;
-        $this->objects = array();
+        $this->objects = [];
     }
 
     /**
@@ -90,9 +90,11 @@ class Dimension
     public function getObject($id = null)
     {
         // search for id
-        foreach ($this->objects as $object)
-            if ($object->getId() == $id)
+        foreach ($this->objects as $object) {
+            if ($object->getId() == $id) {
                 return $object;
+            }
+        }
         // not found
         return null;
     }

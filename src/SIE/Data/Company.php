@@ -31,6 +31,13 @@ class Company
     protected $companyNumber;
 
     /**
+     * #KBTYP - type of chart of accounts
+     * It's optional, when it's missing BAS95 is used.
+     * @var string
+     */
+    protected $typeOfChartOfAccounts;
+    
+    /**
      * #KONTO - Accounts list
      * @var Account[]
      */
@@ -59,10 +66,10 @@ class Company
      */
     public function __construct()
     {
-        $this->accounts = array();
-        $this->verificationSeries = array();
-        $this->dimensions = array();
-        $this->fiscalYears = array();
+        $this->accounts = [];
+        $this->verificationSeries = [];
+        $this->dimensions = [];
+        $this->fiscalYears = [];
     }
 
     /**
@@ -105,6 +112,26 @@ class Company
         return $this;
     }
 
+    /**
+     * Set type of chart of accounts.
+     * @param $type
+     * @return Company
+     */
+    public function setTypeOfChartOfAccounts($type)
+    {
+        $this->typeOfChartOfAccounts = $type;
+        return $this;
+    }
+
+    /**
+     * Get type of chart of accounts.
+     * @return string
+     */
+    public function getTypeOfChartOfAccounts()
+    {
+        return $this->typeOfChartOfAccounts;
+    }
+
 
     /**
      * Add an account
@@ -115,9 +142,9 @@ class Company
     public function addAccount(Account $account)
     {
         $id = $account->getId();
-        if (isset($this->accounts[$id]))
+        if (isset($this->accounts[$id])) {
             throw new DomainException('The account id "' . $id . '" is already defined.');
-
+        }
         $this->accounts[$id] = $account;
         return $this;
     }
@@ -130,8 +157,9 @@ class Company
     public function getAccount($id)
     {
         // search by id
-        if (isset($this->accounts[$id]))
+        if (isset($this->accounts[$id])) {
             return $this->accounts[$id];
+        }
         // not found
         return null;
     }
@@ -156,9 +184,9 @@ class Company
     public function addDimension(Dimension $dimension)
     {
         $id = $dimension->getId();
-        if (isset($this->dimensions[$id]))
+        if (isset($this->dimensions[$id])) {
             throw new DomainException('The dimension id "' . $id . '" is already defined.');
-
+        }
         $this->dimensions[$id] = $dimension;
         return $this;
     }
@@ -171,8 +199,9 @@ class Company
     public function getDimension($id)
     {
         // search by id
-        if (isset($this->dimensions[$id]))
+        if (isset($this->dimensions[$id])) {
             return $this->dimensions[$id];
+        }
         // none found
         return null;
     }
@@ -195,10 +224,11 @@ class Company
     public function addVerificationSeries(VerificationSeries $verificationSeries)
     {
         $id = $verificationSeries->getId();
-        foreach ($this->verificationSeries as $item)
-            if ($item->getId() == $id)
+        foreach ($this->verificationSeries as $item) {
+            if ($item->getId() == $id) {
                 throw new DomainException('This verification series with the id "' . $id . '" is already defined.');
-
+            }
+        }
         $this->verificationSeries[] = $verificationSeries;
         return $this;
     }
@@ -211,9 +241,11 @@ class Company
     public function getVerificationSeries($id)
     {
         // search by id
-        foreach ($this->verificationSeries as $item)
-            if ($item->getId() == $id)
+        foreach ($this->verificationSeries as $item) {
+            if ($item->getId() == $id) {
                 return $item;
+            }
+        }
         // not found
         return null;
     }
@@ -255,10 +287,12 @@ class Company
      */
     public function validate()
     {
-        if (!$this->companyName)
+        if (!$this->companyName) {
             throw new DomainException('Mandatory field companyName');
+        }
         // validate verifications
-        foreach ($this->verificationSeries as $item)
+        foreach ($this->verificationSeries as $item) {
             $item->validate();
+        }
     }
 }

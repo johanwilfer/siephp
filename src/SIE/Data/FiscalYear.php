@@ -112,8 +112,9 @@ class FiscalYear
     public function addAccountBalance(AccountBalance $accountBalance)
     {
         $id = $accountBalance->getAccount()->getId();
-        if (isset($this->accountBalances[$id]))
+        if (isset($this->accountBalances[$id])) {
             throw new DomainException('The balances for account id "' . $id . '" is already defined.');
+        }
 
         $this->accountBalances[$id] = $accountBalance;
         return $this;
@@ -127,8 +128,9 @@ class FiscalYear
     public function getAccountBalance($id)
     {
         // search by id
-        if (isset($this->accountBalances[$id]))
+        if (isset($this->accountBalances[$id])) {
             return $this->accountBalances[$id];
+        }
         // not found
         return null;
     }
