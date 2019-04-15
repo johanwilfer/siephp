@@ -63,8 +63,8 @@ class Verification
      */
     public function __construct($verificationId)
     {
-        if (!$verificationId) {
-            throw new InvalidArgumentException('Mandatory parameter verificationNumber');
+        if ($verificationId === null) {
+            throw new InvalidArgumentException('VerificationNumber cannot be null.');
         }
         $this->id = $verificationId;
     }
