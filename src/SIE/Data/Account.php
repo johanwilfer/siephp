@@ -38,8 +38,9 @@ class Account
      */
     public function __construct($accountNumber)
     {
-        if (!$accountNumber)
+        if (!$accountNumber) {
             throw new InvalidArgumentException('AccountNumber must be set.');
+        }
         $this->id = $accountNumber;
     }
 
@@ -78,7 +79,8 @@ class Account
      */
     public function validate()
     {
-        if (!$this->name)
+        if (!$this->name) {
             throw new DomainException('AccountName must be set.');
+        }
     }
 }

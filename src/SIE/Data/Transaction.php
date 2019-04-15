@@ -65,7 +65,7 @@ class Transaction
      */
     public function __construct()
     {
-        $this->objects = array();
+        $this->objects = [];
     }
 
     /**
@@ -95,9 +95,8 @@ class Transaction
     public function getObjectsAsArrayPairs()
     {
         // object list is pairs of: [dimension] [value] ..
-        $object_list = array();
-        foreach ($this->objects as $object)
-        {
+        $object_list = [];
+        foreach ($this->objects as $object) {
             $object_list[] = $object->getDimension()->getId();
             $object_list[] = $object->getId();
         }
@@ -112,8 +111,9 @@ class Transaction
     public function getObject($dimension)
     {
         // search by dimension
-        if (isset($this->objects[$dimension]))
+        if (isset($this->objects[$dimension])) {
             return $this->objects[$dimension];
+        }
         // not found
         return null;
     }
@@ -137,8 +137,9 @@ class Transaction
     {
         $dimensionId = $object->getDimension()->getId();
         // check that we only add one object per dimension
-        if (isset($this->objects[$dimensionId]))
+        if (isset($this->objects[$dimensionId])) {
             throw new DomainException('This dimension is already defined on this transaction');
+        }
         $this->objects[$dimensionId] = $object;
         return $this;
     }
@@ -250,9 +251,11 @@ class Transaction
      */
     public function validate()
     {
-        if (!$this->account)
+        if (!$this->account) {
             throw new DomainException('Mandatory field: account');
-        if ($this->amount === null)
+        }
+        if ($this->amount === null) {
             throw new DomainException('Mandatory field: amount');
+        }
     }
 }

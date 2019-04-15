@@ -44,7 +44,9 @@ class Object
      */
     public function __construct($id)
     {
-        if (!$id) throw new InvalidArgumentException('Mandatory parameter: id');
+        if (!$id) {
+            throw new InvalidArgumentException('Mandatory parameter: id');
+        }
         $this->id = $id;
     }
 

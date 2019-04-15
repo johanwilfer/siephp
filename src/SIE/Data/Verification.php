@@ -63,8 +63,9 @@ class Verification
      */
     public function __construct($verificationId)
     {
-        if (!$verificationId)
+        if (!$verificationId) {
             throw new InvalidArgumentException('Mandatory parameter verificationNumber');
+        }
         $this->id = $verificationId;
     }
 
@@ -184,15 +185,16 @@ class Verification
      */
     public function validate()
     {
-        if (!$this->date)
+        if (!$this->date) {
             throw new DomainException('Mandatory field date');
-        if (count($this->transactions) == 0)
+        }
+        if (count($this->transactions) == 0) {
             throw new DomainException('No transactions for verification id "' . $this->id . '".');
+        }
 
         // validate verifications
         $sum = 0;
-        foreach ($this->transactions as $transaction)
-        {
+        foreach ($this->transactions as $transaction) {
             // validate all our transactions
             $transaction->validate();
             // calculate sum of all transactions
@@ -201,8 +203,9 @@ class Verification
 
         // validate that our transactions equal zero
         //FIXME The round() is due to precision loss in float operation. Maybe use Money\Money here instead
-        if (round($sum,2) != 0)
+        if (round($sum,2) != 0) {
             throw new DomainException('The verification id "' . $this->id . '" have a non-zero sum: ' . $sum);
+        }
     }
 
 }
