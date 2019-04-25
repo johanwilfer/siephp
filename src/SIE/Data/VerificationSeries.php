@@ -64,12 +64,18 @@ class VerificationSeries
     public function addVerification(Verification $verification)
     {
         $id = $verification->getId();
-        // does the verification already exist?
-        if (isset($this->verifications[$id])) {
-            throw new DomainException('The verification id "' . $id . '" in the series "' . $this->id . '" does already exist.');
+
+        if ($id) {
+            // does the verification already exist?
+            if (isset($this->verifications[$id])) {
+                throw new DomainException('The verification id "' . $id . '" in the series "' . $this->id . '" does already exist.');
+            }
+
+            $this->verifications[$id] = $verification;
+        } else {
+            $this->verifications[] = $verification;
         }
 
-        $this->verifications[$id] = $verification;
         return $this;
     }
 
