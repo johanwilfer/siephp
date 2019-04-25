@@ -38,9 +38,8 @@ class Account
      */
     public function __construct($accountNumber)
     {
-        // allow zero to be set
-        if (in_array($accountNumber, [null, ''])) {
-            throw new InvalidArgumentException('AccountNumber must be set.');
+        if ($accountNumber === null) {
+            throw new InvalidArgumentException('AccountNumber cannot be null.');
         }
         $this->id = $accountNumber;
     }
