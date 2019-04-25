@@ -38,6 +38,9 @@ class Account
      */
     public function __construct($accountNumber)
     {
+        if (!$accountNumber) {
+            throw new InvalidArgumentException('AccountNumber must be set.');
+        }
         $this->id = $accountNumber;
     }
 
