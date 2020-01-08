@@ -48,6 +48,7 @@ class VerificationSeries
     public function __construct($id = self::CONST_DEFAULT_SERIES)
     {
         $this->verifications = [];
+        $this->verificationsPreProcessingSystem = [];
         $this->id = $id;
     }
 
@@ -116,7 +117,7 @@ class VerificationSeries
 
     /**
      * Get verification - will only find numbered verifications
-     * 
+     *
      * @param string $id Search for verification number
      * @return Verification|null
      */
