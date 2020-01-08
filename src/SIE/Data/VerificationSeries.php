@@ -30,11 +30,16 @@ class VerificationSeries
     protected $id;
 
     /**
-     * #VER
+     * #VER - these are the numbered verifications that will be included in ascending order when calling getVerifications()
      * @var Verification[]
      */
     protected $verifications;
 
+    /**
+     * #VER - these don't have a verification number and will be included after the ones in ascending order when calling getVerifications()
+     * @var Verification[]
+     */
+    protected $verificationsPreProcessingSystem;
 
     /**
      * Construct a VerificationSeries
@@ -64,17 +69,32 @@ class VerificationSeries
     public function addVerification(Verification $verification)
     {
         $id = $verification->getId();
-
-        if ($id) {
-            // does the verification already exist?
-            if (isset($this->verifications[$id])) {
-                throw new DomainException('The verification id "' . $id . '" in the series "' . $this->id . '" does already exist.');
-            }
-
-            $this->verifications[$id] = $verification;
-        } else {
-            $this->verifications[] = $verification;
+        // does the verification already exist?
+        if (isset($this->verifications[$id])) {
+            throw new DomainException('The verification id "' . $id . '" in the series "' . $this->id . '" does already exist.');
         }
+
+        $this->verifications[$id] = $verification;
+
+        return $this;
+    }
+
+    /**
+     * add verification from pre-processing system - this uses less strict validation than addVerification
+     *
+     * The SIE standard states:
+     * "Series and/or verno can be submitted empty where the file format is used to input
+     *  transactions (using files of type 4I) from a pre-processing system to a financial
+     *  reporting program. The series or verification number is in this case set by the
+     *  financial reporting program."
+     *
+     * @param Verification $verification
+     * @return VerificationSeries
+     * @throws DomainException
+     */
+    public function addVerificationPreProcessingSystem(Verification $verification)
+    {
+        $this->verificationsPreProcessingSystem[] = $verification;
 
         return $this;
     }
@@ -85,13 +105,18 @@ class VerificationSeries
      */
     public function getVerifications()
     {
-        // return array sorted by verification id
+        // sort numbered verifications by id
         ksort($this->verifications);
-        return $this->verifications;
+        // array_merge will overwrite duplicate string keys with the value from the last array
+        // but we don't add string keys to $this->verificationsPreProcessingSystem
+        $verifications = array_merge($this->verifications, $this->verificationsPreProcessingSystem);
+
+        return $verifications;
     }
 
     /**
-     * Get verification
+     * Get verification - will only find numbered verifications
+     * 
      * @param string $id Search for verification number
      * @return Verification|null
      */
