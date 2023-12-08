@@ -131,7 +131,7 @@ class SIEDumper
             'generator' => 'SIE-PHP exporter',
             'generated_date' => date('Ymd'),
             'generated_sign' => null,
-            'generator_version' => 0,
+            'generator_version' => '0',
         ];
     }
 
