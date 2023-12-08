@@ -45,7 +45,10 @@ class SIEDumper
     {
         // we build the line in reverse order to be able to skip empty items (null) at the end of the lines
         $line = '';
+        $paramCounter = 0;
+
         foreach (array_reverse($parameters) as $param) {
+            $paramCounter++;
             // skip null parameters at the end of the line
             if ($param === null && $line === '') {
                 continue;
@@ -67,8 +70,10 @@ class SIEDumper
                 continue;
             }
 
+            // quotation marks are required when the field contains spaces, add marks for second, third... param then
+            $addQuotes = $paramCounter > 1;
             // normal value
-            $line = $this->delimiter_field . $this->escapeField($param) . $line;
+            $line = $this->delimiter_field . $this->escapeField($param, $addQuotes) . $line;
         }
 
         $line = '#' . $label . $line . $this->delimiter_newline;
@@ -80,7 +85,7 @@ class SIEDumper
      * @param $unescaped
      * @return string
      */
-    protected function escapeField($unescaped)
+    protected function escapeField($unescaped, $addQuotes = false)
     {
         if (is_object($unescaped)) {
             var_dump($unescaped);
@@ -102,7 +107,7 @@ class SIEDumper
                 $char = '\"';
             }
             // page 9, 5.7 "All fields are to be in quotation marks (ASCII 34). Quotation marks are however not a requirement and are only required when the field contains spaces."
-            if ($ascii_numeric == 32) {
+            if ($addQuotes) {
                 $add_quotes = true;
             }
 
@@ -126,6 +131,7 @@ class SIEDumper
             'generator' => 'SIE-PHP exporter',
             'generated_date' => date('Ymd'),
             'generated_sign' => null,
+            'generator_version' => 0,
         ];
     }
 
@@ -134,9 +140,10 @@ class SIEDumper
      *
      * @param $generator
      */
-    public function setGenerator($generator)
+    public function setGenerator($generator, $generatorVersion)
     {
         $this->options['generator'] = $generator;
+        $this->options['generator_version'] = $generatorVersion;
     }
 
     /**
@@ -150,7 +157,7 @@ class SIEDumper
         $data  = $this->getLine('FLAGGA', ['0']);
         $data .= $this->getLine('FORMAT', ['PC8']);
         $data .= $this->getLine('SIETYP', ['4']);
-        $data .= $this->getLine('PROGRAM', [$this->options['generator']]);
+        $data .= $this->getLine('PROGRAM', [$this->options['generator'], $this->options['generator_version']]);
         $data .= $this->getLine('GEN', [$this->options['generated_date'], $this->options['generated_sign']]);
         $data .= $this->getLine('FNAMN', [$sie->getCompanyName()]);
         // optional
