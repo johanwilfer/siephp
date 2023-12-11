@@ -18,6 +18,9 @@ use SIE\Data;
  */
 class SIEDumper
 {
+    const DEFAULT_GENERATOR_NAME = 'SIE-PHP exporter';
+    const DEFAULT_GENERATOR_VERSION = '1.0';
+
     /**
      * Delimiter used for newline.
      * @var string
@@ -123,7 +126,8 @@ class SIEDumper
     {
         // default options
         $this->options = [
-            'generator' => 'SIE-PHP exporter',
+            'generator' => self::DEFAULT_GENERATOR_NAME,
+            'generator_version' => self::DEFAULT_GENERATOR_VERSION,
             'generated_date' => date('Ymd'),
             'generated_sign' => null,
         ];
@@ -132,11 +136,13 @@ class SIEDumper
     /**
      * Set generator (custom "PROGRAM" name).
      *
-     * @param $generator
+     * @param string $generatorName
+     * @param string $generatorVersion
      */
-    public function setGenerator($generator)
+    public function setGenerator($generatorName, $generatorVersion = self::DEFAULT_GENERATOR_VERSION)
     {
-        $this->options['generator'] = $generator;
+        $this->options['generator'] = $generatorName;
+        $this->options['generator_version'] = $generatorVersion;
     }
 
     /**
@@ -150,7 +156,7 @@ class SIEDumper
         $data  = $this->getLine('FLAGGA', ['0']);
         $data .= $this->getLine('FORMAT', ['PC8']);
         $data .= $this->getLine('SIETYP', ['4']);
-        $data .= $this->getLine('PROGRAM', [$this->options['generator']]);
+        $data .= $this->getLine('PROGRAM', [$this->options['generator'], $this->options['generator_version']]);
         $data .= $this->getLine('GEN', [$this->options['generated_date'], $this->options['generated_sign']]);
         $data .= $this->getLine('FNAMN', [$sie->getCompanyName()]);
         // optional
