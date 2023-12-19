@@ -57,7 +57,7 @@ And it will generate the following output (in PC8/CP437 encoding):
 #FLAGGA 0
 #FORMAT PC8
 #SIETYP 4
-#PROGRAM "SIE-PHP exporter"
+#PROGRAM "SIE-PHP exporter" 1.0
 #GEN 20150921
 #FNAMN "My company"
 #KONTO 1511 Kundfordringar
