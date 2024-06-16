@@ -173,8 +173,12 @@ class Verification
      * Get all transactions
      * @return Transaction[]
      */
-    public function getTransactions()
+    public function getTransactions(): array
     {
+        if ($this->transactions === null) {
+            return [];
+        }
+
         return $this->transactions;
     }
 
@@ -188,13 +192,13 @@ class Verification
         if (!$this->date) {
             throw new DomainException('Mandatory field date');
         }
-        if (count($this->transactions) == 0) {
+        if (count($this->getTransactions()) === 0) {
             throw new DomainException('No transactions for verification id "' . $this->id . '".');
         }
 
         // validate verifications
         $sum = 0;
-        foreach ($this->transactions as $transaction) {
+        foreach ($this->getTransactions() as $transaction) {
             // validate all our transactions
             $transaction->validate();
             // calculate sum of all transactions
