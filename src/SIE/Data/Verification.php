@@ -67,7 +67,6 @@ class Verification
             throw new InvalidArgumentException('VerificationNumber cannot be null.');
         }
         $this->id = $verificationId;
-        $this->transactions = [];
     }
 
     /**
