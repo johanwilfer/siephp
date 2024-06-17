@@ -54,7 +54,7 @@ class Verification
      * Transactions for this Verification
      * @var Transaction[]
      */
-    protected $transactions;
+    protected $transactions = [];
 
     /**
      * Construct a Verification
@@ -67,6 +67,7 @@ class Verification
             throw new InvalidArgumentException('VerificationNumber cannot be null.');
         }
         $this->id = $verificationId;
+        $this->transactions = [];
     }
 
     /**
@@ -173,12 +174,8 @@ class Verification
      * Get all transactions
      * @return Transaction[]
      */
-    public function getTransactions(): array
+    public function getTransactions()
     {
-        if ($this->transactions === null) {
-            return [];
-        }
-
         return $this->transactions;
     }
 
@@ -192,13 +189,13 @@ class Verification
         if (!$this->date) {
             throw new DomainException('Mandatory field date');
         }
-        if (count($this->getTransactions()) === 0) {
+        if (count($this->transactions) === 0) {
             throw new DomainException('No transactions for verification id "' . $this->id . '".');
         }
 
         // validate verifications
         $sum = 0;
-        foreach ($this->getTransactions() as $transaction) {
+        foreach ($this->transactions as $transaction) {
             // validate all our transactions
             $transaction->validate();
             // calculate sum of all transactions
