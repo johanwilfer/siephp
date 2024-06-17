@@ -54,7 +54,7 @@ class Verification
      * Transactions for this Verification
      * @var Transaction[]
      */
-    protected $transactions;
+    protected $transactions = [];
 
     /**
      * Construct a Verification
@@ -188,7 +188,7 @@ class Verification
         if (!$this->date) {
             throw new DomainException('Mandatory field date');
         }
-        if (count($this->transactions) == 0) {
+        if (count($this->transactions) === 0) {
             throw new DomainException('No transactions for verification id "' . $this->id . '".');
         }
 
