@@ -21,7 +21,7 @@ class VerificationSeries
     /**
      * See page 37 in "SIE_filformat_ver_4B_ENGLISH.pdf": #VER
      */
-    const CONST_DEFAULT_SERIES = 'A';
+    public const CONST_DEFAULT_SERIES = 'A';
 
     /**
      * Number series designation

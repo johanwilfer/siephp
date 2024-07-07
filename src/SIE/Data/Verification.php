@@ -11,8 +11,8 @@
 
 namespace SIE\Data;
 
-use SIE\Exception\InvalidArgumentException;
 use SIE\Exception\DomainException;
+use SIE\Exception\InvalidArgumentException;
 
 /**
  * Verification, see section 11#VER at page 37 in "SIE_filformat_ver_4B_ENGLISH.pdf"
@@ -203,9 +203,8 @@ class Verification
 
         // validate that our transactions equal zero
         //FIXME The round() is due to precision loss in float operation. Maybe use Money\Money here instead
-        if (round($sum,2) != 0) {
+        if (round($sum, 2) != 0) {
             throw new DomainException('The verification id "' . $this->id . '" have a non-zero sum: ' . $sum);
         }
     }
-
 }

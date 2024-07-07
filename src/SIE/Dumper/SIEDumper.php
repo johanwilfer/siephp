@@ -18,8 +18,8 @@ use SIE\Data;
  */
 class SIEDumper
 {
-    const DEFAULT_GENERATOR_NAME = 'SIE-PHP exporter';
-    const DEFAULT_GENERATOR_VERSION = '1.0';
+    public const DEFAULT_GENERATOR_NAME = 'SIE-PHP exporter';
+    public const DEFAULT_GENERATOR_VERSION = '1.0';
 
     /**
      * Delimiter used for newline.
@@ -57,11 +57,11 @@ class SIEDumper
             // arrays renders this way: {item1 item2 item3...}
             if (is_array($param)) {
                 $sub_field = '';
-                foreach ($param as $item)
-                {
+                foreach ($param as $item) {
                     // insert delimiter if not first
-                    if ($sub_field !== '')
+                    if ($sub_field !== '') {
                         $sub_field .= $this->delimiter_field;
+                    }
                     // add value
                     $sub_field .= $this->escapeField($item);
                 }
@@ -153,7 +153,7 @@ class SIEDumper
     public function dump(Data\Company $sie)
     {
         // mandatory
-        $data  = $this->getLine('FLAGGA', ['0']);
+        $data = $this->getLine('FLAGGA', ['0']);
         $data .= $this->getLine('FORMAT', ['PC8']);
         $data .= $this->getLine('SIETYP', ['4']);
         $data .= $this->getLine('PROGRAM', [$this->options['generator'], $this->options['generator_version']]);

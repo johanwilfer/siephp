@@ -11,8 +11,8 @@
 
 namespace SIE\Data;
 
-use SIE\Exception\InvalidArgumentException;
 use SIE\Exception\DomainException;
+use SIE\Exception\InvalidArgumentException;
 
 /**
  * Transaction, see section 11#TRANS at page 33 in "SIE_filformat_ver_4B_ENGLISH.pdf"

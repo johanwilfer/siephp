@@ -44,4 +44,3 @@ $company->validate();
 $dumper = new SIE\Dumper\SIEDumper();
 $output = $dumper->dump($company);
 echo $output;
-
