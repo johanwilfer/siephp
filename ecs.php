@@ -6,6 +6,7 @@ use PhpCsFixer\FixerFactory;
 use PhpCsFixer\RuleSet\RuleSet;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
+// https://github.com/easy-coding-standard/easy-coding-standard
 $config = ECSConfig::configure()
     ->withPaths([
         __DIR__ . '/src',
