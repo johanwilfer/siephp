@@ -19,6 +19,7 @@ use SIE\Data;
 class SIEDumper
 {
     public const DEFAULT_GENERATOR_NAME = 'SIE-PHP exporter';
+
     public const DEFAULT_GENERATOR_VERSION = '1.0';
 
     /**
@@ -26,6 +27,7 @@ class SIEDumper
      * @var string
      */
     protected $delimiter_newline = "\r\n";
+
     /**
      * Delimiter used for fields.
      * @var string
@@ -40,8 +42,6 @@ class SIEDumper
 
     /**
      * Generates and escapes a line
-     * @param $label
-     * @param $parameters
      * @return string
      */
     protected function getLine($label, $parameters)
@@ -80,7 +80,6 @@ class SIEDumper
 
     /**
      * Escapes a field
-     * @param $unescaped
      * @return string
      */
     protected function escapeField($unescaped)
@@ -147,7 +146,6 @@ class SIEDumper
 
     /**
      * Dumps the Company and the data to SIE-format. Returns the SIE-contents as a string
-     * @param Data\Company $sie
      * @return string
      */
     public function dump(Data\Company $sie)
@@ -206,21 +204,21 @@ class SIEDumper
                     $ver->getDate(),
                     $ver->getText(),
                     $ver->getRegistrationDate(),
-                    $ver->GetRegistrationSign()
+                    $ver->GetRegistrationSign(),
                 ]);
                 // transactions for this verification
                 $data .= '{' . $this->delimiter_newline;
                 foreach ($ver->getTransactions() as $trans) {
                     $data .= '    ' . $this->getLine('TRANS', [
-                            $trans->getAccount()->getId(),
-                            $trans->getObjectsAsArrayPairs(),
-                            $trans->getAmount(),
-                            // transaction date is not mandatory, but looks strange to leave out. Insert verification date if it is missing.
-                            $trans->getDate() ? $trans->getDate() : $ver->getDate(),
-                            $trans->getText(),
-                            $trans->getQuantity(),
-                            $trans->getRegistrationSign(),
-                        ]);
+                        $trans->getAccount()->getId(),
+                        $trans->getObjectsAsArrayPairs(),
+                        $trans->getAmount(),
+                        // transaction date is not mandatory, but looks strange to leave out. Insert verification date if it is missing.
+                        $trans->getDate() ? $trans->getDate() : $ver->getDate(),
+                        $trans->getText(),
+                        $trans->getQuantity(),
+                        $trans->getRegistrationSign(),
+                    ]);
                 }
                 $data .= '}' . $this->delimiter_newline;
                 $data .= $this->delimiter_newline;

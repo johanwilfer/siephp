@@ -58,7 +58,6 @@ class Verification
 
     /**
      * Construct a Verification
-     * @param $verificationId
      * @throws InvalidArgumentException
      */
     public function __construct($verificationId)
@@ -160,7 +159,6 @@ class Verification
 
     /**
      * Add a transaction
-     * @param Transaction $transaction
      * @return Verification
      */
     public function addTransaction(Transaction $transaction)
@@ -185,7 +183,7 @@ class Verification
      */
     public function validate()
     {
-        if (!$this->date) {
+        if (! $this->date) {
             throw new DomainException('Mandatory field date');
         }
         if (count($this->transactions) === 0) {

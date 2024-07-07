@@ -26,7 +26,7 @@ class Transaction
 
     /**
      * Array with objects, uses the dimension as keys, and the value is set to Object.
-     * @var Object[]
+     * @var object[]
      */
     protected $objects;
 
@@ -79,7 +79,6 @@ class Transaction
 
     /**
      * Set account
-     * @param Account $account
      * @return Transaction
      */
     public function setAccount(Account $account)
@@ -106,7 +105,7 @@ class Transaction
     /**
      * Get object with dimension
      * @param int $dimension Dimension to search
-     * @return Object|null
+     * @return object|null
      */
     public function getObject($dimension)
     {
@@ -120,7 +119,7 @@ class Transaction
 
     /**
      * Get all objects for this transaction
-     * @return Object[]
+     * @return object[]
      */
     public function getObjects()
     {
@@ -143,7 +142,6 @@ class Transaction
         $this->objects[$dimensionId] = $object;
         return $this;
     }
-
 
     /**
      * Get amount
@@ -251,7 +249,7 @@ class Transaction
      */
     public function validate()
     {
-        if (!$this->account) {
+        if (! $this->account) {
             throw new DomainException('Mandatory field: account');
         }
         if ($this->amount === null) {

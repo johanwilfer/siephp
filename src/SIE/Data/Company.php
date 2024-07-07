@@ -36,7 +36,7 @@ class Company
      * @var string
      */
     protected $typeOfChartOfAccounts;
-    
+
     /**
      * #KONTO - Accounts list
      * @var Account[]
@@ -114,7 +114,6 @@ class Company
 
     /**
      * Set type of chart of accounts.
-     * @param $type
      * @return Company
      */
     public function setTypeOfChartOfAccounts($type)
@@ -132,10 +131,8 @@ class Company
         return $this->typeOfChartOfAccounts;
     }
 
-
     /**
      * Add an account
-     * @param  Account $account
      * @return Company
      * @throws DomainException
      */
@@ -177,7 +174,6 @@ class Company
 
     /**
      * Add dimension
-     * @param Dimension $dimension
      * @return Company
      * @throws DomainException
      */
@@ -217,7 +213,6 @@ class Company
 
     /**
      * Add verification series
-     * @param VerificationSeries $verificationSeries
      * @return Company
      * @throws DomainException
      */
@@ -261,7 +256,6 @@ class Company
 
     /**
      * Add fiscal year
-     * @param FiscalYear $fiscalYear
      * @return Company
      * @throws DomainException
      */
@@ -280,14 +274,13 @@ class Company
         return $this->fiscalYears;
     }
 
-
     /**
      * Validate the data, valid data should be exportable to SIE-format
      * @throws DomainException
      */
     public function validate()
     {
-        if (!$this->companyName) {
+        if (! $this->companyName) {
             throw new DomainException('Mandatory field companyName');
         }
         // validate verifications

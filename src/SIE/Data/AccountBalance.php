@@ -36,7 +36,6 @@ class AccountBalance
 
     /**
      * Constructor
-     * @param Account $account
      */
     public function __construct(Account $account)
     {

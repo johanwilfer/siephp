@@ -26,10 +26,10 @@ class TSVLoader
     protected function getTabularData($value, $delimiter = "\t")
     {
         // fix line endings to be \n
-        $value = str_replace(array("\r\n", "\r"), "\n", $value);
+        $value = str_replace(["\r\n", "\r"], "\n", $value);
         // split it up ny lines and tabs
         $lines = explode("\n", $value);
-        $rows = array();
+        $rows = [];
         foreach ($lines as $line) {
             // don't add blank lines
             if ($line == '') {
@@ -59,7 +59,6 @@ class TSVLoader
     /**
      * Parse balance data from TSV-file
      *
-     * @param $value
      * @param Data\Company    $company    The company to parse balances for
      * @param Data\FiscalYear $fiscalYear The fiscal year
      * @param int $skipHeaderLines
@@ -74,12 +73,12 @@ class TSVLoader
         }
 
         foreach ($rows as $row) {
-            $data = array(
+            $data = [
                 'account_id' => $row[0],
                 'account_name' => $row[1],
-                'incoming' => (float)(str_replace(array(' ', ' ', '.', ','), array('', '', '', '.'), $row[2])),
-                'outgoing' => (float)(str_replace(array(' ', ' ', '.', ','), array('', '', '', '.'), $row[5])),
-            );
+                'incoming' => (float) (str_replace([' ', ' ', '.', ','], ['', '', '', '.'], $row[2])),
+                'outgoing' => (float) (str_replace([' ', ' ', '.', ','], ['', '', '', '.'], $row[5])),
+            ];
 
             // account - try fetch it from the company
             $account = $company->getAccount($data['account_id']);
@@ -99,13 +98,10 @@ class TSVLoader
         }
     }
 
-
     /**
      * Parse transaction-data form TSV-file
      *
-     * @param $value
      * @param int $skipHeaderLines
-     * @param Data\Company $company
      * @return Data\Company
      */
     public function parseTransactions($value, Data\Company $company, $skipHeaderLines = 1)
@@ -117,7 +113,7 @@ class TSVLoader
             array_shift($rows);
         }
         // fix ordering
-        usort($rows, array($this, 'tabularDataCompareRows'));
+        usort($rows, [$this, 'tabularDataCompareRows']);
 
         // add a verification series and two dimensions
         $verificationSeries = new Data\VerificationSeries();
@@ -139,7 +135,7 @@ class TSVLoader
              * 15: Transaction name
              * 18: Transaction amount
              */
-            $data = array(
+            $data = [
                 'ver_no' => $row[0],
                 'date' => $row[1],
                 'account_no' => $row[3],
@@ -149,8 +145,8 @@ class TSVLoader
                 'ver_name' => $row[13],
                 'ver_row' => $row[14],
                 'trans_text' => $row[15],
-                'trans_amount' => (float) (str_replace(array('.', ','), array('', '.'), $row[18])),
-            );
+                'trans_amount' => (float) (str_replace(['.', ','], ['', '.'], $row[18])),
+            ];
 
             // verification
             if ($last_verification_id !== $data['ver_no']) {
@@ -212,19 +208,15 @@ class TSVLoader
     }
 }
 
-
-
 /*
  * paths to example data
  */
 
-$paths = array(
+$paths = [
     'transaction-data' => __DIR__ . '/data/import-transactions.tsv',
     'balance-data-year-0' => __DIR__ . '/data/import-balance-year-0.tsv',
     'balance-data-year-1' => __DIR__ . '/data/import-balance-year-1.tsv',
-);
-
-
+];
 
 /*
  * Transaction data for current year
@@ -235,8 +227,6 @@ $company = (new SIE\Data\Company())->setCompanyName('Imported company name åä�
 // load transaction data from TSV
 $loader = new TSVLoader();
 $loader->parseTransactions(file_get_contents($paths['transaction-data']), $company);
-
-
 
 /*
  * Balance data
@@ -251,8 +241,6 @@ $loader->parseBalance(file_get_contents($paths['balance-data-year-0']), $company
 $fiscalYear = $fiscalYear->createPreviousFiscalYear();
 $company->addFiscalYear($fiscalYear);
 $loader->parseBalance(file_get_contents($paths['balance-data-year-1']), $company, $fiscalYear);
-
-
 
 /*
  * Dump as SIE

@@ -63,7 +63,6 @@ class VerificationSeries
 
     /**
      * add verification
-     * @param Verification $verification
      * @return VerificationSeries
      * @throws DomainException
      */
@@ -89,7 +88,6 @@ class VerificationSeries
      *  reporting program. The series or verification number is in this case set by the
      *  financial reporting program."
      *
-     * @param Verification $verification
      * @return VerificationSeries
      * @throws DomainException
      */
@@ -130,7 +128,6 @@ class VerificationSeries
         // not found
         return null;
     }
-
 
     /**
      * Validate verifications in this series

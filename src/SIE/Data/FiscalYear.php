@@ -45,7 +45,7 @@ class FiscalYear
         $this->dateStart = new \DateTime('first day of January this year');
         $this->dateEnd = new \DateTime('last day of December this year');
         // initialize array
-        $this->accountBalances = array();
+        $this->accountBalances = [];
     }
 
     /**
@@ -76,7 +76,6 @@ class FiscalYear
     }
 
     /**
-     * @param \DateTime $dateStart
      * @return FiscalYear
      */
     public function setDateStart(\DateTime $dateStart)
@@ -94,7 +93,6 @@ class FiscalYear
     }
 
     /**
-     * @param \DateTime $dateEnd
      * @return FiscalYear
      */
     public function setDateEnd(\DateTime $dateEnd)

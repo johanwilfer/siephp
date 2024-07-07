@@ -32,11 +32,17 @@ class Dimension
      *   20-   = Custom dimension
      */
     public const DIMENSION_COST_CENTRE = 1;
+
     public const DIMENSION_COST_BEARER = 2;
+
     public const DIMENSION_PROJECT = 6;
+
     public const DIMENSION_EMPLOYEE = 7;
+
     public const DIMENSION_CUSTOMER = 8;
+
     public const DIMENSION_SUPPLIER = 9;
+
     public const DIMENSION_INVOICE = 10;
 
     /**
@@ -47,13 +53,12 @@ class Dimension
 
     /**
      * #OBJEKT
-     * @var Object[]
+     * @var object[]
      */
     protected $objects;
 
     /**
      * Create dimension
-     * @param $id
      */
     public function __construct($id)
     {

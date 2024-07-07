@@ -33,7 +33,6 @@ class Account
 
     /**
      * Constructs an Account
-     * @param $accountNumber
      * @throws InvalidArgumentException
      */
     public function __construct($accountNumber)
@@ -79,7 +78,7 @@ class Account
      */
     public function validate()
     {
-        if (!$this->name) {
+        if (! $this->name) {
             throw new DomainException('AccountName must be set.');
         }
     }

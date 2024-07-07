@@ -36,7 +36,6 @@ class Object
      */
     protected $name;
 
-
     /**
      * Constructor
      * @param string $id
@@ -44,7 +43,7 @@ class Object
      */
     public function __construct($id)
     {
-        if (!$id) {
+        if (! $id) {
             throw new InvalidArgumentException('Mandatory parameter: id');
         }
         $this->id = $id;
@@ -71,7 +70,7 @@ class Object
     /**
      * Set dimension
      * @param Dimension $dimension
-     * @return Object
+     * @return object
      */
     public function setDimension($dimension)
     {
@@ -91,7 +90,7 @@ class Object
     /**
      * Set name
      * @param string $name
-     * @return Object
+     * @return object
      */
     public function setName($name)
     {
