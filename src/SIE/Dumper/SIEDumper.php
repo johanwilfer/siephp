@@ -12,6 +12,7 @@
 namespace SIE\Dumper;
 
 use SIE\Data\Company;
+use SIE\Exception\DomainException;
 
 /**
  * Generates a SIE-file
@@ -24,27 +25,28 @@ class SIEDumper
 
     /**
      * Delimiter used for newline.
-     *
-     * @var string
      */
-    protected $delimiter_newline = "\r\n";
+    private string $delimiter_newline = "\r\n";
 
     /**
      * Delimiter used for fields.
-     *
-     * @var string
      */
-    protected $delimiter_field = " ";
+    private string $delimiter_field = " ";
 
     /**
      * Hold the options for the SIE-file
+     *
+     * @var array<string, string|null>
      */
-    protected array $options;
+    private array $options;
 
     /**
      * Generates and escapes a line
+     *
+     * @param array<mixed> $parameters
+     *
      */
-    protected function getLine(string $label, $parameters): string
+    protected function getLine(string $label, array $parameters): string
     {
         // we build the line in reverse order to be able to skip empty items (null) at the end of the lines
         $line = '';
@@ -71,7 +73,12 @@ class SIEDumper
             }
 
             // normal value
-            $line = $this->delimiter_field . $this->escapeField($param) . $line;
+            if (is_string($param) || is_int($param) || is_float($param)) {
+                $line = $this->delimiter_field . $this->escapeField($param) . $line;
+                continue;
+            }
+
+            throw new DomainException('Unexpected type of parameter: ' . gettype($param));
         }
 
         return '#' . $label . $line . $this->delimiter_newline;
@@ -80,15 +87,11 @@ class SIEDumper
     /**
      * Escapes a field
      */
-    protected function escapeField($unescaped): string
+    protected function escapeField(string|int|float $unescaped): string
     {
-        if (is_object($unescaped)) {
-            var_dump($unescaped);
-            die;
-        }
-        $encoded = iconv('UTF-8', 'CP437', (string) $unescaped);
+        $encoded = (string) iconv('UTF-8', 'CP437', (string) $unescaped);
         $escaped = '';
-        $add_quotes = false;
+        $addQuotes = false;
 
         for ($i = 0; $i < strlen($encoded); $i++) {
             $char = $encoded[$i];
@@ -103,22 +106,19 @@ class SIEDumper
             }
             // page 9, 5.7 "All fields are to be in quotation marks (ASCII 34). Quotation marks are however not a requirement and are only required when the field contains spaces."
             if ($ascii_numeric == 32) {
-                $add_quotes = true;
+                $addQuotes = true;
             }
 
             $escaped .= $char;
         }
-        // add quotes if string contains a space or if empty string or null
-        if ($add_quotes || $escaped === '' || $escaped === null) {
+        // add quotes if string contains a space or if empty string
+        if ($addQuotes || $escaped === '') {
             $escaped = '"' . $escaped . '"';
         }
 
         return $escaped;
     }
 
-    /**
-     * Constructor
-     */
     public function __construct()
     {
         // default options
@@ -132,11 +132,8 @@ class SIEDumper
 
     /**
      * Set generator (custom "PROGRAM" name).
-     *
-     * @param string $generatorName
-     * @param string $generatorVersion
      */
-    public function setGenerator($generatorName, $generatorVersion = self::DEFAULT_GENERATOR_VERSION): void
+    public function setGenerator(string $generatorName, string $generatorVersion = self::DEFAULT_GENERATOR_VERSION): void
     {
         $this->options['generator'] = $generatorName;
         $this->options['generator_version'] = $generatorVersion;
@@ -207,7 +204,7 @@ class SIEDumper
                 $data .= '{' . $this->delimiter_newline;
                 foreach ($ver->getTransactions() as $trans) {
                     $data .= '    ' . $this->getLine('TRANS', [
-                        $trans->getAccount()->getId(),
+                        $trans->getAccount()?->getId(),
                         $trans->getObjectsAsArrayPairs(),
                         $trans->getAmount(),
                         // transaction date is not mandatory, but looks strange to leave out. Insert verification date if it is missing.
