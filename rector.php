@@ -12,8 +12,10 @@ return RectorConfig::configure()
 
     ->withPhpSets(php81: true)
     ->withPreparedSets(
+        codeQuality: true,
         typeDeclarations: true,
     )
+    ->withImportNames(importShortClasses: false, removeUnusedImports: true)
 
     // DTOs looks a bit ugly with this, lets consider if we want this
     ->withSkip([

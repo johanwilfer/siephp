@@ -35,14 +35,14 @@ class VerificationSeries
      *
      * @var Verification[]
      */
-    protected $verifications;
+    protected $verifications = [];
 
     /**
      * #VER - these don't have a verification number and will be included after the ones in ascending order when calling getVerifications()
      *
      * @var Verification[]
      */
-    protected $verificationsPreProcessingSystem;
+    protected $verificationsPreProcessingSystem = [];
 
     /**
      * Construct a VerificationSeries
@@ -51,8 +51,6 @@ class VerificationSeries
      */
     public function __construct($id = self::CONST_DEFAULT_SERIES)
     {
-        $this->verifications = [];
-        $this->verificationsPreProcessingSystem = [];
         $this->id = $id;
     }
 

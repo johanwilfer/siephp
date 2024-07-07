@@ -1,5 +1,15 @@
 <?php
 
+use SIE\Data\Company;
+use SIE\Data\FiscalYear;
+use SIE\Data\Account;
+use SIE\Data\AccountBalance;
+use SIE\Data\VerificationSeries;
+use SIE\Data\Dimension;
+use SIE\Data\Verification;
+use SIE\Data\Transaction;
+use SIE\Data\Object;
+use SIE\Dumper\SIEDumper;
 /**
  * This file is part of the SIE-PHP package.
  *
@@ -31,7 +41,7 @@ class TSVLoader
         $rows = [];
         foreach ($lines as $line) {
             // don't add blank lines
-            if ($line == '') {
+            if ($line === '') {
                 continue;
             }
             $rows[] = explode($delimiter, $line);
@@ -62,7 +72,7 @@ class TSVLoader
      * @param Data\FiscalYear $fiscalYear The fiscal year
      * @param int $skipHeaderLines
      */
-    public function parseBalance($value, Data\Company $company, Data\FiscalYear $fiscalYear, $skipHeaderLines = 1): void
+    public function parseBalance($value, Company $company, FiscalYear $fiscalYear, $skipHeaderLines = 1): void
     {
         // parse text
         $rows = $this->getTabularData($value);
@@ -83,14 +93,14 @@ class TSVLoader
             $account = $company->getAccount($data['account_id']);
             // account not found? create it.
             if ($account === null) {
-                $account = (new Data\Account($data['account_id']))
+                $account = (new Account($data['account_id']))
                     ->setName($data['account_name']);
                 $company->addAccount($account);
             }
 
             // add balances
             $fiscalYear->addAccountBalance(
-                (new Data\AccountBalance($account))
+                (new AccountBalance($account))
                     ->setIncomingBalance($data['incoming'])
                     ->setOutgoingBalance($data['outgoing'])
             );
@@ -104,7 +114,7 @@ class TSVLoader
      *
      * @return Data\Company
      */
-    public function parseTransactions($value, Data\Company $company, $skipHeaderLines = 1): void
+    public function parseTransactions($value, Company $company, $skipHeaderLines = 1): void
     {
         // parse text
         $rows = $this->getTabularData($value);
@@ -116,10 +126,10 @@ class TSVLoader
         usort($rows, [$this, 'tabularDataCompareRows']);
 
         // add a verification series and two dimensions
-        $verificationSeries = new Data\VerificationSeries();
+        $verificationSeries = new VerificationSeries();
         $company->addVerificationSeries($verificationSeries)
-            ->addDimension(new Data\Dimension(Data\Dimension::DIMENSION_COST_CENTRE))
-            ->addDimension(new Data\Dimension(Data\Dimension::DIMENSION_PROJECT));
+            ->addDimension(new Dimension(Dimension::DIMENSION_COST_CENTRE))
+            ->addDimension(new Dimension(Dimension::DIMENSION_PROJECT));
 
         $last_verification_id = null;
         foreach ($rows as $row) {
@@ -150,7 +160,7 @@ class TSVLoader
 
             // verification
             if ($last_verification_id !== $data['ver_no']) {
-                $verification = (new Data\Verification($data['ver_no']))
+                $verification = (new Verification($data['ver_no']))
                     ->setDate($data['date'])
                     ->setText($data['ver_name']);
                 $verificationSeries->addVerification($verification);
@@ -159,13 +169,13 @@ class TSVLoader
             // account
             $account = $company->getAccount($row[3]);
             if ($account === null) {
-                $account = (new Data\Account($data['account_no']))
+                $account = (new Account($data['account_no']))
                     ->setName($data['account_name']);
                 $company->addAccount($account);
             }
 
             // transaction
-            $transaction = (new Data\Transaction())
+            $transaction = (new Transaction())
                 ->setAccount($account)
                 ->setAmount($data['trans_amount'])
                 ->setText($data['trans_text']);
@@ -174,11 +184,11 @@ class TSVLoader
             // dimension - result unit
             if ($data['result_unit']) {
                 // find dimension (pre-defined)
-                $dim = $company->getDimension(Data\Dimension::DIMENSION_COST_CENTRE);
+                $dim = $company->getDimension(Dimension::DIMENSION_COST_CENTRE);
                 // find / create object
                 $object = $dim->getObject($data['result_unit']);
                 if ($object === null) {
-                    $object = (new Data\Object($data['result_unit']))
+                    $object = (new Object($data['result_unit']))
                         ->setDimension($dim)
                         ->setName('Resultatenhet ' . $data['result_unit']); //We don't have this data, so just set it
                     $dim->addObject($object);
@@ -190,11 +200,11 @@ class TSVLoader
             // dimension - project
             if ($data['project']) {
                 // find dimension (pre-defined)
-                $dim = $company->getDimension(Data\Dimension::DIMENSION_PROJECT);
+                $dim = $company->getDimension(Dimension::DIMENSION_PROJECT);
                 // find / create object
                 $object = $dim->getObject($data['project']);
                 if ($object === null) {
-                    $object = (new Data\Object($data['project']))
+                    $object = (new Object($data['project']))
                         ->setDimension($dim)
                         ->setName('Projekt ' . $data['project']); //We don't have this data, so just set it
                     $dim->addObject($object);
@@ -223,7 +233,7 @@ $paths = [
  */
 
 //create company
-$company = (new SIE\Data\Company())->setCompanyName('Imported company name åäöÅÄÖ');
+$company = (new Company())->setCompanyName('Imported company name åäöÅÄÖ');
 // load transaction data from TSV
 $loader = new TSVLoader();
 $loader->parseTransactions(file_get_contents($paths['transaction-data']), $company);
@@ -233,7 +243,7 @@ $loader->parseTransactions(file_get_contents($paths['transaction-data']), $compa
  */
 
 // add fiscal year (defaults to current calendar year)
-$fiscalYear = new Data\FiscalYear();
+$fiscalYear = new FiscalYear();
 $company->addFiscalYear($fiscalYear);
 $loader->parseBalance(file_get_contents($paths['balance-data-year-0']), $company, $fiscalYear);
 
@@ -247,6 +257,6 @@ $loader->parseBalance(file_get_contents($paths['balance-data-year-1']), $company
  */
 
 $company->validate();
-$dumper = new \SIE\Dumper\SIEDumper();
+$dumper = new SIEDumper();
 $output = $dumper->dump($company);
 echo $output;

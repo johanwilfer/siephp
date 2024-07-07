@@ -45,38 +45,34 @@ class Company
      *
      * @var Account[]
      */
-    protected $accounts;
+    protected $accounts = [];
 
     /**
      * Represents verification series
      *
      * @var VerificationSeries[]
      */
-    protected $verificationSeries;
+    protected $verificationSeries = [];
 
     /**
      * Represents dimensions
      *
      * @var Dimension[]
      */
-    protected $dimensions;
+    protected $dimensions = [];
 
     /**
      * The fiscal year, used by incoming and outgoing balances.
      *
      * @var FiscalYear[]
      */
-    protected $fiscalYears;
+    protected $fiscalYears = [];
 
     /**
      * Creates a Company object, that could be exported as a SIE-file
      */
     public function __construct()
     {
-        $this->accounts = [];
-        $this->verificationSeries = [];
-        $this->dimensions = [];
-        $this->fiscalYears = [];
     }
 
     /**

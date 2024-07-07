@@ -33,7 +33,7 @@ class FiscalYear
      *
      * @var AccountBalance[]
      */
-    protected $accountBalances;
+    protected $accountBalances = [];
 
     /**
      * Constructor for Fiscal year
@@ -43,8 +43,6 @@ class FiscalYear
         // default to this calendar year
         $this->dateStart = new \DateTime('first day of January this year');
         $this->dateEnd = new \DateTime('last day of December this year');
-        // initialize array
-        $this->accountBalances = [];
     }
 
     /**

@@ -19,7 +19,7 @@ class AccountBalance
     /**
      * The account
      */
-    protected \SIE\Data\Account $account;
+    protected Account $account;
 
     /**
      * Incoming balance for the account
@@ -46,7 +46,7 @@ class AccountBalance
     /**
      * Get account
      */
-    public function getAccount(): \SIE\Data\Account
+    public function getAccount(): Account
     {
         return $this->account;
     }

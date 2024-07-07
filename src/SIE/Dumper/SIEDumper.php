@@ -11,7 +11,7 @@
 
 namespace SIE\Dumper;
 
-use SIE\Data;
+use SIE\Data\Company;
 
 /**
  * Generates a SIE-file
@@ -74,9 +74,7 @@ class SIEDumper
             $line = $this->delimiter_field . $this->escapeField($param) . $line;
         }
 
-        $line = '#' . $label . $line . $this->delimiter_newline;
-
-        return $line;
+        return '#' . $label . $line . $this->delimiter_newline;
     }
 
     /**
@@ -147,7 +145,7 @@ class SIEDumper
     /**
      * Dumps the Company and the data to SIE-format. Returns the SIE-contents as a string
      */
-    public function dump(Data\Company $sie): string
+    public function dump(Company $sie): string
     {
         // mandatory
         $data = $this->getLine('FLAGGA', ['0']);

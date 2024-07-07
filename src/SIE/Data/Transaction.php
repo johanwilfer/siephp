@@ -30,7 +30,7 @@ class Transaction
      *
      * @var object[]
      */
-    protected $objects;
+    protected $objects = [];
 
     /**
      * Amount of transaction
@@ -72,7 +72,6 @@ class Transaction
      */
     public function __construct()
     {
-        $this->objects = [];
     }
 
     /**
@@ -136,7 +135,7 @@ class Transaction
     /**
      * Add object to the transaction
      *
-     * @param \SIE\Data\Object $object
+     * @param Object $object
      *
      * @throws DomainException
      */
