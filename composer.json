@@ -11,7 +11,8 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=8.2"
+        "php": ">=8.1",
+        "ext-iconv": "*"
     },
     "autoload": {
         "psr-4": {
@@ -19,10 +20,15 @@
         }
     },
     "require-dev": {
-        "symplify/easy-coding-standard": "^12.3"
+        "symplify/easy-coding-standard": "^12.3",
+        "rector/rector": "^1.2",
+        "phpstan/phpstan": "^1.11"
     },
     "scripts": {
-        "check-cs": "vendor/bin/ecs check --ansi",
-        "fix-cs": "vendor/bin/ecs check --fix --ansi"
+        "cs-check": "vendor/bin/ecs check --ansi",
+        "cs-fix": "vendor/bin/ecs check --fix --ansi",
+        "phpstan": "vendor/bin/phpstan analyse",
+        "rector-check": "vendor/bin/rector --dry-run",
+        "rector-fix": "vendor/bin/rector"
     }
 }

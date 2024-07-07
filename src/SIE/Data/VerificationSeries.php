@@ -16,7 +16,7 @@ use SIE\Exception\DomainException;
 /**
  * Represents series with verifications
  */
-class VerificationSeries
+final class VerificationSeries
 {
     /**
      * See page 37 in "SIE_filformat_ver_4B_ENGLISH.pdf": #VER
@@ -25,55 +25,43 @@ class VerificationSeries
 
     /**
      * Number series designation
-     *
-     * @var string
      */
-    protected $id;
+    private string $id;
 
     /**
      * #VER - these are the numbered verifications that will be included in ascending order when calling getVerifications()
      *
      * @var Verification[]
      */
-    protected $verifications;
+    private array $verifications = [];
 
     /**
      * #VER - these don't have a verification number and will be included after the ones in ascending order when calling getVerifications()
      *
      * @var Verification[]
      */
-    protected $verificationsPreProcessingSystem;
+    private array $verificationsPreProcessingSystem = [];
 
     /**
      * Construct a VerificationSeries
-     *
-     * @param string $id
      */
-    public function __construct($id = self::CONST_DEFAULT_SERIES)
+    public function __construct(string $id = self::CONST_DEFAULT_SERIES)
     {
-        $this->verifications = [];
-        $this->verificationsPreProcessingSystem = [];
         $this->id = $id;
     }
 
     /**
      * Get series identifier
-     *
-     * @return string
      */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
     /**
-     * add verification
-     *
-     * @return VerificationSeries
-     *
      * @throws DomainException
      */
-    public function addVerification(Verification $verification)
+    public function addVerification(Verification $verification): self
     {
         $id = $verification->getId();
         // does the verification already exist?
@@ -94,12 +82,8 @@ class VerificationSeries
      *  transactions (using files of type 4I) from a pre-processing system to a financial
      *  reporting program. The series or verification number is in this case set by the
      *  financial reporting program."
-     *
-     * @return VerificationSeries
-     *
-     * @throws DomainException
      */
-    public function addVerificationPreProcessingSystem(Verification $verification)
+    public function addVerificationPreProcessingSystem(Verification $verification): self
     {
         $this->verificationsPreProcessingSystem[] = $verification;
 
@@ -111,33 +95,22 @@ class VerificationSeries
      *
      * @return Verification[]
      */
-    public function getVerifications()
+    public function getVerifications(): array
     {
         // sort numbered verifications by id
         ksort($this->verifications);
+
         // array_merge will overwrite duplicate string keys with the value from the last array
         // but we don't add string keys to $this->verificationsPreProcessingSystem
-        $verifications = array_merge($this->verifications, $this->verificationsPreProcessingSystem);
-
-        return $verifications;
+        return array_merge($this->verifications, $this->verificationsPreProcessingSystem);
     }
 
     /**
      * Get verification - will only find numbered verifications
-     *
-     * @param string $id Search for verification number
-     *
-     * @return Verification|null
      */
-    public function getVerification($id)
+    public function getVerification(string $id): ?Verification
     {
-        // search by id
-        if (isset($this->verifications[$id])) {
-            return $this->verifications[$id];
-        }
-
-        // not found
-        return null;
+        return $this->verifications[$id] ?? null;
     }
 
     /**
@@ -145,7 +118,7 @@ class VerificationSeries
      *
      * @throws DomainException
      */
-    public function validate()
+    public function validate(): void
     {
         // validate verifications
         foreach ($this->verifications as $verification) {

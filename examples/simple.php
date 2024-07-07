@@ -1,5 +1,12 @@
 <?php
 
+use SIE\Data\Account;
+use SIE\Data\Company;
+use SIE\Data\Transaction;
+use SIE\Data\Verification;
+use SIE\Data\VerificationSeries;
+use SIE\Dumper\SIEDumper;
+
 /**
  * This file is part of the SIE-PHP package.
  *
@@ -13,25 +20,25 @@
 require_once __DIR__ . '/../vendor/autoload.php';
 
 // create a company
-$company = (new SIE\Data\Company())
+$company = (new Company())
     // set company name
     ->setCompanyName('My company')
     // add a verification series
-    ->addVerificationSeries(new SIE\Data\VerificationSeries())
+    ->addVerificationSeries(new VerificationSeries())
     // add two accounts
-    ->addAccount((new SIE\Data\Account(1511))->setName('Kundfordringar'))
-    ->addAccount((new SIE\Data\Account(3741))->setName('Öresutjämning'))
+    ->addAccount((new Account(1511))->setName('Kundfordringar'))
+    ->addAccount((new Account(3741))->setName('Öresutjämning'))
 ;
 
 // add a verification with two transactions
-$verification = (new SIE\Data\Verification(591000490))->setDate('20150105')
+$verification = (new Verification(591000490))->setDate('20150105')
     ->addTransaction(
-        (new SIE\Data\Transaction())
+        (new Transaction())
             ->setAccount($company->getAccount(1511))
             ->setAmount(-0.24)
     )
     ->addTransaction(
-        (new SIE\Data\Transaction())
+        (new Transaction())
             ->setAccount($company->getAccount(3741))
             ->setAmount(0.24)
     )
@@ -41,6 +48,6 @@ $company->getVerificationSeriesAll()[0]->addVerification($verification);
 // validate data, will throw Exception if invalid data
 $company->validate();
 
-$dumper = new SIE\Dumper\SIEDumper();
+$dumper = new SIEDumper();
 $output = $dumper->dump($company);
 echo $output;

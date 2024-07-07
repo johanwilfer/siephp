@@ -16,28 +16,24 @@ use SIE\Exception\DomainException;
 /**
  * Represents a Fiscal year, can hold account balance sheet items for incoming / outgoing
  */
-class FiscalYear
+final class FiscalYear
 {
     /**
      * Start of Fiscal year
-     *
-     * @var \DateTime
      */
-    protected $dateStart;
+    private \DateTime $dateStart;
 
     /**
      * End of Fiscal year
-     *
-     * @var \DateTime
      */
-    protected $dateEnd;
+    private \DateTime $dateEnd;
 
     /**
      * Account balances for this fiscal year
      *
      * @var AccountBalance[]
      */
-    protected $accountBalances;
+    private $accountBalances = [];
 
     /**
      * Constructor for Fiscal year
@@ -47,16 +43,12 @@ class FiscalYear
         // default to this calendar year
         $this->dateStart = new \DateTime('first day of January this year');
         $this->dateEnd = new \DateTime('last day of December this year');
-        // initialize array
-        $this->accountBalances = [];
     }
 
     /**
      * Constructs a FiscalYear for the previous year from this instances start.
-     *
-     * @return FiscalYear A new instance of FiscalYear
      */
-    public function createPreviousFiscalYear()
+    public function createPreviousFiscalYear(): FiscalYear
     {
         // create new dates
         $dateEnd = clone $this->dateEnd;
@@ -72,36 +64,24 @@ class FiscalYear
         return $fiscalYear;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDateStart()
+    public function getDateStart(): \DateTime
     {
         return $this->dateStart;
     }
 
-    /**
-     * @return FiscalYear
-     */
-    public function setDateStart(\DateTime $dateStart)
+    public function setDateStart(\DateTime $dateStart): self
     {
         $this->dateStart = $dateStart;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDateEnd()
+    public function getDateEnd(): \DateTime
     {
         return $this->dateEnd;
     }
 
-    /**
-     * @return FiscalYear
-     */
-    public function setDateEnd(\DateTime $dateEnd)
+    public function setDateEnd(\DateTime $dateEnd): self
     {
         $this->dateEnd = $dateEnd;
 
@@ -113,11 +93,9 @@ class FiscalYear
      *
      * @param AccountBalance $accountBalance The account balance object representing balances for this fiscal year
      *
-     * @return FiscalYear
-     *
      * @throws DomainException
      */
-    public function addAccountBalance(AccountBalance $accountBalance)
+    public function addAccountBalance(AccountBalance $accountBalance): self
     {
         $id = $accountBalance->getAccount()->getId();
         if (isset($this->accountBalances[$id])) {
@@ -131,20 +109,10 @@ class FiscalYear
 
     /**
      * Get account balance by account id
-     *
-     * @param string $id Account id
-     *
-     * @return AccountBalance|null
      */
-    public function getAccountBalance($id)
+    public function getAccountBalance(int $id): ?AccountBalance
     {
-        // search by id
-        if (isset($this->accountBalances[$id])) {
-            return $this->accountBalances[$id];
-        }
-
-        // not found
-        return null;
+        return $this->accountBalances[$id] ?? null;
     }
 
     /**
@@ -152,7 +120,7 @@ class FiscalYear
      *
      * @return AccountBalance[]
      */
-    public function getAccountBalances()
+    public function getAccountBalances(): array
     {
         ksort($this->accountBalances);
 

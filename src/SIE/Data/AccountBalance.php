@@ -14,89 +14,51 @@ namespace SIE\Data;
 /**
  * Account balance, for a fiscal year
  */
-class AccountBalance
+final class AccountBalance
 {
     /**
      * The account
-     *
-     * @var Account
      */
-    protected $account;
+    protected Account $account;
 
     /**
      * Incoming balance for the account
-     *
-     * @var float
      */
-    protected $incomingBalance;
+    protected float $incomingBalance;
 
     /**
      * Outgoing balance for the account
-     *
-     * @var float
      */
-    protected $outgoingBalance;
+    protected float $outgoingBalance;
 
-    /**
-     * Constructor
-     */
     public function __construct(Account $account)
     {
         $this->account = $account;
     }
 
-    /**
-     * Get account
-     *
-     * @return Account
-     */
-    public function getAccount()
+    public function getAccount(): Account
     {
         return $this->account;
     }
 
-    /**
-     * Get incoming balance
-     *
-     * @return float
-     */
-    public function getIncomingBalance()
+    public function getIncomingBalance(): float
     {
         return $this->incomingBalance;
     }
 
-    /**
-     * Set incoming balance
-     *
-     * @param float $incomingBalance
-     *
-     * @return AccountBalance
-     */
-    public function setIncomingBalance($incomingBalance)
+    public function setIncomingBalance(float $incomingBalance): self
     {
         $this->incomingBalance = $incomingBalance;
 
         return $this;
     }
 
-    /**
-     * Get outgoing balance
-     *
-     * @return float
-     */
-    public function getOutgoingBalance()
+    public function getOutgoingBalance(): float
     {
         return $this->outgoingBalance;
     }
 
-    /**
-     * Set outgoing balance
-     *
-     * @param float $outgoingBalance
-     *
-     * @return AccountBalance
-     */
-    public function setOutgoingBalance($outgoingBalance)
+    public function setOutgoingBalance(float $outgoingBalance): self
     {
         $this->outgoingBalance = $outgoingBalance;
 

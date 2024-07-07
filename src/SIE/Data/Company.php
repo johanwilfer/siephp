@@ -16,135 +16,91 @@ use SIE\Exception\DomainException;
 /**
  * Represents a company with data that could be exported to SIE
  */
-class Company
+final class Company
 {
     /**
      * #FNAMN - Company name
-     *
-     * @var string
      */
-    protected $companyName;
+    private ?string $companyName = null;
 
     /**
      * #ORGNR - Company orgnr, like 555555-5555
-     *
-     * @var string
      */
-    protected $companyNumber;
+    private ?string $companyNumber = null;
 
     /**
      * #KBTYP - type of chart of accounts
      * It's optional, when it's missing BAS95 is used.
-     *
-     * @var string
      */
-    protected $typeOfChartOfAccounts;
+    private ?string $typeOfChartOfAccounts = null;
 
     /**
      * #KONTO - Accounts list
      *
      * @var Account[]
      */
-    protected $accounts;
+    private array $accounts = [];
 
     /**
      * Represents verification series
      *
      * @var VerificationSeries[]
      */
-    protected $verificationSeries;
+    private array $verificationSeries = [];
 
     /**
      * Represents dimensions
      *
      * @var Dimension[]
      */
-    protected $dimensions;
+    private array $dimensions = [];
 
     /**
      * The fiscal year, used by incoming and outgoing balances.
      *
      * @var FiscalYear[]
      */
-    protected $fiscalYears;
+    private array $fiscalYears = [];
 
     /**
      * Creates a Company object, that could be exported as a SIE-file
      */
     public function __construct()
     {
-        $this->accounts = [];
-        $this->verificationSeries = [];
-        $this->dimensions = [];
-        $this->fiscalYears = [];
     }
 
-    /**
-     * Get company name
-     *
-     * @return string
-     */
-    public function getCompanyName()
+    public function getCompanyName(): ?string
     {
         return $this->companyName;
     }
 
-    /**
-     * Set company name
-     *
-     * @param string $companyName
-     *
-     * @return Company
-     */
-    public function setCompanyName($companyName)
+    public function setCompanyName(string $companyName): self
     {
         $this->companyName = $companyName;
 
         return $this;
     }
 
-    /**
-     * Get company number
-     *
-     * @return string
-     */
-    public function getCompanyNumber()
+    public function getCompanyNumber(): ?string
     {
         return $this->companyNumber;
     }
 
-    /**
-     * Set company number
-     *
-     * @param string $companyNumber
-     *
-     * @return Company
-     */
-    public function setCompanyNumber($companyNumber)
+    public function setCompanyNumber(string $companyNumber): self
     {
         $this->companyNumber = $companyNumber;
 
         return $this;
     }
 
-    /**
-     * Set type of chart of accounts.
-     *
-     * @return Company
-     */
-    public function setTypeOfChartOfAccounts($type)
+    public function setTypeOfChartOfAccounts(string $type): self
     {
         $this->typeOfChartOfAccounts = $type;
 
         return $this;
     }
 
-    /**
-     * Get type of chart of accounts.
-     *
-     * @return string
-     */
-    public function getTypeOfChartOfAccounts()
+    public function getTypeOfChartOfAccounts(): ?string
     {
         return $this->typeOfChartOfAccounts;
     }
@@ -152,11 +108,9 @@ class Company
     /**
      * Add an account
      *
-     * @return Company
-     *
      * @throws DomainException
      */
-    public function addAccount(Account $account)
+    public function addAccount(Account $account): self
     {
         $id = $account->getId();
         if (isset($this->accounts[$id])) {
@@ -169,20 +123,10 @@ class Company
 
     /**
      * Search accounts by id
-     *
-     * @param  integer $id The account number
-     *
-     * @return Account|null
      */
-    public function getAccount($id)
+    public function getAccount(int $id): ?Account
     {
-        // search by id
-        if (isset($this->accounts[$id])) {
-            return $this->accounts[$id];
-        }
-
-        // not found
-        return null;
+        return $this->accounts[$id] ?? null;
     }
 
     /**
@@ -190,7 +134,7 @@ class Company
      *
      * @return Account[]
      */
-    public function getAccounts()
+    public function getAccounts(): array
     {
         // return array sorted by account number
         ksort($this->accounts);
@@ -201,11 +145,9 @@ class Company
     /**
      * Add dimension
      *
-     * @return Company
-     *
      * @throws DomainException
      */
-    public function addDimension(Dimension $dimension)
+    public function addDimension(Dimension $dimension): self
     {
         $id = $dimension->getId();
         if (isset($this->dimensions[$id])) {
@@ -218,20 +160,10 @@ class Company
 
     /**
      * Get dimension with id
-     *
-     * @param integer $id The dimension id
-     *
-     * @return Dimension|null
      */
-    public function getDimension($id)
+    public function getDimension(int $id): ?Dimension
     {
-        // search by id
-        if (isset($this->dimensions[$id])) {
-            return $this->dimensions[$id];
-        }
-
-        // none found
-        return null;
+        return $this->dimensions[$id] ?? null;
     }
 
     /**
@@ -239,7 +171,7 @@ class Company
      *
      * @return Dimension[]
      */
-    public function getDimensions()
+    public function getDimensions(): array
     {
         return $this->dimensions;
     }
@@ -247,11 +179,9 @@ class Company
     /**
      * Add verification series
      *
-     * @return Company
-     *
      * @throws DomainException
      */
-    public function addVerificationSeries(VerificationSeries $verificationSeries)
+    public function addVerificationSeries(VerificationSeries $verificationSeries): self
     {
         $id = $verificationSeries->getId();
         foreach ($this->verificationSeries as $item) {
@@ -266,12 +196,8 @@ class Company
 
     /**
      * Get verification series by id.
-     *
-     * @param string $id Id of verification series
-     *
-     * @return VerificationSeries|null
      */
-    public function getVerificationSeries($id)
+    public function getVerificationSeries(int $id): ?VerificationSeries
     {
         // search by id
         foreach ($this->verificationSeries as $item) {
@@ -280,7 +206,6 @@ class Company
             }
         }
 
-        // not found
         return null;
     }
 
@@ -289,7 +214,7 @@ class Company
      *
      * @return VerificationSeries[]
      */
-    public function getVerificationSeriesAll()
+    public function getVerificationSeriesAll(): array
     {
         return $this->verificationSeries;
     }
@@ -297,11 +222,9 @@ class Company
     /**
      * Add fiscal year
      *
-     * @return Company
-     *
      * @throws DomainException
      */
-    public function addFiscalYear(FiscalYear $fiscalYear)
+    public function addFiscalYear(FiscalYear $fiscalYear): self
     {
         $this->fiscalYears[] = $fiscalYear;
 
@@ -313,7 +236,7 @@ class Company
      *
      * @return FiscalYear[]
      */
-    public function getFiscalYears()
+    public function getFiscalYears(): array
     {
         return $this->fiscalYears;
     }
@@ -323,9 +246,9 @@ class Company
      *
      * @throws DomainException
      */
-    public function validate()
+    public function validate(): void
     {
-        if (! $this->companyName) {
+        if ($this->companyName === null) {
             throw new DomainException('Mandatory field companyName');
         }
         // validate verifications

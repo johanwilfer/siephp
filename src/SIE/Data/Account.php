@@ -12,68 +12,47 @@
 namespace SIE\Data;
 
 use SIE\Exception\DomainException;
-use SIE\Exception\InvalidArgumentException;
 
 /**
  * Transaction, see section 11#TRANS at page 33 in "SIE_filformat_ver_4B_ENGLISH.pdf"
  */
-class Account
+final class Account
 {
     /**
      * Account number
-     *
-     * @var integer
      */
-    protected $id;
+    private int $id;
 
     /**
      * Account name
-     *
-     * @var string
      */
-    protected $name;
+    private ?string $name = null;
 
-    /**
-     * Constructs an Account
-     *
-     * @throws InvalidArgumentException
-     */
-    public function __construct($accountNumber)
+    public function __construct(int $accountNumber)
     {
-        if ($accountNumber === null) {
-            throw new InvalidArgumentException('AccountNumber cannot be null.');
-        }
         $this->id = $accountNumber;
     }
 
     /**
      * Get account number
-     *
-     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
     /**
      * Get account name
-     *
-     * @return string
      */
-    public function getName()
+    public function getName(): ?string
     {
         return $this->name;
     }
 
     /**
      * Set account name
-     *
-     * @param string $name
-     *
-     * @return Account
      */
-    public function setName($name)
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -85,9 +64,9 @@ class Account
      *
      * @throws DomainException
      */
-    public function validate()
+    public function validate(): void
     {
-        if (! $this->name) {
+        if ($this->name === null) {
             throw new DomainException('AccountName must be set.');
         }
     }
