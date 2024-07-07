@@ -18,10 +18,8 @@ class AccountBalance
 {
     /**
      * The account
-     *
-     * @var Account
      */
-    protected $account;
+    protected \SIE\Data\Account $account;
 
     /**
      * Incoming balance for the account
@@ -47,20 +45,16 @@ class AccountBalance
 
     /**
      * Get account
-     *
-     * @return Account
      */
-    public function getAccount()
+    public function getAccount(): \SIE\Data\Account
     {
         return $this->account;
     }
 
     /**
      * Get incoming balance
-     *
-     * @return float
      */
-    public function getIncomingBalance()
+    public function getIncomingBalance(): float
     {
         return $this->incomingBalance;
     }
@@ -69,10 +63,8 @@ class AccountBalance
      * Set incoming balance
      *
      * @param float $incomingBalance
-     *
-     * @return AccountBalance
      */
-    public function setIncomingBalance($incomingBalance)
+    public function setIncomingBalance($incomingBalance): self
     {
         $this->incomingBalance = $incomingBalance;
 
@@ -81,10 +73,8 @@ class AccountBalance
 
     /**
      * Get outgoing balance
-     *
-     * @return float
      */
-    public function getOutgoingBalance()
+    public function getOutgoingBalance(): float
     {
         return $this->outgoingBalance;
     }
@@ -93,10 +83,8 @@ class AccountBalance
      * Set outgoing balance
      *
      * @param float $outgoingBalance
-     *
-     * @return AccountBalance
      */
-    public function setOutgoingBalance($outgoingBalance)
+    public function setOutgoingBalance($outgoingBalance): self
     {
         $this->outgoingBalance = $outgoingBalance;
 

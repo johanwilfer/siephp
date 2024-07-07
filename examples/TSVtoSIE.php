@@ -21,10 +21,8 @@ class TSVLoader
      *
      * @param string $value
      * @param string $delimiter
-     *
-     * @return array
      */
-    protected function getTabularData($value, $delimiter = "\t")
+    protected function getTabularData($value, $delimiter = "\t"): array
     {
         // fix line endings to be \n
         $value = str_replace(["\r\n", "\r"], "\n", $value);
@@ -45,7 +43,7 @@ class TSVLoader
     /**
      * Used for sorting the tsv-data
      */
-    protected function tabularDataCompareRows($a, $b)
+    protected function tabularDataCompareRows($a, $b): int
     {
         // compare ver_no
         $field = 0;
@@ -64,7 +62,7 @@ class TSVLoader
      * @param Data\FiscalYear $fiscalYear The fiscal year
      * @param int $skipHeaderLines
      */
-    public function parseBalance($value, Data\Company $company, Data\FiscalYear $fiscalYear, $skipHeaderLines = 1)
+    public function parseBalance($value, Data\Company $company, Data\FiscalYear $fiscalYear, $skipHeaderLines = 1): void
     {
         // parse text
         $rows = $this->getTabularData($value);
@@ -106,7 +104,7 @@ class TSVLoader
      *
      * @return Data\Company
      */
-    public function parseTransactions($value, Data\Company $company, $skipHeaderLines = 1)
+    public function parseTransactions($value, Data\Company $company, $skipHeaderLines = 1): void
     {
         // parse text
         $rows = $this->getTabularData($value);

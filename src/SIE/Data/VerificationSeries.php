@@ -69,11 +69,9 @@ class VerificationSeries
     /**
      * add verification
      *
-     * @return VerificationSeries
-     *
      * @throws DomainException
      */
-    public function addVerification(Verification $verification)
+    public function addVerification(Verification $verification): self
     {
         $id = $verification->getId();
         // does the verification already exist?
@@ -95,11 +93,9 @@ class VerificationSeries
      *  reporting program. The series or verification number is in this case set by the
      *  financial reporting program."
      *
-     * @return VerificationSeries
-     *
      * @throws DomainException
      */
-    public function addVerificationPreProcessingSystem(Verification $verification)
+    public function addVerificationPreProcessingSystem(Verification $verification): self
     {
         $this->verificationsPreProcessingSystem[] = $verification;
 
@@ -111,7 +107,7 @@ class VerificationSeries
      *
      * @return Verification[]
      */
-    public function getVerifications()
+    public function getVerifications(): array
     {
         // sort numbered verifications by id
         ksort($this->verifications);
@@ -140,7 +136,7 @@ class VerificationSeries
      *
      * @throws DomainException
      */
-    public function validate()
+    public function validate(): void
     {
         // validate verifications
         foreach ($this->verifications as $verification) {

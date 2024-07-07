@@ -87,10 +87,8 @@ class Transaction
 
     /**
      * Set account
-     *
-     * @return Transaction
      */
-    public function setAccount(Account $account)
+    public function setAccount(Account $account): self
     {
         $this->account = $account;
 
@@ -99,10 +97,8 @@ class Transaction
 
     /**
      * Get all objects for this transaction as an array with pairs for dimension, object
-     *
-     * @return array
      */
-    public function getObjectsAsArrayPairs()
+    public function getObjectsAsArrayPairs(): array
     {
         // object list is pairs of: [dimension] [value] ..
         $object_list = [];
@@ -142,11 +138,9 @@ class Transaction
      *
      * @param \SIE\Data\Object $object
      *
-     * @return Transaction
-     *
      * @throws DomainException
      */
-    public function addObject(Object $object)
+    public function addObject(Object $object): self
     {
         $dimensionId = $object->getDimension()->getId();
         // check that we only add one object per dimension
@@ -160,10 +154,8 @@ class Transaction
 
     /**
      * Get amount
-     *
-     * @return float
      */
-    public function getAmount()
+    public function getAmount(): float
     {
         return $this->amount;
     }
@@ -172,10 +164,8 @@ class Transaction
      * Set amount
      *
      * @param float $amount
-     *
-     * @return Transaction
      */
-    public function setAmount($amount)
+    public function setAmount($amount): self
     {
         $this->amount = $amount;
 
@@ -196,10 +186,8 @@ class Transaction
      * Set date
      *
      * @param string $date
-     *
-     * @return Transaction
      */
-    public function setDate($date)
+    public function setDate($date): self
     {
         $this->date = $date;
 
@@ -220,10 +208,8 @@ class Transaction
      * Set text
      *
      * @param string $text
-     *
-     * @return Transaction
      */
-    public function setText($text)
+    public function setText($text): self
     {
         $this->text = $text;
 
@@ -244,10 +230,8 @@ class Transaction
      * Set quantity
      *
      * @param string $quantity
-     *
-     * @return Transaction
      */
-    public function setQuantity($quantity)
+    public function setQuantity($quantity): self
     {
         $this->quantity = $quantity;
 
@@ -268,10 +252,8 @@ class Transaction
      * Set registration sign
      *
      * @param string $registrationSign
-     *
-     * @return Transaction
      */
-    public function setRegistrationSign($registrationSign)
+    public function setRegistrationSign($registrationSign): self
     {
         $this->registrationSign = $registrationSign;
 
@@ -283,7 +265,7 @@ class Transaction
      *
      * @throws DomainException
      */
-    public function validate()
+    public function validate(): void
     {
         if (! $this->account) {
             throw new DomainException('Mandatory field: account');

@@ -9,9 +9,11 @@ return RectorConfig::configure()
         __DIR__ . '/examples',
         __DIR__ . '/src',
     ])
-    // uncomment to reach your current PHP version
-    ->withPhpSets()
-    ->withTypeCoverageLevel(0)
+
+    ->withPhpSets(php81: true)
+    ->withPreparedSets(
+        typeDeclarations: true,
+    )
 
     // DTOs looks a bit ugly with this, lets consider if we want this
     ->withSkip([

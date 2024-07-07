@@ -38,17 +38,13 @@ class SIEDumper
 
     /**
      * Hold the options for the SIE-file
-     *
-     * @var array
      */
-    protected $options;
+    protected array $options;
 
     /**
      * Generates and escapes a line
-     *
-     * @return string
      */
-    protected function getLine($label, $parameters)
+    protected function getLine(string $label, $parameters): string
     {
         // we build the line in reverse order to be able to skip empty items (null) at the end of the lines
         $line = '';
@@ -85,10 +81,8 @@ class SIEDumper
 
     /**
      * Escapes a field
-     *
-     * @return string
      */
-    protected function escapeField($unescaped)
+    protected function escapeField($unescaped): string
     {
         if (is_object($unescaped)) {
             var_dump($unescaped);
@@ -144,7 +138,7 @@ class SIEDumper
      * @param string $generatorName
      * @param string $generatorVersion
      */
-    public function setGenerator($generatorName, $generatorVersion = self::DEFAULT_GENERATOR_VERSION)
+    public function setGenerator($generatorName, $generatorVersion = self::DEFAULT_GENERATOR_VERSION): void
     {
         $this->options['generator'] = $generatorName;
         $this->options['generator_version'] = $generatorVersion;
@@ -152,10 +146,8 @@ class SIEDumper
 
     /**
      * Dumps the Company and the data to SIE-format. Returns the SIE-contents as a string
-     *
-     * @return string
      */
-    public function dump(Data\Company $sie)
+    public function dump(Data\Company $sie): string
     {
         // mandatory
         $data = $this->getLine('FLAGGA', ['0']);

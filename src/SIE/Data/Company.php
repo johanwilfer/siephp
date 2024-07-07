@@ -93,10 +93,8 @@ class Company
      * Set company name
      *
      * @param string $companyName
-     *
-     * @return Company
      */
-    public function setCompanyName($companyName)
+    public function setCompanyName($companyName): self
     {
         $this->companyName = $companyName;
 
@@ -117,10 +115,8 @@ class Company
      * Set company number
      *
      * @param string $companyNumber
-     *
-     * @return Company
      */
-    public function setCompanyNumber($companyNumber)
+    public function setCompanyNumber($companyNumber): self
     {
         $this->companyNumber = $companyNumber;
 
@@ -129,10 +125,8 @@ class Company
 
     /**
      * Set type of chart of accounts.
-     *
-     * @return Company
      */
-    public function setTypeOfChartOfAccounts($type)
+    public function setTypeOfChartOfAccounts($type): self
     {
         $this->typeOfChartOfAccounts = $type;
 
@@ -152,11 +146,9 @@ class Company
     /**
      * Add an account
      *
-     * @return Company
-     *
      * @throws DomainException
      */
-    public function addAccount(Account $account)
+    public function addAccount(Account $account): self
     {
         $id = $account->getId();
         if (isset($this->accounts[$id])) {
@@ -196,11 +188,9 @@ class Company
     /**
      * Add dimension
      *
-     * @return Company
-     *
      * @throws DomainException
      */
-    public function addDimension(Dimension $dimension)
+    public function addDimension(Dimension $dimension): self
     {
         $id = $dimension->getId();
         if (isset($this->dimensions[$id])) {
@@ -237,11 +227,9 @@ class Company
     /**
      * Add verification series
      *
-     * @return Company
-     *
      * @throws DomainException
      */
-    public function addVerificationSeries(VerificationSeries $verificationSeries)
+    public function addVerificationSeries(VerificationSeries $verificationSeries): self
     {
         $id = $verificationSeries->getId();
         foreach ($this->verificationSeries as $item) {
@@ -287,11 +275,9 @@ class Company
     /**
      * Add fiscal year
      *
-     * @return Company
-     *
      * @throws DomainException
      */
-    public function addFiscalYear(FiscalYear $fiscalYear)
+    public function addFiscalYear(FiscalYear $fiscalYear): self
     {
         $this->fiscalYears[] = $fiscalYear;
 
@@ -313,7 +299,7 @@ class Company
      *
      * @throws DomainException
      */
-    public function validate()
+    public function validate(): void
     {
         if (! $this->companyName) {
             throw new DomainException('Mandatory field companyName');

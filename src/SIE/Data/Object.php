@@ -78,10 +78,8 @@ class Object
      * Set dimension
      *
      * @param Dimension $dimension
-     *
-     * @return object
      */
-    public function setDimension($dimension)
+    public function setDimension($dimension): self
     {
         $this->dimension = $dimension;
 
@@ -102,10 +100,8 @@ class Object
      * Set name
      *
      * @param string $name
-     *
-     * @return object
      */
-    public function setName($name)
+    public function setName($name): self
     {
         $this->name = $name;
 

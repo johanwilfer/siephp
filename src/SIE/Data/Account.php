@@ -48,10 +48,8 @@ class Account
 
     /**
      * Get account number
-     *
-     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -70,10 +68,8 @@ class Account
      * Set account name
      *
      * @param string $name
-     *
-     * @return Account
      */
-    public function setName($name)
+    public function setName($name): self
     {
         $this->name = $name;
 
@@ -85,7 +81,7 @@ class Account
      *
      * @throws DomainException
      */
-    public function validate()
+    public function validate(): void
     {
         if (! $this->name) {
             throw new DomainException('AccountName must be set.');

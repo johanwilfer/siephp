@@ -20,17 +20,13 @@ class FiscalYear
 {
     /**
      * Start of Fiscal year
-     *
-     * @var \DateTime
      */
-    protected $dateStart;
+    protected \DateTime $dateStart;
 
     /**
      * End of Fiscal year
-     *
-     * @var \DateTime
      */
-    protected $dateEnd;
+    protected \DateTime $dateEnd;
 
     /**
      * Account balances for this fiscal year
@@ -56,7 +52,7 @@ class FiscalYear
      *
      * @return FiscalYear A new instance of FiscalYear
      */
-    public function createPreviousFiscalYear()
+    public function createPreviousFiscalYear(): \SIE\Data\FiscalYear
     {
         // create new dates
         $dateEnd = clone $this->dateEnd;
@@ -72,36 +68,24 @@ class FiscalYear
         return $fiscalYear;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDateStart()
+    public function getDateStart(): \DateTime
     {
         return $this->dateStart;
     }
 
-    /**
-     * @return FiscalYear
-     */
-    public function setDateStart(\DateTime $dateStart)
+    public function setDateStart(\DateTime $dateStart): self
     {
         $this->dateStart = $dateStart;
 
         return $this;
     }
 
-    /**
-     * @return \DateTime
-     */
-    public function getDateEnd()
+    public function getDateEnd(): \DateTime
     {
         return $this->dateEnd;
     }
 
-    /**
-     * @return FiscalYear
-     */
-    public function setDateEnd(\DateTime $dateEnd)
+    public function setDateEnd(\DateTime $dateEnd): self
     {
         $this->dateEnd = $dateEnd;
 
@@ -113,11 +97,9 @@ class FiscalYear
      *
      * @param AccountBalance $accountBalance The account balance object representing balances for this fiscal year
      *
-     * @return FiscalYear
-     *
      * @throws DomainException
      */
-    public function addAccountBalance(AccountBalance $accountBalance)
+    public function addAccountBalance(AccountBalance $accountBalance): self
     {
         $id = $accountBalance->getAccount()->getId();
         if (isset($this->accountBalances[$id])) {

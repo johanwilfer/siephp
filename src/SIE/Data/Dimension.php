@@ -70,10 +70,8 @@ class Dimension
 
     /**
      * Return id of the dimension
-     *
-     * @return int
      */
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
@@ -82,10 +80,8 @@ class Dimension
      * Add object
      *
      * @param \SIE\Data\Object $object
-     *
-     * @return Dimension
      */
-    public function addObject(Object $object)
+    public function addObject(Object $object): self
     {
         $object->setDimension($this);
         $this->objects[] = $object;

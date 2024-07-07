@@ -99,10 +99,8 @@ class Verification
      * Set date
      *
      * @param string $date
-     *
-     * @return Verification
      */
-    public function setDate($date)
+    public function setDate($date): self
     {
         $this->date = $date;
 
@@ -123,10 +121,8 @@ class Verification
      * Set text
      *
      * @param string $text
-     *
-     * @return Verification
      */
-    public function setText($text)
+    public function setText($text): self
     {
         $this->text = $text;
 
@@ -147,10 +143,8 @@ class Verification
      * Set registration date
      *
      * @param string $registrationDate
-     *
-     * @return Verification
      */
-    public function setRegistrationDate($registrationDate)
+    public function setRegistrationDate($registrationDate): self
     {
         $this->registrationDate = $registrationDate;
 
@@ -171,10 +165,8 @@ class Verification
      * Set registartion sign
      *
      * @param string $registrationSign
-     *
-     * @return Verification
      */
-    public function setRegistrationSign($registrationSign)
+    public function setRegistrationSign($registrationSign): self
     {
         $this->registrationSign = $registrationSign;
 
@@ -183,10 +175,8 @@ class Verification
 
     /**
      * Add a transaction
-     *
-     * @return Verification
      */
-    public function addTransaction(Transaction $transaction)
+    public function addTransaction(Transaction $transaction): self
     {
         $this->transactions[] = $transaction;
 
@@ -208,7 +198,7 @@ class Verification
      *
      * @throws DomainException
      */
-    public function validate()
+    public function validate(): void
     {
         if (! $this->date) {
             throw new DomainException('Mandatory field date');
