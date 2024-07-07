@@ -1,0 +1,6 @@
+parameters:
+    # https://phpstan.org/config-reference
+	level: max
+	paths:
+		- examples
+		- src
