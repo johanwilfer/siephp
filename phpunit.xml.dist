@@ -2,12 +2,6 @@
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" colors="true"
          bootstrap="tests/bootstrap.php" xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
 >
-    <php>
-        <server name="KERNEL_DIR" value="tests"/>
-        <env name="KERNEL_CLASS" value="Tbbc\MoneyBundle\Tests\AppKernel"/>
-        <env name="SYMFONY_DEPRECATIONS_HELPER" value="weak"/>
-    </php>
-
     <testsuites>
         <testsuite name="Test suite">
             <directory>tests</directory>
