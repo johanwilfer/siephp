@@ -187,7 +187,7 @@ final class Transaction
      */
     public function validate(): void
     {
-        if (!$this->account instanceof Account) {
+        if (! $this->account instanceof Account) {
             throw new DomainException('Mandatory field: account');
         }
 
