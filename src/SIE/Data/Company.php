@@ -20,12 +20,14 @@ class Company
 {
     /**
      * #FNAMN - Company name
+     *
      * @var string
      */
     protected $companyName;
 
     /**
      * #ORGNR - Company orgnr, like 555555-5555
+     *
      * @var string
      */
     protected $companyNumber;
@@ -33,30 +35,35 @@ class Company
     /**
      * #KBTYP - type of chart of accounts
      * It's optional, when it's missing BAS95 is used.
+     *
      * @var string
      */
     protected $typeOfChartOfAccounts;
-    
+
     /**
      * #KONTO - Accounts list
+     *
      * @var Account[]
      */
     protected $accounts;
 
     /**
      * Represents verification series
+     *
      * @var VerificationSeries[]
      */
     protected $verificationSeries;
 
     /**
      * Represents dimensions
+     *
      * @var Dimension[]
      */
     protected $dimensions;
 
     /**
      * The fiscal year, used by incoming and outgoing balances.
+     *
      * @var FiscalYear[]
      */
     protected $fiscalYears;
@@ -74,6 +81,7 @@ class Company
 
     /**
      * Get company name
+     *
      * @return string
      */
     public function getCompanyName()
@@ -83,17 +91,21 @@ class Company
 
     /**
      * Set company name
+     *
      * @param string $companyName
+     *
      * @return Company
      */
     public function setCompanyName($companyName)
     {
         $this->companyName = $companyName;
+
         return $this;
     }
 
     /**
      * Get company number
+     *
      * @return string
      */
     public function getCompanyNumber()
@@ -103,28 +115,33 @@ class Company
 
     /**
      * Set company number
+     *
      * @param string $companyNumber
+     *
      * @return Company
      */
     public function setCompanyNumber($companyNumber)
     {
         $this->companyNumber = $companyNumber;
+
         return $this;
     }
 
     /**
      * Set type of chart of accounts.
-     * @param $type
+     *
      * @return Company
      */
     public function setTypeOfChartOfAccounts($type)
     {
         $this->typeOfChartOfAccounts = $type;
+
         return $this;
     }
 
     /**
      * Get type of chart of accounts.
+     *
      * @return string
      */
     public function getTypeOfChartOfAccounts()
@@ -132,11 +149,11 @@ class Company
         return $this->typeOfChartOfAccounts;
     }
 
-
     /**
      * Add an account
-     * @param  Account $account
+     *
      * @return Company
+     *
      * @throws DomainException
      */
     public function addAccount(Account $account)
@@ -146,12 +163,15 @@ class Company
             throw new DomainException('The account id "' . $id . '" is already defined.');
         }
         $this->accounts[$id] = $account;
+
         return $this;
     }
 
     /**
      * Search accounts by id
+     *
      * @param  integer $id The account number
+     *
      * @return Account|null
      */
     public function getAccount($id)
@@ -160,25 +180,29 @@ class Company
         if (isset($this->accounts[$id])) {
             return $this->accounts[$id];
         }
+
         // not found
         return null;
     }
 
     /**
      * Get all accounts
+     *
      * @return Account[]
      */
     public function getAccounts()
     {
         // return array sorted by account number
         ksort($this->accounts);
+
         return $this->accounts;
     }
 
     /**
      * Add dimension
-     * @param Dimension $dimension
+     *
      * @return Company
+     *
      * @throws DomainException
      */
     public function addDimension(Dimension $dimension)
@@ -188,12 +212,15 @@ class Company
             throw new DomainException('The dimension id "' . $id . '" is already defined.');
         }
         $this->dimensions[$id] = $dimension;
+
         return $this;
     }
 
     /**
      * Get dimension with id
+     *
      * @param integer $id The dimension id
+     *
      * @return Dimension|null
      */
     public function getDimension($id)
@@ -202,12 +229,14 @@ class Company
         if (isset($this->dimensions[$id])) {
             return $this->dimensions[$id];
         }
+
         // none found
         return null;
     }
 
     /**
      * Return all dimensions
+     *
      * @return Dimension[]
      */
     public function getDimensions()
@@ -217,8 +246,9 @@ class Company
 
     /**
      * Add verification series
-     * @param VerificationSeries $verificationSeries
+     *
      * @return Company
+     *
      * @throws DomainException
      */
     public function addVerificationSeries(VerificationSeries $verificationSeries)
@@ -230,12 +260,15 @@ class Company
             }
         }
         $this->verificationSeries[] = $verificationSeries;
+
         return $this;
     }
 
     /**
      * Get verification series by id.
+     *
      * @param string $id Id of verification series
+     *
      * @return VerificationSeries|null
      */
     public function getVerificationSeries($id)
@@ -246,12 +279,14 @@ class Company
                 return $item;
             }
         }
+
         // not found
         return null;
     }
 
     /**
      * Return all series used for verifications
+     *
      * @return VerificationSeries[]
      */
     public function getVerificationSeriesAll()
@@ -261,18 +296,21 @@ class Company
 
     /**
      * Add fiscal year
-     * @param FiscalYear $fiscalYear
+     *
      * @return Company
+     *
      * @throws DomainException
      */
     public function addFiscalYear(FiscalYear $fiscalYear)
     {
         $this->fiscalYears[] = $fiscalYear;
+
         return $this;
     }
 
     /**
      * Get fiscal years
+     *
      * @return FiscalYear[]
      */
     public function getFiscalYears()
@@ -280,14 +318,14 @@ class Company
         return $this->fiscalYears;
     }
 
-
     /**
      * Validate the data, valid data should be exportable to SIE-format
+     *
      * @throws DomainException
      */
     public function validate()
     {
-        if (!$this->companyName) {
+        if (! $this->companyName) {
             throw new DomainException('Mandatory field companyName');
         }
         // validate verifications

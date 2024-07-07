@@ -12,9 +12,7 @@
 namespace SIE\Exception;
 
 /**
- * Class DomainException
  * @package SIE\Exception
- * @inheritDoc
  */
 class DomainException extends \DomainException
 {

@@ -20,18 +20,21 @@ class FiscalYear
 {
     /**
      * Start of Fiscal year
+     *
      * @var \DateTime
      */
     protected $dateStart;
 
     /**
      * End of Fiscal year
+     *
      * @var \DateTime
      */
     protected $dateEnd;
 
     /**
      * Account balances for this fiscal year
+     *
      * @var AccountBalance[]
      */
     protected $accountBalances;
@@ -45,11 +48,12 @@ class FiscalYear
         $this->dateStart = new \DateTime('first day of January this year');
         $this->dateEnd = new \DateTime('last day of December this year');
         // initialize array
-        $this->accountBalances = array();
+        $this->accountBalances = [];
     }
 
     /**
      * Constructs a FiscalYear for the previous year from this instances start.
+     *
      * @return FiscalYear A new instance of FiscalYear
      */
     public function createPreviousFiscalYear()
@@ -63,6 +67,7 @@ class FiscalYear
         $fiscalYear = new FiscalYear();
         $fiscalYear->setDateEnd($dateEnd);
         $fiscalYear->setDateStart($dateStart);
+
         // return new FiscalYear
         return $fiscalYear;
     }
@@ -76,12 +81,12 @@ class FiscalYear
     }
 
     /**
-     * @param \DateTime $dateStart
      * @return FiscalYear
      */
     public function setDateStart(\DateTime $dateStart)
     {
         $this->dateStart = $dateStart;
+
         return $this;
     }
 
@@ -94,19 +99,22 @@ class FiscalYear
     }
 
     /**
-     * @param \DateTime $dateEnd
      * @return FiscalYear
      */
     public function setDateEnd(\DateTime $dateEnd)
     {
         $this->dateEnd = $dateEnd;
+
         return $this;
     }
 
     /**
      * Add incoming balance for an account
+     *
      * @param AccountBalance $accountBalance The account balance object representing balances for this fiscal year
+     *
      * @return FiscalYear
+     *
      * @throws DomainException
      */
     public function addAccountBalance(AccountBalance $accountBalance)
@@ -117,12 +125,15 @@ class FiscalYear
         }
 
         $this->accountBalances[$id] = $accountBalance;
+
         return $this;
     }
 
     /**
      * Get account balance by account id
+     *
      * @param string $id Account id
+     *
      * @return AccountBalance|null
      */
     public function getAccountBalance($id)
@@ -131,17 +142,20 @@ class FiscalYear
         if (isset($this->accountBalances[$id])) {
             return $this->accountBalances[$id];
         }
+
         // not found
         return null;
     }
 
     /**
      * Get account balances for this fiscal year
+     *
      * @return AccountBalance[]
      */
     public function getAccountBalances()
     {
         ksort($this->accountBalances);
+
         return $this->accountBalances;
     }
 }

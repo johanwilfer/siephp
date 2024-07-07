@@ -18,30 +18,34 @@ use SIE\Data;
  */
 class SIEDumper
 {
-    const DEFAULT_GENERATOR_NAME = 'SIE-PHP exporter';
-    const DEFAULT_GENERATOR_VERSION = '1.0';
+    public const DEFAULT_GENERATOR_NAME = 'SIE-PHP exporter';
+
+    public const DEFAULT_GENERATOR_VERSION = '1.0';
 
     /**
      * Delimiter used for newline.
+     *
      * @var string
      */
     protected $delimiter_newline = "\r\n";
+
     /**
      * Delimiter used for fields.
+     *
      * @var string
      */
     protected $delimiter_field = " ";
 
     /**
      * Hold the options for the SIE-file
+     *
      * @var array
      */
     protected $options;
 
     /**
      * Generates and escapes a line
-     * @param $label
-     * @param $parameters
+     *
      * @return string
      */
     protected function getLine($label, $parameters)
@@ -57,11 +61,11 @@ class SIEDumper
             // arrays renders this way: {item1 item2 item3...}
             if (is_array($param)) {
                 $sub_field = '';
-                foreach ($param as $item)
-                {
+                foreach ($param as $item) {
                     // insert delimiter if not first
-                    if ($sub_field !== '')
+                    if ($sub_field !== '') {
                         $sub_field .= $this->delimiter_field;
+                    }
                     // add value
                     $sub_field .= $this->escapeField($item);
                 }
@@ -75,12 +79,13 @@ class SIEDumper
         }
 
         $line = '#' . $label . $line . $this->delimiter_newline;
+
         return $line;
     }
 
     /**
      * Escapes a field
-     * @param $unescaped
+     *
      * @return string
      */
     protected function escapeField($unescaped)
@@ -147,13 +152,13 @@ class SIEDumper
 
     /**
      * Dumps the Company and the data to SIE-format. Returns the SIE-contents as a string
-     * @param Data\Company $sie
+     *
      * @return string
      */
     public function dump(Data\Company $sie)
     {
         // mandatory
-        $data  = $this->getLine('FLAGGA', ['0']);
+        $data = $this->getLine('FLAGGA', ['0']);
         $data .= $this->getLine('FORMAT', ['PC8']);
         $data .= $this->getLine('SIETYP', ['4']);
         $data .= $this->getLine('PROGRAM', [$this->options['generator'], $this->options['generator_version']]);
@@ -206,21 +211,21 @@ class SIEDumper
                     $ver->getDate(),
                     $ver->getText(),
                     $ver->getRegistrationDate(),
-                    $ver->GetRegistrationSign()
+                    $ver->GetRegistrationSign(),
                 ]);
                 // transactions for this verification
                 $data .= '{' . $this->delimiter_newline;
                 foreach ($ver->getTransactions() as $trans) {
                     $data .= '    ' . $this->getLine('TRANS', [
-                            $trans->getAccount()->getId(),
-                            $trans->getObjectsAsArrayPairs(),
-                            $trans->getAmount(),
-                            // transaction date is not mandatory, but looks strange to leave out. Insert verification date if it is missing.
-                            $trans->getDate() ? $trans->getDate() : $ver->getDate(),
-                            $trans->getText(),
-                            $trans->getQuantity(),
-                            $trans->getRegistrationSign(),
-                        ]);
+                        $trans->getAccount()->getId(),
+                        $trans->getObjectsAsArrayPairs(),
+                        $trans->getAmount(),
+                        // transaction date is not mandatory, but looks strange to leave out. Insert verification date if it is missing.
+                        $trans->getDate() ? $trans->getDate() : $ver->getDate(),
+                        $trans->getText(),
+                        $trans->getQuantity(),
+                        $trans->getRegistrationSign(),
+                    ]);
                 }
                 $data .= '}' . $this->delimiter_newline;
                 $data .= $this->delimiter_newline;

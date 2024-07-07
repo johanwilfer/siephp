@@ -11,8 +11,8 @@
 
 namespace SIE\Data;
 
-use SIE\Exception\InvalidArgumentException;
 use SIE\Exception\DomainException;
+use SIE\Exception\InvalidArgumentException;
 
 /**
  * Transaction, see section 11#TRANS at page 33 in "SIE_filformat_ver_4B_ENGLISH.pdf"
@@ -21,19 +21,21 @@ class Account
 {
     /**
      * Account number
+     *
      * @var integer
      */
     protected $id;
 
     /**
      * Account name
+     *
      * @var string
      */
     protected $name;
 
     /**
      * Constructs an Account
-     * @param $accountNumber
+     *
      * @throws InvalidArgumentException
      */
     public function __construct($accountNumber)
@@ -46,6 +48,7 @@ class Account
 
     /**
      * Get account number
+     *
      * @return int
      */
     public function getId()
@@ -55,6 +58,7 @@ class Account
 
     /**
      * Get account name
+     *
      * @return string
      */
     public function getName()
@@ -64,22 +68,26 @@ class Account
 
     /**
      * Set account name
+     *
      * @param string $name
+     *
      * @return Account
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
     /**
      * Validate the data, valid data should be exportable to SIE-format.
+     *
      * @throws DomainException
      */
     public function validate()
     {
-        if (!$this->name) {
+        if (! $this->name) {
             throw new DomainException('AccountName must be set.');
         }
     }

@@ -12,9 +12,7 @@
 namespace SIE\Exception;
 
 /**
- * Class InvalidArgumentException
  * @package SIE\Exception
- * @inheritDoc
  */
 class InvalidArgumentException extends \InvalidArgumentException
 {

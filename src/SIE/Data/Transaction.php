@@ -20,42 +20,49 @@ class Transaction
 {
     /**
      * Account number
+     *
      * @var Account
      */
     protected $account;
 
     /**
      * Array with objects, uses the dimension as keys, and the value is set to Object.
-     * @var Object[]
+     *
+     * @var object[]
      */
     protected $objects;
 
     /**
      * Amount of transaction
+     *
      * @var float
      */
     protected $amount;
 
     /**
      * Date of transaction (optional)
+     *
      * @var string
      */
     protected $date;
 
     /**
      * Text of transaction (optional)
+     *
      * @var string
      */
     protected $text;
 
     /**
      * Quantity of transaction (optional)
+     *
      * @var string
      */
     protected $quantity;
 
     /**
      * Sign (optional)
+     *
      * @var string
      */
     protected $registrationSign;
@@ -70,6 +77,7 @@ class Transaction
 
     /**
      * Get account
+     *
      * @return Account
      */
     public function getAccount()
@@ -79,17 +87,19 @@ class Transaction
 
     /**
      * Set account
-     * @param Account $account
+     *
      * @return Transaction
      */
     public function setAccount(Account $account)
     {
         $this->account = $account;
+
         return $this;
     }
 
     /**
      * Get all objects for this transaction as an array with pairs for dimension, object
+     *
      * @return array
      */
     public function getObjectsAsArrayPairs()
@@ -100,13 +110,16 @@ class Transaction
             $object_list[] = $object->getDimension()->getId();
             $object_list[] = $object->getId();
         }
+
         return $object_list;
     }
 
     /**
      * Get object with dimension
+     *
      * @param int $dimension Dimension to search
-     * @return Object|null
+     *
+     * @return object|null
      */
     public function getObject($dimension)
     {
@@ -114,13 +127,15 @@ class Transaction
         if (isset($this->objects[$dimension])) {
             return $this->objects[$dimension];
         }
+
         // not found
         return null;
     }
 
     /**
      * Get all objects for this transaction
-     * @return Object[]
+     *
+     * @return object[]
      */
     public function getObjects()
     {
@@ -129,8 +144,11 @@ class Transaction
 
     /**
      * Add object to the transaction
+     *
      * @param \SIE\Data\Object $object
+     *
      * @return Transaction
+     *
      * @throws DomainException
      */
     public function addObject(Object $object)
@@ -141,12 +159,13 @@ class Transaction
             throw new DomainException('This dimension is already defined on this transaction');
         }
         $this->objects[$dimensionId] = $object;
+
         return $this;
     }
 
-
     /**
      * Get amount
+     *
      * @return float
      */
     public function getAmount()
@@ -156,17 +175,21 @@ class Transaction
 
     /**
      * Set amount
+     *
      * @param float $amount
+     *
      * @return Transaction
      */
     public function setAmount($amount)
     {
         $this->amount = $amount;
+
         return $this;
     }
 
     /**
      * Get date
+     *
      * @return string
      */
     public function getDate()
@@ -176,17 +199,21 @@ class Transaction
 
     /**
      * Set date
+     *
      * @param string $date
+     *
      * @return Transaction
      */
     public function setDate($date)
     {
         $this->date = $date;
+
         return $this;
     }
 
     /**
      * Get text
+     *
      * @return string
      */
     public function getText()
@@ -196,17 +223,21 @@ class Transaction
 
     /**
      * Set text
+     *
      * @param string $text
+     *
      * @return Transaction
      */
     public function setText($text)
     {
         $this->text = $text;
+
         return $this;
     }
 
     /**
      * Get quantity
+     *
      * @return string
      */
     public function getQuantity()
@@ -216,17 +247,21 @@ class Transaction
 
     /**
      * Set quantity
+     *
      * @param string $quantity
+     *
      * @return Transaction
      */
     public function setQuantity($quantity)
     {
         $this->quantity = $quantity;
+
         return $this;
     }
 
     /**
      * Get registration sign
+     *
      * @return string
      */
     public function getRegistrationSign()
@@ -236,22 +271,26 @@ class Transaction
 
     /**
      * Set registration sign
+     *
      * @param string $registrationSign
+     *
      * @return Transaction
      */
     public function setRegistrationSign($registrationSign)
     {
         $this->registrationSign = $registrationSign;
+
         return $this;
     }
 
     /**
      * Validate the data, valid data should be exportable to SIE-format.
+     *
      * @throws DomainException
      */
     public function validate()
     {
-        if (!$this->account) {
+        if (! $this->account) {
             throw new DomainException('Mandatory field: account');
         }
         if ($this->amount === null) {

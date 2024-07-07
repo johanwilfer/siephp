@@ -21,28 +21,32 @@ class VerificationSeries
     /**
      * See page 37 in "SIE_filformat_ver_4B_ENGLISH.pdf": #VER
      */
-    const CONST_DEFAULT_SERIES = 'A';
+    public const CONST_DEFAULT_SERIES = 'A';
 
     /**
      * Number series designation
+     *
      * @var string
      */
     protected $id;
 
     /**
      * #VER - these are the numbered verifications that will be included in ascending order when calling getVerifications()
+     *
      * @var Verification[]
      */
     protected $verifications;
 
     /**
      * #VER - these don't have a verification number and will be included after the ones in ascending order when calling getVerifications()
+     *
      * @var Verification[]
      */
     protected $verificationsPreProcessingSystem;
 
     /**
      * Construct a VerificationSeries
+     *
      * @param string $id
      */
     public function __construct($id = self::CONST_DEFAULT_SERIES)
@@ -54,6 +58,7 @@ class VerificationSeries
 
     /**
      * Get series identifier
+     *
      * @return string
      */
     public function getId()
@@ -63,8 +68,9 @@ class VerificationSeries
 
     /**
      * add verification
-     * @param Verification $verification
+     *
      * @return VerificationSeries
+     *
      * @throws DomainException
      */
     public function addVerification(Verification $verification)
@@ -89,8 +95,8 @@ class VerificationSeries
      *  reporting program. The series or verification number is in this case set by the
      *  financial reporting program."
      *
-     * @param Verification $verification
      * @return VerificationSeries
+     *
      * @throws DomainException
      */
     public function addVerificationPreProcessingSystem(Verification $verification)
@@ -102,6 +108,7 @@ class VerificationSeries
 
     /**
      * Get all verifications
+     *
      * @return Verification[]
      */
     public function getVerifications()
@@ -119,6 +126,7 @@ class VerificationSeries
      * Get verification - will only find numbered verifications
      *
      * @param string $id Search for verification number
+     *
      * @return Verification|null
      */
     public function getVerification($id)
@@ -127,13 +135,14 @@ class VerificationSeries
         if (isset($this->verifications[$id])) {
             return $this->verifications[$id];
         }
+
         // not found
         return null;
     }
 
-
     /**
      * Validate verifications in this series
+     *
      * @throws DomainException
      */
     public function validate()
