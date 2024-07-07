@@ -107,6 +107,7 @@ final class Dimension
     public function getObjects(): array
     {
         ksort($this->objects);
+
         return $this->objects;
     }
 }

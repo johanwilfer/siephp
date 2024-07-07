@@ -72,6 +72,7 @@ final class FiscalYear
     public function setDateStart(\DateTime $dateStart): self
     {
         $this->dateStart = $dateStart;
+
         return $this;
     }
 
@@ -83,6 +84,7 @@ final class FiscalYear
     public function setDateEnd(\DateTime $dateEnd): self
     {
         $this->dateEnd = $dateEnd;
+
         return $this;
     }
 
@@ -121,6 +123,7 @@ final class FiscalYear
     public function getAccountBalances(): array
     {
         ksort($this->accountBalances);
+
         return $this->accountBalances;
     }
 }

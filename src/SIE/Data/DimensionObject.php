@@ -11,7 +11,6 @@
 
 namespace SIE\Data;
 
-
 /**
  * Represents an "value" in a Dimension: An Object.
  */
@@ -53,6 +52,7 @@ final class DimensionObject
     public function setName(string $name): self
     {
         $this->name = $name;
+
         return $this;
     }
 }

@@ -69,6 +69,7 @@ final class Verification
     public function setDate(string $date): self
     {
         $this->date = $date;
+
         return $this;
     }
 
@@ -80,6 +81,7 @@ final class Verification
     public function setText(string $text): self
     {
         $this->text = $text;
+
         return $this;
     }
 
@@ -91,6 +93,7 @@ final class Verification
     public function setRegistrationDate(string $registrationDate): self
     {
         $this->registrationDate = $registrationDate;
+
         return $this;
     }
 
@@ -102,12 +105,14 @@ final class Verification
     public function setRegistrationSign(string $registrationSign): self
     {
         $this->registrationSign = $registrationSign;
+
         return $this;
     }
 
     public function addTransaction(Transaction $transaction): self
     {
         $this->transactions[] = $transaction;
+
         return $this;
     }
 

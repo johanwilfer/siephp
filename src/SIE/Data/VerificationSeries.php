@@ -70,6 +70,7 @@ final class VerificationSeries
         }
 
         $this->verifications[$id] = $verification;
+
         return $this;
     }
 
@@ -98,6 +99,7 @@ final class VerificationSeries
     {
         // sort numbered verifications by id
         ksort($this->verifications);
+
         // array_merge will overwrite duplicate string keys with the value from the last array
         // but we don't add string keys to $this->verificationsPreProcessingSystem
         return array_merge($this->verifications, $this->verificationsPreProcessingSystem);

@@ -70,6 +70,7 @@ final class Transaction
     public function setAccount(Account $account): self
     {
         $this->account = $account;
+
         return $this;
     }
 
@@ -133,6 +134,7 @@ final class Transaction
     public function setAmount(float $amount): self
     {
         $this->amount = $amount;
+
         return $this;
     }
 
