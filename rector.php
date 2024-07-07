@@ -12,8 +12,15 @@ return RectorConfig::configure()
 
     ->withPhpSets(php82: true)
     ->withPreparedSets(
+        deadCode: true,
         codeQuality: true,
+        codingStyle: true,
         typeDeclarations: true,
+        privatization: true,
+        instanceOf: true,
+        strictBooleans: true,
+        phpunitCodeQuality: true,
+        phpunit: true,
     )
     ->withImportNames(importShortClasses: false, removeUnusedImports: true)
 

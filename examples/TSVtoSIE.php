@@ -45,6 +45,7 @@ class TSVLoader
             if ($line === '') {
                 continue;
             }
+
             $rows[] = explode($delimiter, $line);
         }
 
@@ -112,8 +113,6 @@ class TSVLoader
      * Parse transaction-data form TSV-file
      *
      * @param int $skipHeaderLines
-     *
-     * @return Data\Company
      */
     public function parseTransactions($value, Company $company, $skipHeaderLines = 1): void
     {
@@ -123,6 +122,7 @@ class TSVLoader
         for ($i = 0; $i < $skipHeaderLines; $i++) {
             array_shift($rows);
         }
+
         // fix ordering
         usort($rows, [$this, 'tabularDataCompareRows']);
 
@@ -194,6 +194,7 @@ class TSVLoader
                         ->setName('Resultatenhet ' . $data['result_unit']); //We don't have this data, so just set it
                     $dim->addObject($object);
                 }
+
                 // add to transaction
                 $transaction->addObject($object);
             }
@@ -210,6 +211,7 @@ class TSVLoader
                         ->setName('Projekt ' . $data['project']); //We don't have this data, so just set it
                     $dim->addObject($object);
                 }
+
                 // add to transaction
                 $transaction->addObject($object);
             }

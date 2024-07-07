@@ -62,13 +62,6 @@ final class Company
      */
     private array $fiscalYears = [];
 
-    /**
-     * Creates a Company object, that could be exported as a SIE-file
-     */
-    public function __construct()
-    {
-    }
-
     public function getCompanyName(): ?string
     {
         return $this->companyName;
@@ -116,6 +109,7 @@ final class Company
         if (isset($this->accounts[$id])) {
             throw new DomainException('The account id "' . $id . '" is already defined.');
         }
+
         $this->accounts[$id] = $account;
 
         return $this;
@@ -153,6 +147,7 @@ final class Company
         if (isset($this->dimensions[$id])) {
             throw new DomainException('The dimension id "' . $id . '" is already defined.');
         }
+
         $this->dimensions[$id] = $dimension;
 
         return $this;
@@ -189,6 +184,7 @@ final class Company
                 throw new DomainException('This verification series with the id "' . $id . '" is already defined.');
             }
         }
+
         $this->verificationSeries[] = $verificationSeries;
 
         return $this;
@@ -251,6 +247,7 @@ final class Company
         if ($this->companyName === null) {
             throw new DomainException('Mandatory field companyName');
         }
+
         // validate verifications
         foreach ($this->verificationSeries as $item) {
             $item->validate();

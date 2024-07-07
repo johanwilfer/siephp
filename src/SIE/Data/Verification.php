@@ -134,6 +134,7 @@ final class Verification
         if ($this->date === null) {
             throw new DomainException('Mandatory field date');
         }
+
         if ($this->transactions === []) {
             throw new DomainException('No transactions for verification id "' . $this->id . '".');
         }
