@@ -29,8 +29,6 @@ $fixerFactory = new FixerFactory();
 $fixerFactory->registerBuiltInFixers();
 $ruleSet = new RuleSet([
     '@Symfony' => true,
-    // You can also enable the risky ruleset if you want.
-    '@Symfony:risky' => true,
 ]);
 $fixerFactory->useRuleSet($ruleSet);
 
