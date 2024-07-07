@@ -194,7 +194,7 @@ final class SIEDumper
                     $ver->getDate(),
                     $ver->getText(),
                     $ver->getRegistrationDate(),
-                    $ver->GetRegistrationSign(),
+                    $ver->getRegistrationSign(),
                 ]);
                 // transactions for this verification
                 $data .= '{' . $this->delimiter_newline;

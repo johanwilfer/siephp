@@ -42,7 +42,7 @@ final class Verification
      * Sign can be the name, signature or user id of the person or process that generated the
      * transaction item or last edited the transaction item. Signature can be omitted.
      */
-    private string $registrationSign;
+    private ?string $registrationSign = null;
 
     /**
      * Transactions for this Verification
@@ -97,12 +97,12 @@ final class Verification
         return $this;
     }
 
-    public function getRegistrationSign(): string
+    public function getRegistrationSign(): ?string
     {
         return $this->registrationSign;
     }
 
-    public function setRegistrationSign(string $registrationSign): self
+    public function setRegistrationSign(?string $registrationSign): self
     {
         $this->registrationSign = $registrationSign;
 
