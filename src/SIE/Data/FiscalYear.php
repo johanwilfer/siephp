@@ -16,24 +16,24 @@ use SIE\Exception\DomainException;
 /**
  * Represents a Fiscal year, can hold account balance sheet items for incoming / outgoing
  */
-class FiscalYear
+final class FiscalYear
 {
     /**
      * Start of Fiscal year
      */
-    protected \DateTime $dateStart;
+    private \DateTime $dateStart;
 
     /**
      * End of Fiscal year
      */
-    protected \DateTime $dateEnd;
+    private \DateTime $dateEnd;
 
     /**
      * Account balances for this fiscal year
      *
      * @var AccountBalance[]
      */
-    protected $accountBalances = [];
+    private $accountBalances = [];
 
     /**
      * Constructor for Fiscal year
@@ -47,10 +47,8 @@ class FiscalYear
 
     /**
      * Constructs a FiscalYear for the previous year from this instances start.
-     *
-     * @return FiscalYear A new instance of FiscalYear
      */
-    public function createPreviousFiscalYear(): \SIE\Data\FiscalYear
+    public function createPreviousFiscalYear(): FiscalYear
     {
         // create new dates
         $dateEnd = clone $this->dateEnd;
@@ -74,7 +72,6 @@ class FiscalYear
     public function setDateStart(\DateTime $dateStart): self
     {
         $this->dateStart = $dateStart;
-
         return $this;
     }
 
@@ -86,7 +83,6 @@ class FiscalYear
     public function setDateEnd(\DateTime $dateEnd): self
     {
         $this->dateEnd = $dateEnd;
-
         return $this;
     }
 
@@ -111,14 +107,9 @@ class FiscalYear
 
     /**
      * Get account balance by account id
-     *
-     * @param string $id Account id
-     *
-     * @return AccountBalance|null
      */
-    public function getAccountBalance($id)
+    public function getAccountBalance(int $id): ?AccountBalance
     {
-        // not found
         return $this->accountBalances[$id] ?? null;
     }
 
@@ -127,10 +118,9 @@ class FiscalYear
      *
      * @return AccountBalance[]
      */
-    public function getAccountBalances()
+    public function getAccountBalances(): array
     {
         ksort($this->accountBalances);
-
         return $this->accountBalances;
     }
 }

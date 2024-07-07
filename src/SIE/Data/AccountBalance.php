@@ -14,7 +14,7 @@ namespace SIE\Data;
 /**
  * Account balance, for a fiscal year
  */
-class AccountBalance
+final class AccountBalance
 {
     /**
      * The account

@@ -5,7 +5,7 @@ use SIE\Data\AccountBalance;
 use SIE\Data\Company;
 use SIE\Data\Dimension;
 use SIE\Data\FiscalYear;
-use SIE\Data\Object;
+use SIE\Data\DimensionObject;
 use SIE\Data\Transaction;
 use SIE\Data\Verification;
 use SIE\Data\VerificationSeries;
@@ -189,7 +189,7 @@ class TSVLoader
                 // find / create object
                 $object = $dim->getObject($data['result_unit']);
                 if ($object === null) {
-                    $object = (new Object($data['result_unit']))
+                    $object = (new DimensionObject($data['result_unit']))
                         ->setDimension($dim)
                         ->setName('Resultatenhet ' . $data['result_unit']); //We don't have this data, so just set it
                     $dim->addObject($object);
@@ -205,7 +205,7 @@ class TSVLoader
                 // find / create object
                 $object = $dim->getObject($data['project']);
                 if ($object === null) {
-                    $object = (new Object($data['project']))
+                    $object = (new DimensionObject($data['project']))
                         ->setDimension($dim)
                         ->setName('Projekt ' . $data['project']); //We don't have this data, so just set it
                     $dim->addObject($object);

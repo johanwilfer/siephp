@@ -14,7 +14,7 @@ namespace SIE\Data;
 /**
  * Represents a dimension, and holds objects
  */
-class Dimension
+final class Dimension
 {
     //FIXME Add support for custom dimensions (#DIM), id 20+ This means generating #DIM-fields for the SIE-export.
 
@@ -47,22 +47,20 @@ class Dimension
 
     /**
      * Dimension identifier
-     *
-     * @var integer
      */
-    protected $id;
+    private int $id;
 
     /**
      * #OBJEKT
      *
-     * @var object[]
+     * @var DimensionObject[]
      */
-    protected $objects = [];
+    private array $objects = [];
 
     /**
      * Create dimension
      */
-    public function __construct($id)
+    public function __construct(int $id)
     {
         $this->id = $id;
     }
@@ -78,7 +76,7 @@ class Dimension
     /**
      * Add object
      */
-    public function addObject(Object $object): self
+    public function addObject(DimensionObject $object): self
     {
         $object->setDimension($this);
         $this->objects[] = $object;
@@ -88,33 +86,27 @@ class Dimension
 
     /**
      * Get Object with id
-     *
-     * @param string $id Search for object key
-     *
-     * @return object|null
      */
-    public function getObject($id = null)
+    public function getObject(string $id): ?DimensionObject
     {
         // search for id
         foreach ($this->objects as $object) {
-            if ($object->getId() == $id) {
+            if ($object->getId() === $id) {
                 return $object;
             }
         }
 
-        // not found
         return null;
     }
 
     /**
      * Get objects for this dimension
      *
-     * @return object[]
+     * @return DimensionObject[]
      */
-    public function getObjects()
+    public function getObjects(): array
     {
         ksort($this->objects);
-
         return $this->objects;
     }
 }

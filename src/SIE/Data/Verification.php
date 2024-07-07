@@ -12,183 +12,109 @@
 namespace SIE\Data;
 
 use SIE\Exception\DomainException;
-use SIE\Exception\InvalidArgumentException;
 
 /**
  * Verification, see section 11#VER at page 37 in "SIE_filformat_ver_4B_ENGLISH.pdf"
  */
-class Verification
+final class Verification
 {
     /**
      * Verification no
-     *
-     * @var string
      */
-    protected $id;
+    private string $id;
 
     /**
      * Verification date
-     *
-     * @var string
      */
-    protected $date;
+    private ?string $date = null;
 
     /**
      * Verification text (optional)
-     *
-     * @var string
      */
-    protected $text;
+    private ?string $text = null;
 
     /**
      * Registration date (optional)
-     *
-     * @var string
      */
-    protected $registrationDate;
+    private ?string $registrationDate = null;
 
     /**
      * Sign can be the name, signature or user id of the person or process that generated the
      * transaction item or last edited the transaction item. Signature can be omitted.
-     *
-     * @var string
      */
-    protected $registrationSign;
+    private string $registrationSign;
 
     /**
      * Transactions for this Verification
      *
      * @var Transaction[]
      */
-    protected $transactions = [];
+    private array $transactions = [];
 
-    /**
-     * Construct a Verification
-     *
-     * @throws InvalidArgumentException
-     */
-    public function __construct($verificationId)
+    public function __construct(string $verificationId)
     {
-        if ($verificationId === null) {
-            throw new InvalidArgumentException('VerificationNumber cannot be null.');
-        }
         $this->id = $verificationId;
     }
 
-    /**
-     * Get verification Id
-     *
-     * @return string
-     */
-    public function getId()
+    public function getId(): string
     {
         return $this->id;
     }
 
-    /**
-     * Get Date
-     *
-     * @return string
-     */
-    public function getDate()
+    public function getDate(): ?string
     {
         return $this->date;
     }
 
-    /**
-     * Set date
-     *
-     * @param string $date
-     */
-    public function setDate($date): self
+    public function setDate(string $date): self
     {
         $this->date = $date;
-
         return $this;
     }
 
-    /**
-     * Get text
-     *
-     * @return string
-     */
-    public function getText()
+    public function getText(): ?string
     {
         return $this->text;
     }
 
-    /**
-     * Set text
-     *
-     * @param string $text
-     */
-    public function setText($text): self
+    public function setText(string $text): self
     {
         $this->text = $text;
-
         return $this;
     }
 
-    /**
-     * Get registration date
-     *
-     * @return string
-     */
-    public function getRegistrationDate()
+    public function getRegistrationDate(): ?string
     {
         return $this->registrationDate;
     }
 
-    /**
-     * Set registration date
-     *
-     * @param string $registrationDate
-     */
-    public function setRegistrationDate($registrationDate): self
+    public function setRegistrationDate(string $registrationDate): self
     {
         $this->registrationDate = $registrationDate;
-
         return $this;
     }
 
-    /**
-     * Get registration sign
-     *
-     * @return string
-     */
-    public function getRegistrationSign()
+    public function getRegistrationSign(): string
     {
         return $this->registrationSign;
     }
 
-    /**
-     * Set registartion sign
-     *
-     * @param string $registrationSign
-     */
-    public function setRegistrationSign($registrationSign): self
+    public function setRegistrationSign(string $registrationSign): self
     {
         $this->registrationSign = $registrationSign;
-
         return $this;
     }
 
-    /**
-     * Add a transaction
-     */
     public function addTransaction(Transaction $transaction): self
     {
         $this->transactions[] = $transaction;
-
         return $this;
     }
 
     /**
-     * Get all transactions
-     *
      * @return Transaction[]
      */
-    public function getTransactions()
+    public function getTransactions(): array
     {
         return $this->transactions;
     }
@@ -200,7 +126,7 @@ class Verification
      */
     public function validate(): void
     {
-        if (! $this->date) {
+        if ($this->date === null) {
             throw new DomainException('Mandatory field date');
         }
         if (count($this->transactions) === 0) {
@@ -217,8 +143,7 @@ class Verification
         }
 
         // validate that our transactions equal zero
-        //FIXME The round() is due to precision loss in float operation. Maybe use Money\Money here instead
-        if (round($sum, 2) != 0) {
+        if (round($sum, 2) !== 0.0) {
             throw new DomainException('The verification id "' . $this->id . '" have a non-zero sum: ' . $sum);
         }
     }

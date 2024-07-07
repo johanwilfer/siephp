@@ -16,7 +16,7 @@ use SIE\Exception\DomainException;
 /**
  * Represents a company with data that could be exported to SIE
  */
-class Company
+final class Company
 {
     /**
      * #FNAMN - Company name

@@ -16,56 +16,44 @@ use SIE\Exception\DomainException;
 /**
  * Transaction, see section 11#TRANS at page 33 in "SIE_filformat_ver_4B_ENGLISH.pdf"
  */
-class Transaction
+final class Transaction
 {
     /**
      * Account number
-     *
-     * @var Account
      */
-    protected $account;
+    private ?Account $account = null;
 
     /**
      * Array with objects, uses the dimension as keys, and the value is set to Object.
      *
-     * @var object[]
+     * @var DimensionObject[]
      */
-    protected $objects = [];
+    private array $dimensionObjects = [];
 
     /**
      * Amount of transaction
-     *
-     * @var float
      */
-    protected $amount;
+    private ?float $amount = null;
 
     /**
      * Date of transaction (optional)
-     *
-     * @var string
      */
-    protected $date;
+    private ?string $date = null;
 
     /**
      * Text of transaction (optional)
-     *
-     * @var string
      */
-    protected $text;
+    private ?string $text = null;
 
     /**
      * Quantity of transaction (optional)
-     *
-     * @var string
      */
-    protected $quantity;
+    private ?string $quantity = null;
 
     /**
      * Sign (optional)
-     *
-     * @var string
      */
-    protected $registrationSign;
+    private ?string $registrationSign = null;
 
     /**
      * Construct a Transaction
@@ -74,62 +62,50 @@ class Transaction
     {
     }
 
-    /**
-     * Get account
-     *
-     * @return Account
-     */
-    public function getAccount()
+    public function getAccount(): ?Account
     {
         return $this->account;
     }
 
-    /**
-     * Set account
-     */
     public function setAccount(Account $account): self
     {
         $this->account = $account;
-
         return $this;
     }
 
     /**
      * Get all objects for this transaction as an array with pairs for dimension, object
+     *
+     * @return array<int, int|string|null>
      */
     public function getObjectsAsArrayPairs(): array
     {
         // object list is pairs of: [dimension] [value] ..
-        $object_list = [];
-        foreach ($this->objects as $object) {
-            $object_list[] = $object->getDimension()->getId();
-            $object_list[] = $object->getId();
+        $objectList = [];
+        foreach ($this->dimensionObjects as $object) {
+            $objectList[] = $object->getDimension()?->getId();
+            $objectList[] = $object->getId();
         }
 
-        return $object_list;
+        return $objectList;
     }
 
     /**
      * Get object with dimension
-     *
-     * @param int $dimension Dimension to search
-     *
-     * @return object|null
      */
-    public function getObject($dimension)
+    public function getObject(int $dimension): ?DimensionObject
     {
-        // not found
-        return $this->objects[$dimension] ?? null;
+        return $this->dimensionObjects[$dimension] ?? null;
     }
 
     /**
      * Get all objects for this transaction
      *
-     * @return object[]
+     * @return DimensionObject[]
      */
-    public function getObjects()
+    public function getObjects(): array
     {
-        return $this->objects;
+        return $this->dimensionObjects;
     }
 
     /**
@@ -137,120 +113,71 @@ class Transaction
      *
      * @throws DomainException
      */
-    public function addObject(Object $object): self
+    public function addObject(DimensionObject $object): self
     {
-        $dimensionId = $object->getDimension()->getId();
+        $dimensionId = $object->getDimension()?->getId();
         // check that we only add one object per dimension
-        if (isset($this->objects[$dimensionId])) {
+        if (isset($this->dimensionObjects[$dimensionId])) {
             throw new DomainException('This dimension is already defined on this transaction');
         }
-        $this->objects[$dimensionId] = $object;
+        $this->dimensionObjects[$dimensionId] = $object;
 
         return $this;
     }
 
-    /**
-     * Get amount
-     */
-    public function getAmount(): float
+    public function getAmount(): ?float
     {
         return $this->amount;
     }
 
-    /**
-     * Set amount
-     *
-     * @param float $amount
-     */
-    public function setAmount($amount): self
+    public function setAmount(float $amount): self
     {
         $this->amount = $amount;
-
         return $this;
     }
 
-    /**
-     * Get date
-     *
-     * @return string
-     */
-    public function getDate()
+    public function getDate(): ?string
     {
         return $this->date;
     }
 
-    /**
-     * Set date
-     *
-     * @param string $date
-     */
-    public function setDate($date): self
+    public function setDate(?string $date): self
     {
         $this->date = $date;
 
         return $this;
     }
 
-    /**
-     * Get text
-     *
-     * @return string
-     */
-    public function getText()
+    public function getText(): ?string
     {
         return $this->text;
     }
 
-    /**
-     * Set text
-     *
-     * @param string $text
-     */
-    public function setText($text): self
+    public function setText(string $text): self
     {
         $this->text = $text;
 
         return $this;
     }
 
-    /**
-     * Get quantity
-     *
-     * @return string
-     */
-    public function getQuantity()
+    public function getQuantity(): ?string
     {
         return $this->quantity;
     }
 
-    /**
-     * Set quantity
-     *
-     * @param string $quantity
-     */
-    public function setQuantity($quantity): self
+    public function setQuantity(string $quantity): self
     {
         $this->quantity = $quantity;
 
         return $this;
     }
 
-    /**
-     * Get registration sign
-     *
-     * @return string
-     */
-    public function getRegistrationSign()
+    public function getRegistrationSign(): ?string
     {
         return $this->registrationSign;
     }
 
-    /**
-     * Set registration sign
-     *
-     * @param string $registrationSign
-     */
-    public function setRegistrationSign($registrationSign): self
+    public function setRegistrationSign(string $registrationSign): self
     {
         $this->registrationSign = $registrationSign;
 
@@ -264,7 +191,7 @@ class Transaction
      */
     public function validate(): void
     {
-        if (! $this->account) {
+        if ($this->account === null) {
             throw new DomainException('Mandatory field: account');
         }
         if ($this->amount === null) {

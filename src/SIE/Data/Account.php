@@ -16,7 +16,7 @@ use SIE\Exception\DomainException;
 /**
  * Transaction, see section 11#TRANS at page 33 in "SIE_filformat_ver_4B_ENGLISH.pdf"
  */
-class Account
+final class Account
 {
     /**
      * Account number
