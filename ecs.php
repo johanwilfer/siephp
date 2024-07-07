@@ -14,10 +14,10 @@ return ECSConfig::configure()
     // add sets - group of rules
     ->withPreparedSets(
         psr12: true,
-        // arrays: true,
-        // namespaces: true,
-        // spaces: true,
-        // docblocks: true,
-        // comments: true,
+        arrays: true,
+        comments: true,
+        docblocks: true,
+        spaces: true,
+        namespaces: true,
     )
 ;
