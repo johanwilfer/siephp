@@ -131,13 +131,8 @@ class VerificationSeries
      */
     public function getVerification($id)
     {
-        // search by id
-        if (isset($this->verifications[$id])) {
-            return $this->verifications[$id];
-        }
-
         // not found
-        return null;
+        return $this->verifications[$id] ?? null;
     }
 
     /**

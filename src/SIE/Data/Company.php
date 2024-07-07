@@ -176,13 +176,8 @@ class Company
      */
     public function getAccount($id)
     {
-        // search by id
-        if (isset($this->accounts[$id])) {
-            return $this->accounts[$id];
-        }
-
         // not found
-        return null;
+        return $this->accounts[$id] ?? null;
     }
 
     /**
@@ -225,13 +220,8 @@ class Company
      */
     public function getDimension($id)
     {
-        // search by id
-        if (isset($this->dimensions[$id])) {
-            return $this->dimensions[$id];
-        }
-
         // none found
-        return null;
+        return $this->dimensions[$id] ?? null;
     }
 
     /**

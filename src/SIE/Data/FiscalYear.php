@@ -138,13 +138,8 @@ class FiscalYear
      */
     public function getAccountBalance($id)
     {
-        // search by id
-        if (isset($this->accountBalances[$id])) {
-            return $this->accountBalances[$id];
-        }
-
         // not found
-        return null;
+        return $this->accountBalances[$id] ?? null;
     }
 
     /**

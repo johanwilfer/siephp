@@ -94,7 +94,7 @@ class SIEDumper
             var_dump($unescaped);
             die;
         }
-        $encoded = iconv('UTF-8', 'CP437', $unescaped);
+        $encoded = iconv('UTF-8', 'CP437', (string) $unescaped);
         $escaped = '';
         $add_quotes = false;
 
@@ -221,7 +221,7 @@ class SIEDumper
                         $trans->getObjectsAsArrayPairs(),
                         $trans->getAmount(),
                         // transaction date is not mandatory, but looks strange to leave out. Insert verification date if it is missing.
-                        $trans->getDate() ? $trans->getDate() : $ver->getDate(),
+                        $trans->getDate() ?: $ver->getDate(),
                         $trans->getText(),
                         $trans->getQuantity(),
                         $trans->getRegistrationSign(),

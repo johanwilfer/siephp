@@ -123,13 +123,8 @@ class Transaction
      */
     public function getObject($dimension)
     {
-        // search by dimension
-        if (isset($this->objects[$dimension])) {
-            return $this->objects[$dimension];
-        }
-
         // not found
-        return null;
+        return $this->objects[$dimension] ?? null;
     }
 
     /**
