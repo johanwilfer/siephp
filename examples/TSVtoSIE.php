@@ -1,15 +1,16 @@
 <?php
 
-use SIE\Data\Company;
-use SIE\Data\FiscalYear;
 use SIE\Data\Account;
 use SIE\Data\AccountBalance;
-use SIE\Data\VerificationSeries;
+use SIE\Data\Company;
 use SIE\Data\Dimension;
-use SIE\Data\Verification;
-use SIE\Data\Transaction;
+use SIE\Data\FiscalYear;
 use SIE\Data\Object;
+use SIE\Data\Transaction;
+use SIE\Data\Verification;
+use SIE\Data\VerificationSeries;
 use SIE\Dumper\SIEDumper;
+
 /**
  * This file is part of the SIE-PHP package.
  *

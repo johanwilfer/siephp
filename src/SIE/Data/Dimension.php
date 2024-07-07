@@ -77,8 +77,6 @@ class Dimension
 
     /**
      * Add object
-     *
-     * @param Object $object
      */
     public function addObject(Object $object): self
     {
@@ -93,7 +91,7 @@ class Dimension
      *
      * @param string $id Search for object key
      *
-     * @return Object|null
+     * @return object|null
      */
     public function getObject($id = null)
     {
@@ -111,7 +109,7 @@ class Dimension
     /**
      * Get objects for this dimension
      *
-     * @return Object[]
+     * @return object[]
      */
     public function getObjects()
     {

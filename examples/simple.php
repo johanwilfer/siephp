@@ -1,11 +1,12 @@
 <?php
 
-use SIE\Data\Company;
-use SIE\Data\VerificationSeries;
 use SIE\Data\Account;
-use SIE\Data\Verification;
+use SIE\Data\Company;
 use SIE\Data\Transaction;
+use SIE\Data\Verification;
+use SIE\Data\VerificationSeries;
 use SIE\Dumper\SIEDumper;
+
 /**
  * This file is part of the SIE-PHP package.
  *

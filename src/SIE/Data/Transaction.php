@@ -135,8 +135,6 @@ class Transaction
     /**
      * Add object to the transaction
      *
-     * @param Object $object
-     *
      * @throws DomainException
      */
     public function addObject(Object $object): self
