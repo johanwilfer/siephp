@@ -48,7 +48,7 @@ final class Dimension
     /**
      * Dimension identifier
      */
-    private int $id;
+    private readonly int $id;
 
     /**
      * #OBJEKT

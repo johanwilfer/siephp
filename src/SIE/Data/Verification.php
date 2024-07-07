@@ -21,7 +21,7 @@ final class Verification
     /**
      * Verification no
      */
-    private string $id;
+    private readonly string $id;
 
     /**
      * Verification date
@@ -134,7 +134,7 @@ final class Verification
         if ($this->date === null) {
             throw new DomainException('Mandatory field date');
         }
-        if (count($this->transactions) === 0) {
+        if ($this->transactions === []) {
             throw new DomainException('No transactions for verification id "' . $this->id . '".');
         }
 

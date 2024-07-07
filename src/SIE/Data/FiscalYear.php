@@ -33,7 +33,7 @@ final class FiscalYear
      *
      * @var AccountBalance[]
      */
-    private $accountBalances = [];
+    private array $accountBalances = [];
 
     /**
      * Constructor for Fiscal year
