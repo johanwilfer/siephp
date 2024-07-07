@@ -23,68 +23,42 @@ class AccountBalance
 
     /**
      * Incoming balance for the account
-     *
-     * @var float
      */
-    protected $incomingBalance;
+    protected float $incomingBalance;
 
     /**
      * Outgoing balance for the account
-     *
-     * @var float
      */
-    protected $outgoingBalance;
+    protected float $outgoingBalance;
 
-    /**
-     * Constructor
-     */
     public function __construct(Account $account)
     {
         $this->account = $account;
     }
 
-    /**
-     * Get account
-     */
     public function getAccount(): Account
     {
         return $this->account;
     }
 
-    /**
-     * Get incoming balance
-     */
     public function getIncomingBalance(): float
     {
         return $this->incomingBalance;
     }
 
-    /**
-     * Set incoming balance
-     *
-     * @param float $incomingBalance
-     */
-    public function setIncomingBalance($incomingBalance): self
+    public function setIncomingBalance(float $incomingBalance): self
     {
         $this->incomingBalance = $incomingBalance;
 
         return $this;
     }
 
-    /**
-     * Get outgoing balance
-     */
     public function getOutgoingBalance(): float
     {
         return $this->outgoingBalance;
     }
 
-    /**
-     * Set outgoing balance
-     *
-     * @param float $outgoingBalance
-     */
-    public function setOutgoingBalance($outgoingBalance): self
+    public function setOutgoingBalance(float $outgoingBalance): self
     {
         $this->outgoingBalance = $outgoingBalance;
 

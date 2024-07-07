@@ -20,53 +20,47 @@ class Company
 {
     /**
      * #FNAMN - Company name
-     *
-     * @var string
      */
-    protected $companyName;
+    private ?string $companyName = null;
 
     /**
      * #ORGNR - Company orgnr, like 555555-5555
-     *
-     * @var string
      */
-    protected $companyNumber;
+    private ?string $companyNumber = null;
 
     /**
      * #KBTYP - type of chart of accounts
      * It's optional, when it's missing BAS95 is used.
-     *
-     * @var string
      */
-    protected $typeOfChartOfAccounts;
+    private ?string $typeOfChartOfAccounts = null;
 
     /**
      * #KONTO - Accounts list
      *
      * @var Account[]
      */
-    protected $accounts = [];
+    private array $accounts = [];
 
     /**
      * Represents verification series
      *
      * @var VerificationSeries[]
      */
-    protected $verificationSeries = [];
+    private array $verificationSeries = [];
 
     /**
      * Represents dimensions
      *
      * @var Dimension[]
      */
-    protected $dimensions = [];
+    private array $dimensions = [];
 
     /**
      * The fiscal year, used by incoming and outgoing balances.
      *
      * @var FiscalYear[]
      */
-    protected $fiscalYears = [];
+    private array $fiscalYears = [];
 
     /**
      * Creates a Company object, that could be exported as a SIE-file
@@ -75,66 +69,38 @@ class Company
     {
     }
 
-    /**
-     * Get company name
-     *
-     * @return string
-     */
-    public function getCompanyName()
+    public function getCompanyName(): ?string
     {
         return $this->companyName;
     }
 
-    /**
-     * Set company name
-     *
-     * @param string $companyName
-     */
-    public function setCompanyName($companyName): self
+    public function setCompanyName(string $companyName): self
     {
         $this->companyName = $companyName;
 
         return $this;
     }
 
-    /**
-     * Get company number
-     *
-     * @return string
-     */
-    public function getCompanyNumber()
+    public function getCompanyNumber(): ?string
     {
         return $this->companyNumber;
     }
 
-    /**
-     * Set company number
-     *
-     * @param string $companyNumber
-     */
-    public function setCompanyNumber($companyNumber): self
+    public function setCompanyNumber(string $companyNumber): self
     {
         $this->companyNumber = $companyNumber;
 
         return $this;
     }
 
-    /**
-     * Set type of chart of accounts.
-     */
-    public function setTypeOfChartOfAccounts($type): self
+    public function setTypeOfChartOfAccounts(string $type): self
     {
         $this->typeOfChartOfAccounts = $type;
 
         return $this;
     }
 
-    /**
-     * Get type of chart of accounts.
-     *
-     * @return string
-     */
-    public function getTypeOfChartOfAccounts()
+    public function getTypeOfChartOfAccounts(): ?string
     {
         return $this->typeOfChartOfAccounts;
     }
@@ -157,14 +123,9 @@ class Company
 
     /**
      * Search accounts by id
-     *
-     * @param  integer $id The account number
-     *
-     * @return Account|null
      */
-    public function getAccount($id)
+    public function getAccount(int $id): ?Account
     {
-        // not found
         return $this->accounts[$id] ?? null;
     }
 
@@ -173,7 +134,7 @@ class Company
      *
      * @return Account[]
      */
-    public function getAccounts()
+    public function getAccounts(): array
     {
         // return array sorted by account number
         ksort($this->accounts);
@@ -199,14 +160,9 @@ class Company
 
     /**
      * Get dimension with id
-     *
-     * @param integer $id The dimension id
-     *
-     * @return Dimension|null
      */
-    public function getDimension($id)
+    public function getDimension(int $id): ?Dimension
     {
-        // none found
         return $this->dimensions[$id] ?? null;
     }
 
@@ -215,7 +171,7 @@ class Company
      *
      * @return Dimension[]
      */
-    public function getDimensions()
+    public function getDimensions(): array
     {
         return $this->dimensions;
     }
@@ -240,12 +196,8 @@ class Company
 
     /**
      * Get verification series by id.
-     *
-     * @param string $id Id of verification series
-     *
-     * @return VerificationSeries|null
      */
-    public function getVerificationSeries($id)
+    public function getVerificationSeries(int $id): ?VerificationSeries
     {
         // search by id
         foreach ($this->verificationSeries as $item) {
@@ -254,7 +206,6 @@ class Company
             }
         }
 
-        // not found
         return null;
     }
 
@@ -263,7 +214,7 @@ class Company
      *
      * @return VerificationSeries[]
      */
-    public function getVerificationSeriesAll()
+    public function getVerificationSeriesAll(): array
     {
         return $this->verificationSeries;
     }
@@ -285,7 +236,7 @@ class Company
      *
      * @return FiscalYear[]
      */
-    public function getFiscalYears()
+    public function getFiscalYears(): array
     {
         return $this->fiscalYears;
     }
@@ -297,7 +248,7 @@ class Company
      */
     public function validate(): void
     {
-        if (! $this->companyName) {
+        if ($this->companyName === null) {
             throw new DomainException('Mandatory field companyName');
         }
         // validate verifications
