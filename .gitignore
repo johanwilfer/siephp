@@ -1,5 +1,5 @@
 # composer vendor and binary
-/vendor/
+/vendor
 /composer.phar
 
 # phpstorm dir

@@ -11,11 +11,14 @@
     ],
     "minimum-stability": "dev",
     "require": {
-        "php": ">=5.4.0"
+        "php": ">=8.2"
     },
     "autoload": {
         "psr-4": {
             "SIE\\": "src/SIE/"
         }
+    },
+    "require-dev": {
+        "symplify/easy-coding-standard": "^12.3"
     }
 }
