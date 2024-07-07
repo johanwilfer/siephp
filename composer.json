@@ -23,7 +23,9 @@
         "rector/rector": "dev-main"
     },
     "scripts": {
-        "check-cs": "vendor/bin/ecs check --ansi",
-        "fix-cs": "vendor/bin/ecs check --fix --ansi"
+        "cs-check": "vendor/bin/ecs check --ansi",
+        "cs-fix": "vendor/bin/ecs check --fix --ansi",
+        "rector-check": "vendor/bin/rector --dry-run",
+        "rector-fix": "vendor/bin/rector"
     }
 }
