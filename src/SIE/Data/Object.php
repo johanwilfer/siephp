@@ -20,25 +20,30 @@ class Object
 {
     /**
      * Dimension id
+     *
      * @var Dimension
      */
     protected $dimension;
 
     /**
      * Object identifier
+     *
      * @var string
      */
     protected $id;
 
     /**
      * Object name
+     *
      * @var string
      */
     protected $name;
 
     /**
      * Constructor
+     *
      * @param string $id
+     *
      * @throws InvalidArgumentException
      */
     public function __construct($id)
@@ -51,6 +56,7 @@ class Object
 
     /**
      * Get id
+     *
      * @return string
      */
     public function getId()
@@ -60,6 +66,7 @@ class Object
 
     /**
      * Get Dimension
+     *
      * @return Dimension
      */
     public function getDimension()
@@ -69,17 +76,21 @@ class Object
 
     /**
      * Set dimension
+     *
      * @param Dimension $dimension
+     *
      * @return object
      */
     public function setDimension($dimension)
     {
         $this->dimension = $dimension;
+
         return $this;
     }
 
     /**
      * Get name
+     *
      * @return string
      */
     public function getName()
@@ -89,12 +100,15 @@ class Object
 
     /**
      * Set name
+     *
      * @param string $name
+     *
      * @return object
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 }

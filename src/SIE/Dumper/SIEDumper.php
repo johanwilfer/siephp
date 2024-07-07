@@ -24,24 +24,28 @@ class SIEDumper
 
     /**
      * Delimiter used for newline.
+     *
      * @var string
      */
     protected $delimiter_newline = "\r\n";
 
     /**
      * Delimiter used for fields.
+     *
      * @var string
      */
     protected $delimiter_field = " ";
 
     /**
      * Hold the options for the SIE-file
+     *
      * @var array
      */
     protected $options;
 
     /**
      * Generates and escapes a line
+     *
      * @return string
      */
     protected function getLine($label, $parameters)
@@ -75,11 +79,13 @@ class SIEDumper
         }
 
         $line = '#' . $label . $line . $this->delimiter_newline;
+
         return $line;
     }
 
     /**
      * Escapes a field
+     *
      * @return string
      */
     protected function escapeField($unescaped)
@@ -146,6 +152,7 @@ class SIEDumper
 
     /**
      * Dumps the Company and the data to SIE-format. Returns the SIE-contents as a string
+     *
      * @return string
      */
     public function dump(Data\Company $sie)

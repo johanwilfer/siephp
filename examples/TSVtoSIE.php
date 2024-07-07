@@ -21,6 +21,7 @@ class TSVLoader
      *
      * @param string $value
      * @param string $delimiter
+     *
      * @return array
      */
     protected function getTabularData($value, $delimiter = "\t")
@@ -76,8 +77,8 @@ class TSVLoader
             $data = [
                 'account_id' => $row[0],
                 'account_name' => $row[1],
-                'incoming' => (float) (str_replace([' ', ' ', '.', ','], ['', '', '', '.'], $row[2])),
-                'outgoing' => (float) (str_replace([' ', ' ', '.', ','], ['', '', '', '.'], $row[5])),
+                'incoming' => (float) str_replace([' ', ' ', '.', ','], ['', '', '', '.'], $row[2]),
+                'outgoing' => (float) str_replace([' ', ' ', '.', ','], ['', '', '', '.'], $row[5]),
             ];
 
             // account - try fetch it from the company
@@ -102,6 +103,7 @@ class TSVLoader
      * Parse transaction-data form TSV-file
      *
      * @param int $skipHeaderLines
+     *
      * @return Data\Company
      */
     public function parseTransactions($value, Data\Company $company, $skipHeaderLines = 1)
@@ -145,7 +147,7 @@ class TSVLoader
                 'ver_name' => $row[13],
                 'ver_row' => $row[14],
                 'trans_text' => $row[15],
-                'trans_amount' => (float) (str_replace(['.', ','], ['', '.'], $row[18])),
+                'trans_amount' => (float) str_replace(['.', ','], ['', '.'], $row[18]),
             ];
 
             // verification

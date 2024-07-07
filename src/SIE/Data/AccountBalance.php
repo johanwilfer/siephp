@@ -18,18 +18,21 @@ class AccountBalance
 {
     /**
      * The account
+     *
      * @var Account
      */
     protected $account;
 
     /**
      * Incoming balance for the account
+     *
      * @var float
      */
     protected $incomingBalance;
 
     /**
      * Outgoing balance for the account
+     *
      * @var float
      */
     protected $outgoingBalance;
@@ -44,6 +47,7 @@ class AccountBalance
 
     /**
      * Get account
+     *
      * @return Account
      */
     public function getAccount()
@@ -53,6 +57,7 @@ class AccountBalance
 
     /**
      * Get incoming balance
+     *
      * @return float
      */
     public function getIncomingBalance()
@@ -62,17 +67,21 @@ class AccountBalance
 
     /**
      * Set incoming balance
+     *
      * @param float $incomingBalance
+     *
      * @return AccountBalance
      */
     public function setIncomingBalance($incomingBalance)
     {
         $this->incomingBalance = $incomingBalance;
+
         return $this;
     }
 
     /**
      * Get outgoing balance
+     *
      * @return float
      */
     public function getOutgoingBalance()
@@ -82,12 +91,15 @@ class AccountBalance
 
     /**
      * Set outgoing balance
+     *
      * @param float $outgoingBalance
+     *
      * @return AccountBalance
      */
     public function setOutgoingBalance($outgoingBalance)
     {
         $this->outgoingBalance = $outgoingBalance;
+
         return $this;
     }
 }

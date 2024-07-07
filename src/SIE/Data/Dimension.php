@@ -47,12 +47,14 @@ class Dimension
 
     /**
      * Dimension identifier
+     *
      * @var integer
      */
     protected $id;
 
     /**
      * #OBJEKT
+     *
      * @var object[]
      */
     protected $objects;
@@ -68,6 +70,7 @@ class Dimension
 
     /**
      * Return id of the dimension
+     *
      * @return int
      */
     public function getId()
@@ -77,19 +80,24 @@ class Dimension
 
     /**
      * Add object
+     *
      * @param \SIE\Data\Object $object
+     *
      * @return Dimension
      */
     public function addObject(Object $object)
     {
         $object->setDimension($this);
         $this->objects[] = $object;
+
         return $this;
     }
 
     /**
      * Get Object with id
+     *
      * @param string $id Search for object key
+     *
      * @return \SIE\Data\Object|null
      */
     public function getObject($id = null)
@@ -100,17 +108,20 @@ class Dimension
                 return $object;
             }
         }
+
         // not found
         return null;
     }
 
     /**
      * Get objects for this dimension
+     *
      * @return \SIE\Data\Object[]
      */
     public function getObjects()
     {
         ksort($this->objects);
+
         return $this->objects;
     }
 }

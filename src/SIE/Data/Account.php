@@ -21,18 +21,21 @@ class Account
 {
     /**
      * Account number
+     *
      * @var integer
      */
     protected $id;
 
     /**
      * Account name
+     *
      * @var string
      */
     protected $name;
 
     /**
      * Constructs an Account
+     *
      * @throws InvalidArgumentException
      */
     public function __construct($accountNumber)
@@ -45,6 +48,7 @@ class Account
 
     /**
      * Get account number
+     *
      * @return int
      */
     public function getId()
@@ -54,6 +58,7 @@ class Account
 
     /**
      * Get account name
+     *
      * @return string
      */
     public function getName()
@@ -63,17 +68,21 @@ class Account
 
     /**
      * Set account name
+     *
      * @param string $name
+     *
      * @return Account
      */
     public function setName($name)
     {
         $this->name = $name;
+
         return $this;
     }
 
     /**
      * Validate the data, valid data should be exportable to SIE-format.
+     *
      * @throws DomainException
      */
     public function validate()
