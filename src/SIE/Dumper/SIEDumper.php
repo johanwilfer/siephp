@@ -17,7 +17,7 @@ use SIE\Exception\DomainException;
 /**
  * Generates a SIE-file
  */
-class SIEDumper
+final class SIEDumper
 {
     public const DEFAULT_GENERATOR_NAME = 'SIE-PHP exporter';
 
@@ -44,9 +44,8 @@ class SIEDumper
      * Generates and escapes a line
      *
      * @param array<mixed> $parameters
-     *
      */
-    protected function getLine(string $label, array $parameters): string
+    private function getLine(string $label, array $parameters): string
     {
         // we build the line in reverse order to be able to skip empty items (null) at the end of the lines
         $line = '';
@@ -84,10 +83,7 @@ class SIEDumper
         return '#' . $label . $line . $this->delimiter_newline;
     }
 
-    /**
-     * Escapes a field
-     */
-    protected function escapeField(string|int|float $unescaped): string
+    private function escapeField(string|int|float $unescaped): string
     {
         $encoded = (string) iconv('UTF-8', 'CP437', (string) $unescaped);
         $escaped = '';
