@@ -33,7 +33,7 @@ final class FiscalYear
      *
      * @var AccountBalance[]
      */
-    private $accountBalances = [];
+    private array $accountBalances = [];
 
     /**
      * Constructor for Fiscal year
@@ -53,6 +53,7 @@ final class FiscalYear
         // create new dates
         $dateEnd = clone $this->dateEnd;
         $dateEnd->modify('-1 year');
+
         $dateStart = clone $this->dateStart;
         $dateStart->modify('-1 year');
         // create fiscal year and set start & end

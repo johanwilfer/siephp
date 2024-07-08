@@ -10,10 +10,17 @@ return RectorConfig::configure()
         __DIR__ . '/src',
     ])
 
-    ->withPhpSets(php81: true)
+    ->withPhpSets(php82: true)
     ->withPreparedSets(
+        deadCode: true,
         codeQuality: true,
+        codingStyle: true,
         typeDeclarations: true,
+        privatization: true,
+        instanceOf: true,
+        strictBooleans: true,
+        phpunitCodeQuality: true,
+        phpunit: true,
     )
     ->withImportNames(importShortClasses: false, removeUnusedImports: true)
 

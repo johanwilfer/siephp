@@ -19,17 +19,17 @@ final class AccountBalance
     /**
      * The account
      */
-    protected Account $account;
+    private readonly Account $account;
 
     /**
      * Incoming balance for the account
      */
-    protected float $incomingBalance;
+    private float $incomingBalance;
 
     /**
      * Outgoing balance for the account
      */
-    protected float $outgoingBalance;
+    private float $outgoingBalance;
 
     public function __construct(Account $account)
     {

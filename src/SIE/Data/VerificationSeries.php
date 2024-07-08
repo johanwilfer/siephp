@@ -26,7 +26,7 @@ final class VerificationSeries
     /**
      * Number series designation
      */
-    private string $id;
+    private readonly string $id;
 
     /**
      * #VER - these are the numbered verifications that will be included in ascending order when calling getVerifications()

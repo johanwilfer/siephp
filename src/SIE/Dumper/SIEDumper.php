@@ -63,6 +63,7 @@ final class SIEDumper
                     if ($sub_field !== '') {
                         $sub_field .= $this->delimiter_field;
                     }
+
                     // add value
                     $sub_field .= $this->escapeField($item);
                 }
@@ -96,10 +97,12 @@ final class SIEDumper
             if ($ascii_numeric < 32 || $ascii_numeric == 127) {
                 continue;
             }
+
             // page 9, 5.7 "Quotation marks in export fields are to be preceded by a backslash (ASCII 92)."
             if ($ascii_numeric == 34) {
                 $char = '\"';
             }
+
             // page 9, 5.7 "All fields are to be in quotation marks (ASCII 34). Quotation marks are however not a requirement and are only required when the field contains spaces."
             if ($ascii_numeric == 32) {
                 $addQuotes = true;
@@ -107,6 +110,7 @@ final class SIEDumper
 
             $escaped .= $char;
         }
+
         // add quotes if string contains a space or if empty string
         if ($addQuotes || $escaped === '') {
             $escaped = '"' . $escaped . '"';
@@ -151,14 +155,17 @@ final class SIEDumper
         if ($sie->getCompanyNumber() !== null) {
             $data .= $this->getLine('ORGNR', [$sie->getCompanyNumber()]);
         }
+
         // optional - type of chart of accounts
         if ($sie->getTypeOfChartOfAccounts() !== null) {
             $data .= $this->getLine('KPTYP', [$sie->getTypeOfChartOfAccounts()]);
         }
+
         // accounts
         foreach ($sie->getAccounts() as $account) {
             $data .= $this->getLine('KONTO', [$account->getId(), $account->getName()]);
         }
+
         // objects
         foreach ($sie->getDimensions() as $dimension) {
             foreach ($dimension->getObjects() as $object) {
@@ -172,6 +179,7 @@ final class SIEDumper
         foreach ($fiscalYears as $fiscalYear) {
             $data .= $this->getLine('RAR', [$year--, $fiscalYear->getDateStart()->format('Ymd'), $fiscalYear->getDateEnd()->format('Ymd')]);
         }
+
         // balance data per fiscal year
         $year = 0;
         foreach ($fiscalYears as $fiscalYear) {
@@ -179,6 +187,7 @@ final class SIEDumper
                 $data .= $this->getLine('IB', [$year, $balance->getAccount()->getId(), $balance->getIncomingBalance()]);
                 $data .= $this->getLine('UB', [$year, $balance->getAccount()->getId(), $balance->getOutgoingBalance()]);
             }
+
             $year--;
         }
 
@@ -194,7 +203,7 @@ final class SIEDumper
                     $ver->getDate(),
                     $ver->getText(),
                     $ver->getRegistrationDate(),
-                    $ver->GetRegistrationSign(),
+                    $ver->getRegistrationSign(),
                 ]);
                 // transactions for this verification
                 $data .= '{' . $this->delimiter_newline;
@@ -210,6 +219,7 @@ final class SIEDumper
                         $trans->getRegistrationSign(),
                     ]);
                 }
+
                 $data .= '}' . $this->delimiter_newline;
                 $data .= $this->delimiter_newline;
             }

@@ -45,6 +45,7 @@ class TSVLoader
             if ($line === '') {
                 continue;
             }
+
             $rows[] = explode($delimiter, $line);
         }
 
@@ -93,7 +94,7 @@ class TSVLoader
             // account - try fetch it from the company
             $account = $company->getAccount($data['account_id']);
             // account not found? create it.
-            if ($account === null) {
+            if (! $account instanceof Account) {
                 $account = (new Account($data['account_id']))
                     ->setName($data['account_name']);
                 $company->addAccount($account);
@@ -112,8 +113,6 @@ class TSVLoader
      * Parse transaction-data form TSV-file
      *
      * @param int $skipHeaderLines
-     *
-     * @return Data\Company
      */
     public function parseTransactions($value, Company $company, $skipHeaderLines = 1): void
     {
@@ -123,6 +122,7 @@ class TSVLoader
         for ($i = 0; $i < $skipHeaderLines; $i++) {
             array_shift($rows);
         }
+
         // fix ordering
         usort($rows, [$this, 'tabularDataCompareRows']);
 
@@ -169,7 +169,7 @@ class TSVLoader
 
             // account
             $account = $company->getAccount($row[3]);
-            if ($account === null) {
+            if (! $account instanceof Account) {
                 $account = (new Account($data['account_no']))
                     ->setName($data['account_name']);
                 $company->addAccount($account);
@@ -188,12 +188,13 @@ class TSVLoader
                 $dim = $company->getDimension(Dimension::DIMENSION_COST_CENTRE);
                 // find / create object
                 $object = $dim->getObject($data['result_unit']);
-                if ($object === null) {
+                if (! $object instanceof DimensionObject) {
                     $object = (new DimensionObject($data['result_unit']))
                         ->setDimension($dim)
                         ->setName('Resultatenhet ' . $data['result_unit']); //We don't have this data, so just set it
                     $dim->addObject($object);
                 }
+
                 // add to transaction
                 $transaction->addObject($object);
             }
@@ -204,12 +205,13 @@ class TSVLoader
                 $dim = $company->getDimension(Dimension::DIMENSION_PROJECT);
                 // find / create object
                 $object = $dim->getObject($data['project']);
-                if ($object === null) {
+                if (! $object instanceof DimensionObject) {
                     $object = (new DimensionObject($data['project']))
                         ->setDimension($dim)
                         ->setName('Projekt ' . $data['project']); //We don't have this data, so just set it
                     $dim->addObject($object);
                 }
+
                 // add to transaction
                 $transaction->addObject($object);
             }

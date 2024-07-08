@@ -5,3 +5,5 @@
 # phpstorm dir
 /.idea
 
+# phpunit
+.phpunit.result.cache

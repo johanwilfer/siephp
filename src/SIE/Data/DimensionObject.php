@@ -16,11 +16,11 @@ namespace SIE\Data;
  */
 final class DimensionObject
 {
-    protected string $id;
+    private readonly string $id;
 
-    protected ?string $name = null;
+    private ?string $name = null;
 
-    protected ?Dimension $dimension = null;
+    private ?Dimension $dimension = null;
 
     public function __construct(string $id)
     {

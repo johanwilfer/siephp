@@ -55,13 +55,6 @@ final class Transaction
      */
     private ?string $registrationSign = null;
 
-    /**
-     * Construct a Transaction
-     */
-    public function __construct()
-    {
-    }
-
     public function getAccount(): ?Account
     {
         return $this->account;
@@ -121,6 +114,7 @@ final class Transaction
         if (isset($this->dimensionObjects[$dimensionId])) {
             throw new DomainException('This dimension is already defined on this transaction');
         }
+
         $this->dimensionObjects[$dimensionId] = $object;
 
         return $this;
@@ -193,9 +187,10 @@ final class Transaction
      */
     public function validate(): void
     {
-        if ($this->account === null) {
+        if (! $this->account instanceof Account) {
             throw new DomainException('Mandatory field: account');
         }
+
         if ($this->amount === null) {
             throw new DomainException('Mandatory field: amount');
         }

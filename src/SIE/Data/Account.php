@@ -21,7 +21,7 @@ final class Account
     /**
      * Account number
      */
-    private int $id;
+    private readonly int $id;
 
     /**
      * Account name
