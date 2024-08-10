@@ -47,7 +47,7 @@ jobs:
       - name: Execute tests
         run: composer phpunit
 
-  cs:
+  cs-and-rector:
     runs-on: ubuntu-latest
 
     permissions:
@@ -63,10 +63,12 @@ jobs:
       - run: |
           composer install --no-progress
           composer cs-fix
-      # auto-commit
+          composer rector-fix
+      # auto-commit CS / Rector changes
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: Apply CS changes
+          commit_message: Apply CS/Rector changes
+
 
   phpstan:
     runs-on: ubuntu-latest
