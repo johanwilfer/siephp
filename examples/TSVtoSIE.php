@@ -189,7 +189,7 @@ class TSVLoader
             if ($data['result_unit'] !== '') {
                 // find dimension (pre-defined)
                 $dim = $company->getDimension(Dimension::DIMENSION_COST_CENTRE);
-                if ($dim === null) {
+                if (!$dim instanceof Dimension) {
                     throw new \LogicException('Expected to find dimension: DIMENSION_COST_CENTRE');
                 }
 
@@ -210,7 +210,7 @@ class TSVLoader
             if ($data['project'] !== '') {
                 // find dimension (pre-defined)
                 $dim = $company->getDimension(Dimension::DIMENSION_PROJECT);
-                if ($dim === null) {
+                if (!$dim instanceof Dimension) {
                     throw new \LogicException('Expected to find dimension: DIMENSION_PROJECT');
                 }
 

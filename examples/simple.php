@@ -37,8 +37,6 @@ $company
     ->addAccount($account3741)
 ;
 
-
-
 // add a verification with two transactions
 $verification = (new Verification('591000490'))->setDate('20150105')
     ->addTransaction(
