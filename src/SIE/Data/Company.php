@@ -112,7 +112,7 @@ final class Company
             throw new DomainException('The account id "' . $id . '" is already defined.');
         }
 
-        $this->accounts[$id] = $account;
+        $this->accounts[$id  ] = $account;
 
         return $this;
     }
