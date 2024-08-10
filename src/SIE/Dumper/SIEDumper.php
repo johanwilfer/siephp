@@ -33,7 +33,7 @@ final class SIEDumper
     /**
      * Delimiter used for fields.
      */
-    private string $delimiter_field = " ";
+    private string $delimiter_field = ' ';
 
     /**
      * Hold the options for the SIE-file
