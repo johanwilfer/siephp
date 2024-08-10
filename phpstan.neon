@@ -6,7 +6,7 @@ parameters:
     paths:
         - src
         # FIXME! Cleanup example dir and enable phpstan for that as well
-        #- examples
+        - examples
 
     disallowedSuperglobals:
         -
