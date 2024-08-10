@@ -99,7 +99,7 @@ class TSVLoader
             // account - try fetch it from the company
             $account = $company->getAccount($data['account_id']);
             // account not found? create it.
-            if (! $account instanceof Account) {
+            if ($account === null) {
                 $account = (new Account($data['account_id']))
                     ->setName($data['account_name']);
                 $company->addAccount($account);
@@ -172,7 +172,7 @@ class TSVLoader
 
             // account
             $account = $company->getAccount($data['account_no']);
-            if (! $account instanceof Account) {
+            if ($account === null) {
                 $account = (new Account($data['account_no']))
                     ->setName($data['account_name']);
                 $company->addAccount($account);
@@ -189,13 +189,13 @@ class TSVLoader
             if ($data['result_unit'] !== '') {
                 // find dimension (pre-defined)
                 $dim = $company->getDimension(Dimension::DIMENSION_COST_CENTRE);
-                if (!$dim instanceof Dimension) {
+                if ($dim === null) {
                     throw new \LogicException('Expected to find dimension: DIMENSION_COST_CENTRE');
                 }
 
                 // find / create object
                 $object = $dim->getObject($data['result_unit']);
-                if (! $object instanceof DimensionObject) {
+                if ($object === null) {
                     $object = (new DimensionObject($data['result_unit']))
                         ->setDimension($dim)
                         ->setName('Resultatenhet ' . $data['result_unit']); //We don't have this data, so just set it
@@ -210,13 +210,13 @@ class TSVLoader
             if ($data['project'] !== '') {
                 // find dimension (pre-defined)
                 $dim = $company->getDimension(Dimension::DIMENSION_PROJECT);
-                if (!$dim instanceof Dimension) {
+                if ($dim === null) {
                     throw new \LogicException('Expected to find dimension: DIMENSION_PROJECT');
                 }
 
                 // find / create object
                 $object = $dim->getObject($data['project']);
-                if (! $object instanceof DimensionObject) {
+                if ($object === null) {
                     $object = (new DimensionObject($data['project']))
                         ->setDimension($dim)
                         ->setName('Projekt ' . $data['project']); //We don't have this data, so just set it
