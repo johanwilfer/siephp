@@ -28,7 +28,10 @@
         "symplify/easy-coding-standard": "^12.3",
         "rector/rector": "^1.2",
         "phpstan/phpstan": "^1.11",
-        "phpunit/phpunit": "^11.2"
+        "phpunit/phpunit": "^11.2",
+        "phpstan/phpstan-strict-rules": "^1.6",
+        "spaze/phpstan-disallowed-calls": "^3.4",
+        "phpstan/phpstan-phpunit": "^1.4"
     },
     "scripts": {
         "cs-check": "vendor/bin/ecs check --ansi",

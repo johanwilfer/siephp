@@ -2,5 +2,16 @@ parameters:
     # https://phpstan.org/config-reference
 	level: max
 	paths:
-		- examples
 		- src
+		# FIXME! Cleanup example dir and enable phpstan for that as well
+		#- examples
+
+includes:
+        # https://github.com/phpstan/phpstan-strict-rules
+        - vendor/phpstan/phpstan-strict-rules/rules.neon
+        - vendor/phpstan/phpstan/conf/bleedingEdge.neon
+        - vendor/phpstan/phpstan-phpunit/extension.neon
+        - vendor/spaze/phpstan-disallowed-calls/extension.neon
+        - vendor/spaze/phpstan-disallowed-calls/disallowed-dangerous-calls.neon
+        - vendor/spaze/phpstan-disallowed-calls/disallowed-execution-calls.neon
+        - vendor/spaze/phpstan-disallowed-calls/disallowed-insecure-calls.neon

@@ -147,7 +147,7 @@ final class Verification
             // validate all our transactions
             $transaction->validate();
             // calculate sum of all transactions
-            $sum += $transaction->getAmount();
+            $sum += (float) $transaction->getAmount();
         }
 
         // validate that our transactions equal zero
