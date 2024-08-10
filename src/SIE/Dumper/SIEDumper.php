@@ -210,12 +210,13 @@ final class SIEDumper
                 // transactions for this verification
                 $data .= '{' . $this->delimiter_newline;
                 foreach ($ver->getTransactions() as $trans) {
+                    // transaction date is not mandatory, but looks strange to leave out. Insert verification date if it is missing.
+                    $date = $trans->getDate() ?? $ver->getDate();
                     $data .= '    ' . $this->getLine('TRANS', [
                         $trans->getAccount()?->getId(),
                         $trans->getObjectsAsArrayPairs(),
                         $trans->getAmount(),
-                        // transaction date is not mandatory, but looks strange to leave out. Insert verification date if it is missing.
-                        $trans->getDate() ?: $ver->getDate(),
+                        $date,
                         $trans->getText(),
                         $trans->getQuantity(),
                         $trans->getRegistrationSign(),

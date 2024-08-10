@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Rector\Config\RectorConfig;
+use Rector\Php53\Rector\Ternary\TernaryToElvisRector;
 use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 
 //
@@ -37,5 +38,7 @@ return RectorConfig::configure()
     // DTOs looks a bit ugly with this, lets consider if we want this
     ->withSkip([
         ClassPropertyAssignToConstructorPromotionRector::class,
+        // this is conflicting with our phpstan rules - either they should change or this needs to be skipped
+        TernaryToElvisRector::class,
     ])
 ;
