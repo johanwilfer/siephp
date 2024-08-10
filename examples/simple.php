@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use SIE\Data\Account;
 use SIE\Data\Company;
 use SIE\Data\Transaction;

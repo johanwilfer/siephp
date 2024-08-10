@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the SIE-PHP package.
  *
@@ -145,7 +147,7 @@ final class Verification
             // validate all our transactions
             $transaction->validate();
             // calculate sum of all transactions
-            $sum += $transaction->getAmount();
+            $sum += (float) $transaction->getAmount();
         }
 
         // validate that our transactions equal zero

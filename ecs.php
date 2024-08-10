@@ -2,15 +2,23 @@
 
 declare(strict_types=1);
 
-use PhpCsFixer\FixerFactory;
-use PhpCsFixer\RuleSet\RuleSet;
+use PhpCsFixer\Fixer\StringNotation\SingleQuoteFixer;
 use Symplify\EasyCodingStandard\Config\ECSConfig;
 
-// https://github.com/easy-coding-standard/easy-coding-standard
-$config = ECSConfig::configure()
+// https://github.com/easy-coding-standard/easy-coding-standard/blob/main/README.md
+// https://tomasvotruba.com/blog/2018/06/04/how-to-migrate-from-php-code-sniffer-to-easy-coding-standard/
+// https://github.com/easy-coding-standard/easy-coding-standard?tab=readme-ov-file
+// https://tomasvotruba.com/blog/zen-config-in-ecs
+
+return ECSConfig::configure()
     ->withPaths([
         __DIR__ . '/src',
         __DIR__ . '/examples',
+    ])
+
+    // add a single rule
+    ->withRules([
+        SingleQuoteFixer::class,
     ])
 
     // add sets - group of rules
@@ -23,22 +31,3 @@ $config = ECSConfig::configure()
         namespaces: true,
     )
 ;
-
-// source: https://hugo.alliau.me/blog/posts/2023-07-19-how-to-use-php-cs-fixer-ruleset-with-easy-coding-standard
-// Configure Symfony and Symfony Risky SetList from PHP-CS-Fixer, since they are not shipped anymore with Easy Coding Standard.
-$fixerFactory = new FixerFactory();
-$fixerFactory->registerBuiltInFixers();
-$ruleSet = new RuleSet([
-    '@Symfony' => true,
-]);
-$fixerFactory->useRuleSet($ruleSet);
-
-foreach ($fixerFactory->getFixers() as $fixer) {
-    if (null !== $fixerConfiguration = $ruleSet->getRuleConfiguration($fixer->getName())) {
-        $config->withConfiguredRule($fixer::class, $fixerConfiguration);
-    } else {
-        $config->withRules([$fixer::class]);
-    }
-}
-
-return $config;

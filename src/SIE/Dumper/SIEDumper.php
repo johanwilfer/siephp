@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the SIE-PHP package.
  *
@@ -31,7 +33,7 @@ final class SIEDumper
     /**
      * Delimiter used for fields.
      */
-    private string $delimiter_field = " ";
+    private string $delimiter_field = ' ';
 
     /**
      * Hold the options for the SIE-file
@@ -64,6 +66,10 @@ final class SIEDumper
                         $sub_field .= $this->delimiter_field;
                     }
 
+                    if (!is_string($item) && !is_int($item) && !is_float($item)) {
+                        throw new DomainException('Unexpected type of parameter: ' . gettype($item));
+                    }
+
                     // add value
                     $sub_field .= $this->escapeField($item);
                 }
@@ -90,21 +96,21 @@ final class SIEDumper
         $escaped = '';
         $addQuotes = false;
 
-        for ($i = 0; $i < strlen($encoded); $i++) {
+        for ($i = 0; $i < strlen($encoded); ++$i) {
             $char = $encoded[$i];
             $ascii_numeric = ord($char);
             // page 9, 5.7 "There are to be no control characters in text strings. ASCII 0 up to and including ASCII 31 and ASCII 127 are control characters."
-            if ($ascii_numeric < 32 || $ascii_numeric == 127) {
+            if ($ascii_numeric < 32 || $ascii_numeric === 127) {
                 continue;
             }
 
             // page 9, 5.7 "Quotation marks in export fields are to be preceded by a backslash (ASCII 92)."
-            if ($ascii_numeric == 34) {
+            if ($ascii_numeric === 34) {
                 $char = '\"';
             }
 
             // page 9, 5.7 "All fields are to be in quotation marks (ASCII 34). Quotation marks are however not a requirement and are only required when the field contains spaces."
-            if ($ascii_numeric == 32) {
+            if ($ascii_numeric === 32) {
                 $addQuotes = true;
             }
 
@@ -125,7 +131,7 @@ final class SIEDumper
         $this->options = [
             'generator' => self::DEFAULT_GENERATOR_NAME,
             'generator_version' => self::DEFAULT_GENERATOR_VERSION,
-            'generated_date' => date('Ymd'),
+            'generated_date' => (new \DateTime('now'))->format('Ymd'),
             'generated_sign' => null,
         ];
     }
@@ -188,7 +194,7 @@ final class SIEDumper
                 $data .= $this->getLine('UB', [$year, $balance->getAccount()->getId(), $balance->getOutgoingBalance()]);
             }
 
-            $year--;
+            --$year;
         }
 
         // end head with a blank line (not needed but looks nice)
@@ -208,12 +214,13 @@ final class SIEDumper
                 // transactions for this verification
                 $data .= '{' . $this->delimiter_newline;
                 foreach ($ver->getTransactions() as $trans) {
+                    // transaction date is not mandatory, but looks strange to leave out. Insert verification date if it is missing.
+                    $date = $trans->getDate() ?? $ver->getDate();
                     $data .= '    ' . $this->getLine('TRANS', [
                         $trans->getAccount()?->getId(),
                         $trans->getObjectsAsArrayPairs(),
                         $trans->getAmount(),
-                        // transaction date is not mandatory, but looks strange to leave out. Insert verification date if it is missing.
-                        $trans->getDate() ?: $ver->getDate(),
+                        $date,
                         $trans->getText(),
                         $trans->getQuantity(),
                         $trans->getRegistrationSign(),

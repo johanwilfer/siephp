@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the SIE-PHP package.
  *
@@ -180,7 +182,7 @@ final class Company
     {
         $id = $verificationSeries->getId();
         foreach ($this->verificationSeries as $item) {
-            if ($item->getId() == $id) {
+            if ($item->getId() === $id) {
                 throw new DomainException('This verification series with the id "' . $id . '" is already defined.');
             }
         }
@@ -193,11 +195,11 @@ final class Company
     /**
      * Get verification series by id.
      */
-    public function getVerificationSeries(int $id): ?VerificationSeries
+    public function getVerificationSeries(string $id): ?VerificationSeries
     {
         // search by id
         foreach ($this->verificationSeries as $item) {
-            if ($item->getId() == $id) {
+            if ($item->getId() === $id) {
                 return $item;
             }
         }
