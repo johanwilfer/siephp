@@ -138,7 +138,7 @@ final class Verification
         }
 
         if ($this->transactions === []) {
-            throw new DomainException(  'No transactions for verification id "' . $this->id . '".' );
+            throw new DomainException('No transactions for verification id "' . $this->id . '".');
         }
 
         // validate verifications
