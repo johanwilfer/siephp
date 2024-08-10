@@ -87,7 +87,7 @@ class TSVLoader
 
         foreach ($rows as $row) {
             $data = [
-                'account_id' => $row[0],
+                'account_id' => (int) $row[0],
                 'account_name' => $row[1],
                 'incoming' => (float) str_replace([' ', ' ', '.', ','], ['', '', '', '.'], $row[2]),
                 'outgoing' => (float) str_replace([' ', ' ', '.', ','], ['', '', '', '.'], $row[5]),
@@ -151,7 +151,7 @@ class TSVLoader
             $data = [
                 'ver_no' => $row[0],
                 'date' => $row[1],
-                'account_no' => $row[3],
+                'account_no' => (int) $row[3],
                 'account_name' => $row[4],
                 'result_unit' => $row[5],
                 'project' => $row[6],
@@ -170,7 +170,7 @@ class TSVLoader
             }
 
             // account
-            $account = $company->getAccount($row[3]);
+            $account = $company->getAccount($data['account_no']);
             if (! $account instanceof Account) {
                 $account = (new Account($data['account_no']))
                     ->setName($data['account_name']);

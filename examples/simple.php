@@ -33,7 +33,7 @@ $company = (new Company())
 ;
 
 // add a verification with two transactions
-$verification = (new Verification(591000490))->setDate('20150105')
+$verification = (new Verification('591000490'))->setDate('20150105')
     ->addTransaction(
         (new Transaction())
             ->setAccount($company->getAccount(1511))
