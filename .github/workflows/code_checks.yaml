@@ -37,8 +37,7 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
-          extensions: pcov, curl
-          coverage: pcov
+          coverage: none
 
       - name: Install dependencies
         run: |
@@ -56,15 +55,24 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
+
       - uses: shivammathur/setup-php@v2
         with:
           php-version: 8.3
           coverage: none
+
+      - name: Cache dependencies
+        id: composer-cache
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: dependencies-php-8.3-composer-${{ hashFiles('composer.json') }}
+
       - run: |
           composer install --no-progress
           composer cs-fix
           composer rector-fix
-      # auto-commit CS / Rector changes
+
       - uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: Apply CS/Rector changes
@@ -74,9 +82,18 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: shivammathur/setup-php@v2
         with:
           php-version: 8.3
           coverage: none
+
+      - name: Cache dependencies
+        id: composer-cache
+        uses: actions/cache@v4
+        with:
+          path: vendor
+          key: dependencies-php-8.3-composer-${{ hashFiles('composer.json') }}
+
       - run: composer install --no-progress
       - run: composer phpstan
