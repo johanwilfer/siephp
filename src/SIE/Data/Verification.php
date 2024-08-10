@@ -138,7 +138,7 @@ final class Verification
         }
 
         if ($this->transactions === []) {
-            throw new DomainException('No transactions for verification id "' . $this->id . '".');
+            throw new DomainException(  'No transactions for verification id "' . $this->id . '".' );
         }
 
         // validate verifications
@@ -147,7 +147,7 @@ final class Verification
             // validate all our transactions
             $transaction->validate();
             // calculate sum of all transactions
-            $sum += (float) $transaction->getAmount();
+            $sum += $transaction->getAmount();
         }
 
         // validate that our transactions equal zero
