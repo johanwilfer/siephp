@@ -32,10 +32,10 @@ class TSVLoader
     /**
      * Parse TSV data and returns array of rows, that holds an array of fields.
      *
-     * @param string $value
-     * @param string $delimiter
+     * @param non-empty-string $delimiter
+     * @return array<int, array<int, string>>
      */
-    protected function getTabularData($value, $delimiter = "\t"): array
+    private function getTabularData(string $value, string $delimiter): array
     {
         // fix line endings to be \n
         $value = str_replace(["\r\n", "\r"], "\n", $value);
@@ -56,13 +56,16 @@ class TSVLoader
 
     /**
      * Used for sorting the tsv-data
+     *
+     * @param array<int, string|int> $a
+     * @param array<int, string|int> $b
      */
-    protected function tabularDataCompareRows($a, $b): int
+    private function tabularDataCompareRows(array $a, array $b): int
     {
         // compare ver_no
         $field = 0;
         // same ver_no, compare ver_row instead
-        if ($a[$field] == $b[$field]) {
+        if ($a[$field] === $b[$field]) {
             $field = 14;
         }
 
@@ -76,10 +79,10 @@ class TSVLoader
      * @param Data\FiscalYear $fiscalYear The fiscal year
      * @param int $skipHeaderLines
      */
-    public function parseBalance($value, Company $company, FiscalYear $fiscalYear, $skipHeaderLines = 1): void
+    public function parseBalance(string $value, Company $company, FiscalYear $fiscalYear, $skipHeaderLines = 1): void
     {
         // parse text
-        $rows = $this->getTabularData($value);
+        $rows = $this->getTabularData($value, "\t");
         // kill header lines
         for ($i = 0; $i < $skipHeaderLines; ++$i) {
             array_shift($rows);
@@ -87,7 +90,7 @@ class TSVLoader
 
         foreach ($rows as $row) {
             $data = [
-                'account_id' => $row[0],
+                'account_id' => (int) $row[0],
                 'account_name' => $row[1],
                 'incoming' => (float) str_replace([' ', ' ', '.', ','], ['', '', '', '.'], $row[2]),
                 'outgoing' => (float) str_replace([' ', ' ', '.', ','], ['', '', '', '.'], $row[5]),
@@ -96,7 +99,7 @@ class TSVLoader
             // account - try fetch it from the company
             $account = $company->getAccount($data['account_id']);
             // account not found? create it.
-            if (! $account instanceof Account) {
+            if ($account === null) {
                 $account = (new Account($data['account_id']))
                     ->setName($data['account_name']);
                 $company->addAccount($account);
@@ -113,13 +116,11 @@ class TSVLoader
 
     /**
      * Parse transaction-data form TSV-file
-     *
-     * @param int $skipHeaderLines
      */
-    public function parseTransactions($value, Company $company, $skipHeaderLines = 1): void
+    public function parseTransactions(string $value, Company $company, int $skipHeaderLines = 1): void
     {
         // parse text
-        $rows = $this->getTabularData($value);
+        $rows = $this->getTabularData($value, "\t");
         // kill header lines
         for ($i = 0; $i < $skipHeaderLines; ++$i) {
             array_shift($rows);
@@ -134,7 +135,7 @@ class TSVLoader
             ->addDimension(new Dimension(Dimension::DIMENSION_COST_CENTRE))
             ->addDimension(new Dimension(Dimension::DIMENSION_PROJECT));
 
-        $last_verification_id = null;
+        $lastVerificationId = null;
         foreach ($rows as $row) {
             /* -- Our columns --
              * 0: Verification number
@@ -151,7 +152,7 @@ class TSVLoader
             $data = [
                 'ver_no' => $row[0],
                 'date' => $row[1],
-                'account_no' => $row[3],
+                'account_no' => (int) $row[3],
                 'account_name' => $row[4],
                 'result_unit' => $row[5],
                 'project' => $row[6],
@@ -162,7 +163,7 @@ class TSVLoader
             ];
 
             // verification
-            if ($last_verification_id !== $data['ver_no']) {
+            if ($lastVerificationId !== $data['ver_no']) {
                 $verification = (new Verification($data['ver_no']))
                     ->setDate($data['date'])
                     ->setText($data['ver_name']);
@@ -170,8 +171,8 @@ class TSVLoader
             }
 
             // account
-            $account = $company->getAccount($row[3]);
-            if (! $account instanceof Account) {
+            $account = $company->getAccount($data['account_no']);
+            if ($account === null) {
                 $account = (new Account($data['account_no']))
                     ->setName($data['account_name']);
                 $company->addAccount($account);
@@ -185,12 +186,16 @@ class TSVLoader
             $verification->addTransaction($transaction);
 
             // dimension - result unit
-            if ($data['result_unit']) {
+            if ($data['result_unit'] !== '') {
                 // find dimension (pre-defined)
                 $dim = $company->getDimension(Dimension::DIMENSION_COST_CENTRE);
+                if ($dim === null) {
+                    throw new \LogicException('Expected to find dimension: DIMENSION_COST_CENTRE');
+                }
+
                 // find / create object
                 $object = $dim->getObject($data['result_unit']);
-                if (! $object instanceof DimensionObject) {
+                if ($object === null) {
                     $object = (new DimensionObject($data['result_unit']))
                         ->setDimension($dim)
                         ->setName('Resultatenhet ' . $data['result_unit']); //We don't have this data, so just set it
@@ -202,12 +207,16 @@ class TSVLoader
             }
 
             // dimension - project
-            if ($data['project']) {
+            if ($data['project'] !== '') {
                 // find dimension (pre-defined)
                 $dim = $company->getDimension(Dimension::DIMENSION_PROJECT);
+                if ($dim === null) {
+                    throw new \LogicException('Expected to find dimension: DIMENSION_PROJECT');
+                }
+
                 // find / create object
                 $object = $dim->getObject($data['project']);
-                if (! $object instanceof DimensionObject) {
+                if ($object === null) {
                     $object = (new DimensionObject($data['project']))
                         ->setDimension($dim)
                         ->setName('Projekt ' . $data['project']); //We don't have this data, so just set it
@@ -218,7 +227,7 @@ class TSVLoader
                 $transaction->addObject($object);
             }
 
-            $last_verification_id = $verification->getId();
+            $lastVerificationId = $verification->getId();
         }
     }
 }
@@ -241,7 +250,7 @@ $paths = [
 $company = (new Company())->setCompanyName('Imported company name åäöÅÄÖ');
 // load transaction data from TSV
 $loader = new TSVLoader();
-$loader->parseTransactions(file_get_contents($paths['transaction-data']), $company);
+$loader->parseTransactions((string) file_get_contents($paths['transaction-data']), $company);
 
 /*
  * Balance data
@@ -250,12 +259,12 @@ $loader->parseTransactions(file_get_contents($paths['transaction-data']), $compa
 // add fiscal year (defaults to current calendar year)
 $fiscalYear = new FiscalYear();
 $company->addFiscalYear($fiscalYear);
-$loader->parseBalance(file_get_contents($paths['balance-data-year-0']), $company, $fiscalYear);
+$loader->parseBalance((string) file_get_contents($paths['balance-data-year-0']), $company, $fiscalYear);
 
 // the year before that
 $fiscalYear = $fiscalYear->createPreviousFiscalYear();
 $company->addFiscalYear($fiscalYear);
-$loader->parseBalance(file_get_contents($paths['balance-data-year-1']), $company, $fiscalYear);
+$loader->parseBalance((string) file_get_contents($paths['balance-data-year-1']), $company, $fiscalYear);
 
 /*
  * Dump as SIE

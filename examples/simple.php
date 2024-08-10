@@ -27,21 +27,26 @@ $company = (new Company())
     ->setCompanyName('My company')
     // add a verification series
     ->addVerificationSeries(new VerificationSeries())
-    // add two accounts
-    ->addAccount((new Account(1511))->setName('Kundfordringar'))
-    ->addAccount((new Account(3741))->setName('Öresutjämning'))
+;
+
+// add two accounts
+$account1511 = (new Account(1511))->setName('Kundfordringar');
+$account3741 = (new Account(3741))->setName('Öresutjämning');
+$company
+    ->addAccount($account1511)
+    ->addAccount($account3741)
 ;
 
 // add a verification with two transactions
-$verification = (new Verification(591000490))->setDate('20150105')
+$verification = (new Verification('591000490'))->setDate('20150105')
     ->addTransaction(
         (new Transaction())
-            ->setAccount($company->getAccount(1511))
+            ->setAccount($account1511)
             ->setAmount(-0.24)
     )
     ->addTransaction(
         (new Transaction())
-            ->setAccount($company->getAccount(3741))
+            ->setAccount($account3741)
             ->setAmount(0.24)
     )
 ;
