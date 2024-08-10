@@ -1,6 +1,8 @@
 parameters:
     # https://phpstan.org/config-reference
     level: max
+    bootstrapFiles:
+        - tests/bootstrap.php
     paths:
         - src
         # FIXME! Cleanup example dir and enable phpstan for that as well
