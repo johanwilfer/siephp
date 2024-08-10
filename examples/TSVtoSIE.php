@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use SIE\Data\Account;
 use SIE\Data\AccountBalance;
 use SIE\Data\Company;
@@ -79,7 +81,7 @@ class TSVLoader
         // parse text
         $rows = $this->getTabularData($value);
         // kill header lines
-        for ($i = 0; $i < $skipHeaderLines; $i++) {
+        for ($i = 0; $i < $skipHeaderLines; ++$i) {
             array_shift($rows);
         }
 
@@ -119,7 +121,7 @@ class TSVLoader
         // parse text
         $rows = $this->getTabularData($value);
         // kill header lines
-        for ($i = 0; $i < $skipHeaderLines; $i++) {
+        for ($i = 0; $i < $skipHeaderLines; ++$i) {
             array_shift($rows);
         }
 

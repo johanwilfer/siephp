@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * This file is part of the SIE-PHP package.
  *
@@ -90,7 +92,7 @@ final class SIEDumper
         $escaped = '';
         $addQuotes = false;
 
-        for ($i = 0; $i < strlen($encoded); $i++) {
+        for ($i = 0; $i < strlen($encoded); ++$i) {
             $char = $encoded[$i];
             $ascii_numeric = ord($char);
             // page 9, 5.7 "There are to be no control characters in text strings. ASCII 0 up to and including ASCII 31 and ASCII 127 are control characters."
@@ -188,7 +190,7 @@ final class SIEDumper
                 $data .= $this->getLine('UB', [$year, $balance->getAccount()->getId(), $balance->getOutgoingBalance()]);
             }
 
-            $year--;
+            --$year;
         }
 
         // end head with a blank line (not needed but looks nice)
