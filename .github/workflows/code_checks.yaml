@@ -27,6 +27,8 @@ jobs:
             stability: prefer-stable
           - php: '8.3'
             stability: prefer-stable
+          - php: '8.4-rc'
+            stability: prefer-stable
 
     name: PHP ${{ matrix.php }} - ${{ matrix.symfony-version }} - ${{ matrix.stability }}
     steps:
