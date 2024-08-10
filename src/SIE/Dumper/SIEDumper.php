@@ -66,7 +66,7 @@ final class SIEDumper
                         $sub_field .= $this->delimiter_field;
                     }
 
-                    if (!is_string($item) && !is_int($item) && !is_float($item)) {
+                    if (! is_string($item) && ! is_int($item) && ! is_float($item)) {
                         throw new DomainException('Unexpected type of parameter: ' . gettype($item));
                     }
 
