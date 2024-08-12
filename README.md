@@ -3,16 +3,22 @@
 ## About
 SIEPHP is a library that enables export of bookkeeping-data to the Swedish SIE-format. For more information about SIE see http://www.sie.se/
 
-Currently only a subset of the specification is supported, like export to SIE4 (verification/transaction data). In the future a loader-class for SIE could be written as well, and support of more features in the SIE-standard.
+Currently only a subset of the specification is supported, like export to SIE4 (verification/transaction data). 
+In the future a loader-class for SIE could be written as well, and support of more features in the SIE-standard.
 
-It's built around simple data-classes that represents a Company / Verifications / Transactions by the model in the SIE-standard. It also comes with a dumper-class that can dump the data to SIE-format.
+It's built around simple data-classes that represents a Company / Verifications / Transactions by the model in the SIE-standard. 
+It also comes with a dumper-class that can dump the data to SIE-format.
 
 ## Installation
-Install the latest version with
+Install the latest stable version with
 
 ```bash
-$ composer require jttech/sie
+$ composer require jttech/sie ^1.2
 ```
+
+## Upgrade
+
+See [UPGRADE.md](UPGRADE.md) for how to upgrade.
 
 ## Usage
 
@@ -71,6 +77,33 @@ And it will generate the following output (in PC8/CP437 encoding):
 ```
 
 See [examples/TSVtoSIE.php](examples/TSVtoSIE.php) for a custom TSV to SIE converter, loading the same data from a TSV-file.
+
+## Development
+
+SIEPHP comes with docker compose to ease development, to build dev docker containers, run:
+```bash
+docker compose up --build -d
+```
+
+And once it is built, enter the php 8.2 or 8.3 container:
+```bash
+docker exec -it siephp-php83 bash
+docker exec -it siephp-php84 bash
+```
+
+All the tooling is added as composer scripts, start by installing deps:
+```bash
+composer install
+```
+
+The you can use the code style (cs) commands to check/fix issues, rector to run the automatic refactors, or phpunit.
+```bash
+composer cs-check
+composer cs-fix
+composer rector-check
+composer rector-fix
+composer phpunit
+```
 
 ## Author
 Johan Wilfer - johan [at] jttech.se - http://jttech.se
