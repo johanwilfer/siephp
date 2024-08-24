@@ -2,7 +2,7 @@
 
 ## Version 2.0
 
-Released: TBD
+Released: 2024-08-24
 
 Breaking changes:
 - PHP version required is now 8.2, PHP 8.3 is also supported
