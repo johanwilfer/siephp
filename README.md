@@ -112,7 +112,8 @@ Johan Wilfer - johan [at] jttech.se - http://jttech.se
 SIE-PHP is licensed under the MIT License - see the LICENSE file for details
 
 ## Thanks to
-Mitronic AB (http://mitronic.se) that funded this work.
+- Mitronic AB (https://www.mitronic.se/) that funded the development of version 1
+- Sirvoy (https://sirvoy.com) that funded the development of version 2
 
 ## Questions?
 Send an email to johan [at] jttech.se
