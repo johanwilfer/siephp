@@ -85,8 +85,9 @@ SIEPHP comes with docker compose to ease development, to build dev docker contai
 docker compose up --build -d
 ```
 
-And once it is built, enter the php 8.2 or 8.3 container:
+And once it is built, enter the php 8.2, 8.3 or 8.4 container:
 ```bash
+docker exec -it siephp-php82 bash
 docker exec -it siephp-php83 bash
 docker exec -it siephp-php84 bash
 ```
