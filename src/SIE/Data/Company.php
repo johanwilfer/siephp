@@ -219,8 +219,6 @@ final class Company
 
     /**
      * Add fiscal year
-     *
-     * @throws DomainException
      */
     public function addFiscalYear(FiscalYear $fiscalYear): self
     {
