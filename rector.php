@@ -11,6 +11,7 @@ use Rector\Php80\Rector\Class_\ClassPropertyAssignToConstructorPromotionRector;
 // https://github.com/rectorphp/rector
 // https://getrector.com/documentation/integration-to-new-project
 // https://getrector.com/blog
+// https://getrector.com/blog/5-new-features-in-rector-20
 //
 // Another good tool from the rector team is installed to be able to use for manual refactors: https://github.com/rectorphp/swiss-knife
 //
@@ -21,7 +22,7 @@ return RectorConfig::configure()
     ])
     ->withPhpSets(php82: true)
     ->withImportNames(importShortClasses: false)
-    ->withAttributesSets(all: true)
+    ->withAttributesSets()
     // https://getrector.com/documentation/set-lists
     ->withPreparedSets(
         deadCode: true,
@@ -33,6 +34,8 @@ return RectorConfig::configure()
         strictBooleans: true,
         rectorPreset: true,
         phpunitCodeQuality: true,
+    )
+    ->withComposerBased(
         phpunit: true,
     )
 
