@@ -2,11 +2,11 @@
 
 ## Version 3.0
 
-Released: TBD
+Released: 2025-11-05
 
 Breaking changes:
 - PHP version required is now 8.3, (dropped support for PHP 8.2)
-- PHP 8.5 is also supported
+- PHP 8.5 is also supported (RC3 as of writing)
 
 ## Version 2.0
 
