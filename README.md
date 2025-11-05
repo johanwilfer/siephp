@@ -13,7 +13,7 @@ It also comes with a dumper-class that can dump the data to SIE-format.
 Install the latest stable version with
 
 ```bash
-$ composer require jttech/sie ^2.0
+$ composer require jttech/sie ^3.0
 ```
 
 ## Upgrade
