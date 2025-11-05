@@ -1,14 +1,4 @@
 services:
-  siephp-php82:
-    container_name: siephp-php82
-    build:
-      context: .
-      dockerfile: ./docker/dockerfile-siephp-php82
-    tty: true
-    stdin_open: true
-    volumes:
-      - .:/docker:rw,delegated
-
   siephp-php83:
     container_name: siephp-php83
     build:
@@ -24,6 +14,16 @@ services:
     build:
       context: .
       dockerfile: ./docker/dockerfile-siephp-php84
+    tty: true
+    stdin_open: true
+    volumes:
+      - .:/docker:rw,delegated
+
+  siephp-php85:
+    container_name: siephp-php85
+    build:
+      context: .
+      dockerfile: ./docker/dockerfile-siephp-php85
     tty: true
     stdin_open: true
     volumes:

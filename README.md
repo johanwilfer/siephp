@@ -13,7 +13,7 @@ It also comes with a dumper-class that can dump the data to SIE-format.
 Install the latest stable version with
 
 ```bash
-$ composer require jttech/sie ^2.0
+$ composer require jttech/sie ^3.0
 ```
 
 ## Upgrade
@@ -85,11 +85,11 @@ SIEPHP comes with docker compose to ease development, to build dev docker contai
 docker compose up --build -d
 ```
 
-And once it is built, enter the php 8.2, 8.3 or 8.4 container:
+And once it is built, enter the php 8.3, 8.4 or 8.5 container:
 ```bash
-docker exec -it siephp-php82 bash
 docker exec -it siephp-php83 bash
 docker exec -it siephp-php84 bash
+docker exec -it siephp-php85 bash
 ```
 
 All the tooling is added as composer scripts, start by installing deps:
