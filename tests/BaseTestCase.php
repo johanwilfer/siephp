@@ -15,7 +15,6 @@ abstract class BaseTestCase extends TestCase
 
         // use reflection to set private property
         $reflectionProperty = $reflectionObject->getProperty($name);
-        $reflectionProperty->setAccessible(true);
         $reflectionProperty->setValue($object, $value);
     }
 
@@ -28,8 +27,6 @@ abstract class BaseTestCase extends TestCase
 
         // use reflection to set private property
         $reflectionProperty = $reflectionObject->getProperty($name);
-        $reflectionProperty->setAccessible(true);
-
         return $reflectionProperty->getValue($object);
     }
 }

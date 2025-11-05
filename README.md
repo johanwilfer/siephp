@@ -90,6 +90,7 @@ And once it is built, enter the php 8.2, 8.3 or 8.4 container:
 docker exec -it siephp-php82 bash
 docker exec -it siephp-php83 bash
 docker exec -it siephp-php84 bash
+docker exec -it siephp-php85 bash
 ```
 
 All the tooling is added as composer scripts, start by installing deps:
