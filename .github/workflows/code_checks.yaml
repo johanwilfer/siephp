@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['8.3']
+        php: ['8.4']
         stability: [ prefer-stable ]
         include:
           - php: '8.3'
@@ -37,20 +37,20 @@ jobs:
 
     name: PHP ${{ matrix.php }} - ${{ matrix.symfony-version }} - ${{ matrix.stability }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 #v5
 
       - name: Validate composer.json and composer.lock
         run: composer validate --strict
 
       - name: Cache dependencies
         id: composer-cache
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 #v4
         with:
           path: vendor
           key: dependencies-php-${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
 
       # use PHP of specific version
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f #v2
         with:
           php-version: ${{ matrix.php }}
           coverage: none
@@ -70,16 +70,16 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 #v5
 
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f #v2
         with:
           php-version: 8.4
           coverage: none
 
       - name: Cache dependencies
         id: composer-cache
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 #v4
         with:
           path: vendor
           key: dependencies-php-8.4-composer-${{ hashFiles('composer.json') }}
@@ -89,7 +89,7 @@ jobs:
           composer cs-fix
           composer rector-fix
 
-      - uses: stefanzweifel/git-auto-commit-action@v5
+      - uses: stefanzweifel/git-auto-commit-action@28e16e81777b558cc906c8750092100bbb34c5e3 #v7
         with:
           commit_message: Apply CS/Rector changes
 
@@ -97,16 +97,16 @@ jobs:
   phpstan:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 #v5
 
-      - uses: shivammathur/setup-php@v2
+      - uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f #v2
         with:
           php-version: 8.4
           coverage: none
 
       - name: Cache dependencies
         id: composer-cache
-        uses: actions/cache@v4
+        uses: actions/cache@0057852bfaa89a56745cba8c7296529d2fc39830 #v4
         with:
           path: vendor
           key: dependencies-php-8.4-composer-${{ hashFiles('composer.json') }}
