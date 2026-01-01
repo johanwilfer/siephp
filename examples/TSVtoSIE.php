@@ -22,7 +22,6 @@ use SIE\Dumper\SIEDumper;
  * file that was distributed with this source code.
  */
 
-
 // Autoload files using Composer autoload
 require_once __DIR__ . '/../vendor/autoload.php';
 
