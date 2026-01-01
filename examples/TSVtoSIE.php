@@ -127,7 +127,7 @@ class TSVLoader
         }
 
         // fix ordering
-        usort($rows, [$this, 'tabularDataCompareRows']);
+        usort($rows, $this->tabularDataCompareRows(...));
 
         // add a verification series and two dimensions
         $verificationSeries = new VerificationSeries();
