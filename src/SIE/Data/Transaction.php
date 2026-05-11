@@ -111,7 +111,7 @@ final class Transaction
      */
     public function addObject(DimensionObject $object): self
     {
-        $dimensionId = $object->getDimension()?->getId();
+        $dimensionId = (int) $object->getDimension()?->getId();
         // check that we only add one object per dimension
         if (isset($this->dimensionObjects[$dimensionId])) {
             throw new DomainException('This dimension is already defined on this transaction');
