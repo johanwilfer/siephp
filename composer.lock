@@ -245,11 +245,11 @@
         },
         {
             "name": "phpstan/phpstan",
-            "version": "2.2.1",
+            "version": "2.2.3",
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/dea9c8f2d25cc849391042b71e429c1a4bf82660",
-                "reference": "dea9c8f2d25cc849391042b71e429c1a4bf82660",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/4048833dd47b377287818841877fb3087289509c",
+                "reference": "4048833dd47b377287818841877fb3087289509c",
                 "shasum": ""
             },
             "require": {
@@ -305,25 +305,26 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-28T14:44:12+00:00"
+            "time": "2026-06-30T21:15:26+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
-            "version": "2.0.16",
+            "version": "2.0.17",
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-phpunit.git",
-                "reference": "6ab598e1bc106e6827fd346ae4a12b4a5d634c32"
+                "reference": "c2f977551f0736d60467b3d754b2e0cf4e337b3f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/6ab598e1bc106e6827fd346ae4a12b4a5d634c32",
-                "reference": "6ab598e1bc106e6827fd346ae4a12b4a5d634c32",
+                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/c2f977551f0736d60467b3d754b2e0cf4e337b3f",
+                "reference": "c2f977551f0736d60467b3d754b2e0cf4e337b3f",
                 "shasum": ""
             },
             "require": {
+                "phar-io/version": "^3.2",
                 "php": "^7.4 || ^8.0",
-                "phpstan/phpstan": "^2.1.32"
+                "phpstan/phpstan": "^2.2.3"
             },
             "conflict": {
                 "phpunit/phpunit": "<7.0"
@@ -333,7 +334,8 @@
                 "php-parallel-lint/php-parallel-lint": "^1.2",
                 "phpstan/phpstan-deprecation-rules": "^2.0",
                 "phpstan/phpstan-strict-rules": "^2.0",
-                "phpunit/phpunit": "^9.6"
+                "phpunit/phpunit": "^9.6",
+                "shipmonk/name-collision-detector": "^2.1"
             },
             "type": "phpstan-extension",
             "extra": {
@@ -359,9 +361,9 @@
             ],
             "support": {
                 "issues": "https://github.com/phpstan/phpstan-phpunit/issues",
-                "source": "https://github.com/phpstan/phpstan-phpunit/tree/2.0.16"
+                "source": "https://github.com/phpstan/phpstan-phpunit/tree/2.0.17"
             },
-            "time": "2026-02-14T09:05:21+00:00"
+            "time": "2026-06-29T05:32:23+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
@@ -851,21 +853,21 @@
         },
         {
             "name": "rector/rector",
-            "version": "2.4.5",
+            "version": "2.5.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/rectorphp/rector.git",
-                "reference": "cbd86024be5014d3c14d9f0b3f7aae8ecbffd62c"
+                "reference": "49ff6339174bdbdf50b0b35ecbcff14a05ac9e24"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/rectorphp/rector/zipball/cbd86024be5014d3c14d9f0b3f7aae8ecbffd62c",
-                "reference": "cbd86024be5014d3c14d9f0b3f7aae8ecbffd62c",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/49ff6339174bdbdf50b0b35ecbcff14a05ac9e24",
+                "reference": "49ff6339174bdbdf50b0b35ecbcff14a05ac9e24",
                 "shasum": ""
             },
             "require": {
                 "php": "^7.4|^8.0",
-                "phpstan/phpstan": "^2.1.56"
+                "phpstan/phpstan": "^2.2.2"
             },
             "conflict": {
                 "rector/rector-doctrine": "*",
@@ -899,7 +901,7 @@
             ],
             "support": {
                 "issues": "https://github.com/rectorphp/rector/issues",
-                "source": "https://github.com/rectorphp/rector/tree/2.4.5"
+                "source": "https://github.com/rectorphp/rector/tree/2.5.2"
             },
             "funding": [
                 {
@@ -907,7 +909,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2026-05-26T21:03:22+00:00"
+            "time": "2026-06-22T11:39:33+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -1927,16 +1929,16 @@
         },
         {
             "name": "symplify/easy-coding-standard",
-            "version": "13.1.5",
+            "version": "13.2.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/easy-coding-standard/ecs.git",
-                "reference": "96294d652c17ccffabb7d36f9d116dd5f0e6b84e"
+                "url": "https://github.com/ecsphp/ecs.git",
+                "reference": "94f56bce0420d4e837a85c4b2c6501293a5974eb"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/easy-coding-standard/ecs/zipball/96294d652c17ccffabb7d36f9d116dd5f0e6b84e",
-                "reference": "96294d652c17ccffabb7d36f9d116dd5f0e6b84e",
+                "url": "https://api.github.com/repos/ecsphp/ecs/zipball/94f56bce0420d4e837a85c4b2c6501293a5974eb",
+                "reference": "94f56bce0420d4e837a85c4b2c6501293a5974eb",
                 "shasum": ""
             },
             "require": {
@@ -1971,9 +1973,9 @@
                 "static analysis"
             ],
             "support": {
-                "source": "https://github.com/easy-coding-standard/ecs/tree/13.1.5"
+                "source": "https://github.com/ecsphp/ecs/tree/13.2.3"
             },
-            "time": "2026-05-30T09:12:26+00:00"
+            "time": "2026-06-15T22:08:41+00:00"
         },
         {
             "name": "theseer/tokenizer",
