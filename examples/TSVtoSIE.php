@@ -198,7 +198,7 @@ class TSVLoader
                 if ($object === null) {
                     $object = (new DimensionObject($data['result_unit']))
                         ->setDimension($dim)
-                        ->setName('Resultatenhet ' . $data['result_unit']); //We don't have this data, so just set it
+                        ->setName('Resultatenhet ' . $data['result_unit']); // We don't have this data, so just set it
                     $dim->addObject($object);
                 }
 
@@ -219,7 +219,7 @@ class TSVLoader
                 if ($object === null) {
                     $object = (new DimensionObject($data['project']))
                         ->setDimension($dim)
-                        ->setName('Projekt ' . $data['project']); //We don't have this data, so just set it
+                        ->setName('Projekt ' . $data['project']); // We don't have this data, so just set it
                     $dim->addObject($object);
                 }
 
@@ -246,7 +246,7 @@ $paths = [
  * Transaction data for current year
  */
 
-//create company
+// create company
 $company = (new Company())->setCompanyName('Imported company name åäöÅÄÖ');
 // load transaction data from TSV
 $loader = new TSVLoader();

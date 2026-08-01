@@ -51,7 +51,8 @@ $verification = (new Verification('591000490'))->setDate('20150105')
     )
 ;
 // add the verification to the company
-$company->getVerificationSeriesAll()[0]->addVerification($verification);
+$company->getVerificationSeriesAll()[0]
+    ->addVerification($verification);
 // validate data, will throw Exception if invalid data
 $company->validate();
 
