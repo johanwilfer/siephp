@@ -18,7 +18,7 @@ namespace SIE\Data;
  */
 final class Dimension
 {
-    //FIXME Add support for custom dimensions (#DIM), id 20+ This means generating #DIM-fields for the SIE-export.
+    // FIXME Add support for custom dimensions (#DIM), id 20+ This means generating #DIM-fields for the SIE-export.
 
     /**
      * See 8.17 in "SIE_filformat_ver_4B_ENGLISH.pdf" "Reserved dimension numbers"
@@ -75,9 +75,6 @@ final class Dimension
         return $this->id;
     }
 
-    /**
-     * Add object
-     */
     public function addObject(DimensionObject $object): self
     {
         $object->setDimension($this);

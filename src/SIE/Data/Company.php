@@ -101,8 +101,6 @@ final class Company
     }
 
     /**
-     * Add an account
-     *
      * @throws DomainException
      */
     public function addAccount(Account $account): self
@@ -139,8 +137,6 @@ final class Company
     }
 
     /**
-     * Add dimension
-     *
      * @throws DomainException
      */
     public function addDimension(Dimension $dimension): self
@@ -174,8 +170,6 @@ final class Company
     }
 
     /**
-     * Add verification series
-     *
      * @throws DomainException
      */
     public function addVerificationSeries(VerificationSeries $verificationSeries): self
@@ -217,9 +211,6 @@ final class Company
         return $this->verificationSeries;
     }
 
-    /**
-     * Add fiscal year
-     */
     public function addFiscalYear(FiscalYear $fiscalYear): self
     {
         $this->fiscalYears[] = $fiscalYear;
@@ -228,8 +219,6 @@ final class Company
     }
 
     /**
-     * Get fiscal years
-     *
      * @return FiscalYear[]
      */
     public function getFiscalYears(): array

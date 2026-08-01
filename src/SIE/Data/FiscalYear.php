@@ -100,7 +100,8 @@ final class FiscalYear
      */
     public function addAccountBalance(AccountBalance $accountBalance): self
     {
-        $id = $accountBalance->getAccount()->getId();
+        $id = $accountBalance->getAccount()
+            ->getId();
         if (isset($this->accountBalances[$id])) {
             throw new DomainException('The balances for account id "' . $id . '" is already defined.');
         }
