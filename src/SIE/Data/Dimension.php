@@ -75,8 +75,6 @@ final class Dimension
         return $this->id;
     }
 
-    /**
-     */
     public function addObject(DimensionObject $object): self
     {
         $object->setDimension($this);

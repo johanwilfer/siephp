@@ -211,8 +211,6 @@ final class Company
         return $this->verificationSeries;
     }
 
-    /**
-     */
     public function addFiscalYear(FiscalYear $fiscalYear): self
     {
         $this->fiscalYears[] = $fiscalYear;
