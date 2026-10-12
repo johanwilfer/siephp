@@ -40,5 +40,10 @@
         "rector-check": "vendor/bin/rector --dry-run",
         "rector-fix": "vendor/bin/rector",
         "phpunit": "vendor/bin/phpunit"
+    },
+    "config": {
+        "platform": {
+            "php": "8.3.0"
+        }
     }
 }
