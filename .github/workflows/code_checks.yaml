@@ -113,3 +113,15 @@ jobs:
 
       - run: composer install --prefer-dist --no-progress
       - run: composer phpstan
+
+  # Fails on any advisory against composer.lock, so the nightly run turns red
+  # when Dependabot cannot ship a security fix on its own.
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 #v5
+      - uses: shivammathur/setup-php@bf6b4fbd49ca58e4608c9c89fba0b8d90bd2a39f #v2
+        with:
+          php-version: 8.4
+          coverage: none
+      - run: composer audit --locked
