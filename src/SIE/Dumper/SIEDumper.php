@@ -119,7 +119,7 @@ final class SIEDumper
 
         // add quotes if string contains a space or if empty string
         if ($addQuotes || $escaped === '') {
-            $escaped = '"' . $escaped . '"';
+            return '"' . $escaped . '"';
         }
 
         return $escaped;

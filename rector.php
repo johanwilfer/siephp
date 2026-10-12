@@ -31,7 +31,6 @@ return RectorConfig::configure()
         typeDeclarations: true,
         privatization: true,
         instanceOf: true,
-        strictBooleans: true,
         rectorPreset: true,
         phpunitCodeQuality: true,
     )
