@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use SIE\Data;
 use SIE\Data\Account;
 use SIE\Data\AccountBalance;
 use SIE\Data\Company;
@@ -24,8 +25,6 @@ use SIE\Dumper\SIEDumper;
 
 // Autoload files using Composer autoload
 require_once __DIR__ . '/../vendor/autoload.php';
-
-use SIE\Data;
 
 class TSVLoader
 {
