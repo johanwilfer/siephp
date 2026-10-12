@@ -144,7 +144,7 @@ class TSVLoader
              * 5: Result unit
              * 6: Project
              * 13: Verification name
-             * 14: Verification row number
+             * 14: Verification row number (used for sorting only)
              * 15: Transaction name
              * 18: Transaction amount
              */
@@ -156,7 +156,6 @@ class TSVLoader
                 'result_unit' => $row[5],
                 'project' => $row[6],
                 'ver_name' => $row[13],
-                'ver_row' => $row[14],
                 'trans_text' => $row[15],
                 'trans_amount' => (float) str_replace(['.', ','], ['', '.'], $row[18]),
             ];
